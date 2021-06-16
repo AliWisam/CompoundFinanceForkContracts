@@ -2799,12 +2799,29 @@ contract PriceOracle {
     function getUnderlyingPrice(BToken bToken) external view returns (uint);
 }
 
-// File: contracts/BAIControllerStorage.sol
+// File: contracts/BAIControllerInterface.sol
+
+pragma solidity ^0.5.16;
+
+contract BAIControllerInterface {
+    function getBAIAddress() public view returns (address);
+    function getMintableBAI(address minter) public view returns (uint, uint);
+    function mintBAI(address minter, uint mintBAIAmount) external returns (uint);
+    function repayBAI(address repayer, uint repayBAIAmount) external returns (uint);
+
+    function _initializeBtntexBAIState(uint blockNumber) external returns (uint);
+    function updateBtntexBAIMintIndex() external returns (uint);
+    function calcDistributeBAIMinterBtntex(address baiMinter) external returns(uint, uint, uint, uint);
+}
+
+// File: contracts/ComptrollerStorage.sol
 
 pragma solidity ^0.5.16;
 
 
-contract BAIUnitrollerAdminStorage {
+
+
+contract UnitrollerAdminStorage {
     /**
     * @notice Administrator for this contract
     */
@@ -2818,36 +2835,157 @@ contract BAIUnitrollerAdminStorage {
     /**
     * @notice Active brains of Unitroller
     */
-    address public baiControllerImplementation;
+    address public comptrollerImplementation;
 
     /**
     * @notice Pending brains of Unitroller
     */
-    address public pendingBAIControllerImplementation;
+    address public pendingComptrollerImplementation;
 }
 
-contract BAIControllerStorageG1 is BAIUnitrollerAdminStorage {
-    ComptrollerInterface public comptroller;
+contract ComptrollerV1Storage is UnitrollerAdminStorage {
 
-    struct BtntexBAIState {
-        /// @notice The last updated btntexBAIMintIndex
+    /**
+     * @notice Oracle which gives the price of any given asset
+     */
+    PriceOracle public oracle;
+
+    /**
+     * @notice Multiplier used to calculate the maximum repayAmount when liquidating a borrow
+     */
+    uint public closeFactorMantissa;
+
+    /**
+     * @notice Multiplier representing the discount on collateral that a liquidator receives
+     */
+    uint public liquidationIncentiveMantissa;
+
+    /**
+     * @notice Max number of assets a single account can participate in (borrow or use as collateral)
+     */
+    uint public maxAssets;
+
+    /**
+     * @notice Per-account mapping of "assets you are in", capped by maxAssets
+     */
+    mapping(address => BToken[]) public accountAssets;
+
+    struct Market {
+        /// @notice Whether or not this market is listed
+        bool isListed;
+
+        /**
+         * @notice Multiplier representing the most one can borrow against their collateral in this market.
+         *  For instance, 0.9 to allow borrowing 90% of collateral value.
+         *  Must be between 0 and 1, and stored as a mantissa.
+         */
+        uint collateralFactorMantissa;
+
+        /// @notice Per-market mapping of "accounts in this asset"
+        mapping(address => bool) accountMembership;
+
+        /// @notice Whether or not this market receives BTNT
+        bool isBtntex;
+    }
+
+    /**
+     * @notice Official mapping of bTokens -> Market metadata
+     * @dev Used e.g. to determine if a market is supported
+     */
+    mapping(address => Market) public markets;
+
+    /**
+     * @notice The Pause Guardian can pause certain actions as a safety mechanism.
+     *  Actions which allow users to remove their own assets cbtntot be paused.
+     *  Liquidation / seizing / transfer can only be paused globally, not by market.
+     */
+    address public pauseGuardian;
+    bool public _mintGuardianPaused;
+    bool public _borrowGuardianPaused;
+    bool public transferGuardianPaused;
+    bool public seizeGuardianPaused;
+    mapping(address => bool) public mintGuardianPaused;
+    mapping(address => bool) public borrowGuardianPaused;
+
+    struct BtntexMarketState {
+        /// @notice The market's last updated btntexBorrowIndex or btntexSupplyIndex
         uint224 index;
 
         /// @notice The block number the index was last updated at
         uint32 block;
     }
 
-    /// @notice The Btntex BAI state
-    BtntexBAIState public btntexBAIState;
+    /// @notice A list of all markets
+    BToken[] public allMarkets;
 
-    /// @notice The Btntex BAI state initialized
-    bool public isBtntexBAIInitialized;
+    /// @notice The rate at which the flywheel distributes BTNT, per block
+    uint public btntexRate;
 
-    /// @notice The Btntex BAI minter index as of the last time they accrued BTNT
-    mapping(address => uint) public btntexBAIMinterIndex;
+    /// @notice The portion of btntexRate that each market currently receives
+    mapping(address => uint) public btntexSpeeds;
+
+    /// @notice The Btntex market supply state for each market
+    mapping(address => BtntexMarketState) public btntexSupplyState;
+
+    /// @notice The Btntex market borrow state for each market
+    mapping(address => BtntexMarketState) public btntexBorrowState;
+
+    /// @notice The Btntex supply index for each market for each supplier as of the last time they accrued BTNT
+    mapping(address => mapping(address => uint)) public btntexSupplierIndex;
+
+    /// @notice The Btntex borrow index for each market for each borrower as of the last time they accrued BTNT
+    mapping(address => mapping(address => uint)) public btntexBorrowerIndex;
+
+    /// @notice The BTNT accrued but not yet transferred to each user
+    mapping(address => uint) public btntexAccrued;
+
+    /// @notice The Address of BAIController
+    BAIControllerInterface public baiController;
+
+    /// @notice The minted BAI amount to each user
+    mapping(address => uint) public mintedBAIs;
+
+    /// @notice BAI Mint Rate as a percentage
+    uint public baiMintRate;
+
+    /**
+     * @notice The Pause Guardian can pause certain actions as a safety mechanism.
+     */
+    bool public mintBAIGuardianPaused;
+    bool public repayBAIGuardianPaused;
+
+    /**
+     * @notice Pause/Unpause whole protocol actions
+     */
+    bool public protocolPaused;
+
+    /// @notice The rate at which the flywheel distributes BTNT to BAI Minters, per block
+    uint public btntexBAIRate;
 }
 
-contract BAIControllerStorageG2 is BAIControllerStorageG1 {
+contract ComptrollerV2Storage is ComptrollerV1Storage {
+    /// @notice The rate at which the flywheel distributes BTNT to BAI Vault, per block
+    uint public btntexBAIVaultRate;
+
+    // address of BAI Vault
+    address public baiVaultAddress;
+
+    // start block of release to BAI Vault
+    uint256 public releaseStartBlock;
+
+    // minimum release amount to BAI Vault
+    uint256 public minReleaseAmount;
+}
+
+contract ComptrollerV3Storage is ComptrollerV2Storage {
+    /// @notice The borrowCapGuardian can set borrowCaps to any number for any market. Lowering the borrow cap could disable borrowing on the given market.
+    address public borrowCapGuardian;
+
+    /// @notice Borrow caps enforced by borrowAllowed for each bToken address. Defaults to zero which corresponds to unlimited borrowing.
+    mapping(address => uint) public borrowCaps;
+}
+
+contract ComptrollerV4Storage is ComptrollerV3Storage {
     /// @notice Treasury Guardian address
     address public treasuryGuardian;
 
@@ -2856,26 +2994,27 @@ contract BAIControllerStorageG2 is BAIControllerStorageG1 {
 
     /// @notice Fee percent of accrued interest with decimal 18
     uint256 public treasuryPercent;
-
-    /// @notice Guard variable for re-entrancy checks
-    bool internal _notEntered;
 }
 
-// File: contracts/BAIUnitroller.sol
+// File: contracts/Unitroller.sol
 
 pragma solidity ^0.5.16;
 
 
-
-contract BAIUnitroller is BAIUnitrollerAdminStorage, BAIControllerErrorReporter {
+/**
+ * @title ComptrollerCore
+ * @dev Storage for the comptroller is at this address, while execution is delegated to the `comptrollerImplementation`.
+ * BTokens should reference this contract as their comptroller.
+ */
+contract Unitroller is UnitrollerAdminStorage, ComptrollerErrorReporter {
 
     /**
-      * @notice Emitted when pendingBAIControllerImplementation is changed
+      * @notice Emitted when pendingComptrollerImplementation is changed
       */
     event NewPendingImplementation(address oldPendingImplementation, address newPendingImplementation);
 
     /**
-      * @notice Emitted when pendingBAIControllerImplementation is accepted, which means comptroller implementation is updated
+      * @notice Emitted when pendingComptrollerImplementation is accepted, which means comptroller implementation is updated
       */
     event NewImplementation(address oldImplementation, address newImplementation);
 
@@ -2901,11 +3040,11 @@ contract BAIUnitroller is BAIUnitrollerAdminStorage, BAIControllerErrorReporter 
             return fail(Error.UNAUTHORIZED, FailureInfo.SET_PENDING_IMPLEMENTATION_OWNER_CHECK);
         }
 
-        address oldPendingImplementation = pendingBAIControllerImplementation;
+        address oldPendingImplementation = pendingComptrollerImplementation;
 
-        pendingBAIControllerImplementation = newPendingImplementation;
+        pendingComptrollerImplementation = newPendingImplementation;
 
-        emit NewPendingImplementation(oldPendingImplementation, pendingBAIControllerImplementation);
+        emit NewPendingImplementation(oldPendingImplementation, pendingComptrollerImplementation);
 
         return uint(Error.NO_ERROR);
     }
@@ -2916,21 +3055,21 @@ contract BAIUnitroller is BAIUnitrollerAdminStorage, BAIControllerErrorReporter 
     * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
     */
     function _acceptImplementation() public returns (uint) {
-        // Check caller is pendingImplementation
-        if (msg.sender != pendingBAIControllerImplementation) {
+        // Check caller is pendingImplementation and pendingImplementation ≠ address(0)
+        if (msg.sender != pendingComptrollerImplementation || pendingComptrollerImplementation == address(0)) {
             return fail(Error.UNAUTHORIZED, FailureInfo.ACCEPT_PENDING_IMPLEMENTATION_ADDRESS_CHECK);
         }
 
         // Save current values for inclusion in log
-        address oldImplementation = baiControllerImplementation;
-        address oldPendingImplementation = pendingBAIControllerImplementation;
+        address oldImplementation = comptrollerImplementation;
+        address oldPendingImplementation = pendingComptrollerImplementation;
 
-        baiControllerImplementation = pendingBAIControllerImplementation;
+        comptrollerImplementation = pendingComptrollerImplementation;
 
-        pendingBAIControllerImplementation = address(0);
+        pendingComptrollerImplementation = address(0);
 
-        emit NewImplementation(oldImplementation, baiControllerImplementation);
-        emit NewPendingImplementation(oldPendingImplementation, pendingBAIControllerImplementation);
+        emit NewImplementation(oldImplementation, comptrollerImplementation);
+        emit NewPendingImplementation(oldPendingImplementation, pendingComptrollerImplementation);
 
         return uint(Error.NO_ERROR);
     }
@@ -2966,8 +3105,8 @@ contract BAIUnitroller is BAIUnitrollerAdminStorage, BAIControllerErrorReporter 
       * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
       */
     function _acceptAdmin() public returns (uint) {
-        // Check caller is pendingAdmin
-        if (msg.sender != pendingAdmin) {
+        // Check caller is pendingAdmin and pendingAdmin ≠ address(0)
+        if (msg.sender != pendingAdmin || msg.sender == address(0)) {
             return fail(Error.UNAUTHORIZED, FailureInfo.ACCEPT_ADMIN_PENDING_ADMIN_CHECK);
         }
 
@@ -2994,7 +3133,7 @@ contract BAIUnitroller is BAIUnitrollerAdminStorage, BAIControllerErrorReporter 
      */
     function () external payable {
         // delegate all other functions to current implementation
-        (bool success, ) = baiControllerImplementation.delegatecall(msg.data);
+        (bool success, ) = comptrollerImplementation.delegatecall(msg.data);
 
         assembly {
               let free_mem_ptr := mload(0x40)
@@ -3004,6 +3143,354 @@ contract BAIUnitroller is BAIUnitrollerAdminStorage, BAIControllerErrorReporter 
               case 0 { revert(free_mem_ptr, returndatasize) }
               default { return(free_mem_ptr, returndatasize) }
         }
+    }
+}
+
+// File: contracts/BTNT.sol
+
+pragma solidity ^0.5.16;
+
+contract Owned {
+
+    address public owner;
+
+    event OwnershipTransferred(address indexed _from, address indexed _to);
+
+    constructor() public {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner {
+        require(msg.sender == owner, "Should be owner");
+        _;
+    }
+
+    function transferOwnership(address newOwner) public onlyOwner {
+        owner = newOwner;
+        emit OwnershipTransferred(owner, newOwner);
+    }
+}
+
+contract Tokenlock is Owned {
+    /// @notice Indicates if token is locked
+    uint8 isLocked = 0;
+
+    event Freezed();
+    event UnFreezed();
+
+    modifier validLock {
+        require(isLocked == 0, "Token is locked");
+        _;
+    }
+
+    function freeze() public onlyOwner {
+        isLocked = 1;
+
+        emit Freezed();
+    }
+
+    function unfreeze() public onlyOwner {
+        isLocked = 0;
+
+        emit UnFreezed();
+    }
+}
+
+contract BTNT is Tokenlock {
+    /// @notice BEP-20 token name for this token
+    string public constant name = "Btntex";
+
+    /// @notice BEP-20 token symbol for this token
+    string public constant symbol = "BTNT";
+
+    /// @notice BEP-20 token decimals for this token
+    uint8 public constant decimals = 18;
+
+    /// @notice Total number of tokens in circulation
+    uint public constant totalSupply = 30000000e18; // 30 million BTNT
+
+    /// @notice Allowance amounts on behalf of others
+    mapping (address => mapping (address => uint96)) internal allowances;
+
+    /// @notice Official record of token balances for each account
+    mapping (address => uint96) internal balances;
+
+    /// @notice A record of each accounts delegate
+    mapping (address => address) public delegates;
+
+    /// @notice A checkpoint for marking number of votes from a given block
+    struct Checkpoint {
+        uint32 fromBlock;
+        uint96 votes;
+    }
+
+    /// @notice A record of votes checkpoints for each account, by index
+    mapping (address => mapping (uint32 => Checkpoint)) public checkpoints;
+
+    /// @notice The number of checkpoints for each account
+    mapping (address => uint32) public numCheckpoints;
+
+    /// @notice The EIP-712 typehash for the contract's domain
+    bytes32 public constant DOMAIN_TYPEHASH = keccak256("EIP712Domain(string name,uint256 chainId,address verifyingContract)");
+
+    /// @notice The EIP-712 typehash for the delegation struct used by the contract
+    bytes32 public constant DELEGATION_TYPEHASH = keccak256("Delegation(address delegatee,uint256 nonce,uint256 expiry)");
+
+    /// @notice A record of states for signing / validating signatures
+    mapping (address => uint) public nonces;
+
+    /// @notice An event thats emitted when an account changes its delegate
+    event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate);
+
+    /// @notice An event thats emitted when a delegate account's vote balance changes
+    event DelegateVotesChanged(address indexed delegate, uint previousBalance, uint newBalance);
+
+    /// @notice The standard BEP-20 transfer event
+    event Transfer(address indexed from, address indexed to, uint256 amount);
+
+    /// @notice The standard BEP-20 approval event
+    event Approval(address indexed owner, address indexed spender, uint256 amount);
+
+    /**
+     * @notice Construct a new BTNT token
+     * @param account The initial account to grant all the tokens
+     */
+    constructor(address account) public {
+        balances[account] = uint96(totalSupply);
+        emit Transfer(address(0), account, totalSupply);
+    }
+
+    /**
+     * @notice Get the number of tokens `spender` is approved to spend on behalf of `account`
+     * @param account The address of the account holding the funds
+     * @param spender The address of the account spending the funds
+     * @return The number of tokens approved
+     */
+    function allowance(address account, address spender) external view returns (uint) {
+        return allowances[account][spender];
+    }
+
+    /**
+     * @notice Approve `spender` to transfer up to `amount` from `src`
+     * @dev This will overwrite the approval amount for `spender`
+     * @param spender The address of the account which may transfer tokens
+     * @param rawAmount The number of tokens that are approved (2^256-1 means infinite)
+     * @return Whether or not the approval succeeded
+     */
+    function approve(address spender, uint rawAmount) external validLock returns (bool) {
+        uint96 amount;
+        if (rawAmount == uint(-1)) {
+            amount = uint96(-1);
+        } else {
+            amount = safe96(rawAmount, "BTNT::approve: amount exceeds 96 bits");
+        }
+
+        allowances[msg.sender][spender] = amount;
+
+        emit Approval(msg.sender, spender, amount);
+        return true;
+    }
+
+    /**
+     * @notice Get the number of tokens held by the `account`
+     * @param account The address of the account to get the balance of
+     * @return The number of tokens held
+     */
+    function balanceOf(address account) external view returns (uint) {
+        return balances[account];
+    }
+
+    /**
+     * @notice Transfer `amount` tokens from `msg.sender` to `dst`
+     * @param dst The address of the destination account
+     * @param rawAmount The number of tokens to transfer
+     * @return Whether or not the transfer succeeded
+     */
+    function transfer(address dst, uint rawAmount) external validLock returns (bool) {
+        uint96 amount = safe96(rawAmount, "BTNT::transfer: amount exceeds 96 bits");
+        _transferTokens(msg.sender, dst, amount);
+        return true;
+    }
+
+    /**
+     * @notice Transfer `amount` tokens from `src` to `dst`
+     * @param src The address of the source account
+     * @param dst The address of the destination account
+     * @param rawAmount The number of tokens to transfer
+     * @return Whether or not the transfer succeeded
+     */
+    function transferFrom(address src, address dst, uint rawAmount) external validLock returns (bool) {
+        address spender = msg.sender;
+        uint96 spenderAllowance = allowances[src][spender];
+        uint96 amount = safe96(rawAmount, "BTNT::approve: amount exceeds 96 bits");
+
+        if (spender != src && spenderAllowance != uint96(-1)) {
+            uint96 newAllowance = sub96(spenderAllowance, amount, "BTNT::transferFrom: transfer amount exceeds spender allowance");
+            allowances[src][spender] = newAllowance;
+
+            emit Approval(src, spender, newAllowance);
+        }
+
+        _transferTokens(src, dst, amount);
+        return true;
+    }
+
+    /**
+     * @notice Delegate votes from `msg.sender` to `delegatee`
+     * @param delegatee The address to delegate votes to
+     */
+    function delegate(address delegatee) public validLock {
+        return _delegate(msg.sender, delegatee);
+    }
+
+    /**
+     * @notice Delegates votes from signatory to `delegatee`
+     * @param delegatee The address to delegate votes to
+     * @param nonce The contract state required to match the signature
+     * @param expiry The time at which to expire the signature
+     * @param v The recovery byte of the signature
+     * @param r Half of the ECDSA signature pair
+     * @param s Half of the ECDSA signature pair
+     */
+    function delegateBySig(address delegatee, uint nonce, uint expiry, uint8 v, bytes32 r, bytes32 s) public validLock {
+        bytes32 domainSeparator = keccak256(abi.encode(DOMAIN_TYPEHASH, keccak256(bytes(name)), getChainId(), address(this)));
+        bytes32 structHash = keccak256(abi.encode(DELEGATION_TYPEHASH, delegatee, nonce, expiry));
+        bytes32 digest = keccak256(abi.encodePacked("\x19\x01", domainSeparator, structHash));
+        address signatory = ecrecover(digest, v, r, s);
+        require(signatory != address(0), "BTNT::delegateBySig: invalid signature");
+        require(nonce == nonces[signatory]++, "BTNT::delegateBySig: invalid nonce");
+        require(now <= expiry, "BTNT::delegateBySig: signature expired");
+        return _delegate(signatory, delegatee);
+    }
+
+    /**
+     * @notice Gets the current votes balance for `account`
+     * @param account The address to get votes balance
+     * @return The number of current votes for `account`
+     */
+    function getCurrentVotes(address account) external view returns (uint96) {
+        uint32 nCheckpoints = numCheckpoints[account];
+        return nCheckpoints > 0 ? checkpoints[account][nCheckpoints - 1].votes : 0;
+    }
+
+    /**
+     * @notice Determine the prior number of votes for an account as of a block number
+     * @dev Block number must be a finalized block or else this function will revert to prevent misinformation.
+     * @param account The address of the account to check
+     * @param blockNumber The block number to get the vote balance at
+     * @return The number of votes the account had as of the given block
+     */
+    function getPriorVotes(address account, uint blockNumber) public view returns (uint96) {
+        require(blockNumber < block.number, "BTNT::getPriorVotes: not yet determined");
+
+        uint32 nCheckpoints = numCheckpoints[account];
+        if (nCheckpoints == 0) {
+            return 0;
+        }
+
+        // First check most recent balance
+        if (checkpoints[account][nCheckpoints - 1].fromBlock <= blockNumber) {
+            return checkpoints[account][nCheckpoints - 1].votes;
+        }
+
+        // Next check implicit zero balance
+        if (checkpoints[account][0].fromBlock > blockNumber) {
+            return 0;
+        }
+
+        uint32 lower = 0;
+        uint32 upper = nCheckpoints - 1;
+        while (upper > lower) {
+            uint32 center = upper - (upper - lower) / 2; // ceil, avoiding overflow
+            Checkpoint memory cp = checkpoints[account][center];
+            if (cp.fromBlock == blockNumber) {
+                return cp.votes;
+            } else if (cp.fromBlock < blockNumber) {
+                lower = center;
+            } else {
+                upper = center - 1;
+            }
+        }
+        return checkpoints[account][lower].votes;
+    }
+
+    function _delegate(address delegator, address delegatee) internal {
+        address currentDelegate = delegates[delegator];
+        uint96 delegatorBalance = balances[delegator];
+        delegates[delegator] = delegatee;
+
+        emit DelegateChanged(delegator, currentDelegate, delegatee);
+
+        _moveDelegates(currentDelegate, delegatee, delegatorBalance);
+    }
+
+    function _transferTokens(address src, address dst, uint96 amount) internal {
+        require(src != address(0), "BTNT::_transferTokens: cbtntot transfer from the zero address");
+        require(dst != address(0), "BTNT::_transferTokens: cbtntot transfer to the zero address");
+
+        balances[src] = sub96(balances[src], amount, "BTNT::_transferTokens: transfer amount exceeds balance");
+        balances[dst] = add96(balances[dst], amount, "BTNT::_transferTokens: transfer amount overflows");
+        emit Transfer(src, dst, amount);
+
+        _moveDelegates(delegates[src], delegates[dst], amount);
+    }
+
+    function _moveDelegates(address srcRep, address dstRep, uint96 amount) internal {
+        if (srcRep != dstRep && amount > 0) {
+            if (srcRep != address(0)) {
+                uint32 srcRepNum = numCheckpoints[srcRep];
+                uint96 srcRepOld = srcRepNum > 0 ? checkpoints[srcRep][srcRepNum - 1].votes : 0;
+                uint96 srcRepNew = sub96(srcRepOld, amount, "BTNT::_moveVotes: vote amount underflows");
+                _writeCheckpoint(srcRep, srcRepNum, srcRepOld, srcRepNew);
+            }
+
+            if (dstRep != address(0)) {
+                uint32 dstRepNum = numCheckpoints[dstRep];
+                uint96 dstRepOld = dstRepNum > 0 ? checkpoints[dstRep][dstRepNum - 1].votes : 0;
+                uint96 dstRepNew = add96(dstRepOld, amount, "BTNT::_moveVotes: vote amount overflows");
+                _writeCheckpoint(dstRep, dstRepNum, dstRepOld, dstRepNew);
+            }
+        }
+    }
+
+    function _writeCheckpoint(address delegatee, uint32 nCheckpoints, uint96 oldVotes, uint96 newVotes) internal {
+      uint32 blockNumber = safe32(block.number, "BTNT::_writeCheckpoint: block number exceeds 32 bits");
+
+      if (nCheckpoints > 0 && checkpoints[delegatee][nCheckpoints - 1].fromBlock == blockNumber) {
+          checkpoints[delegatee][nCheckpoints - 1].votes = newVotes;
+      } else {
+          checkpoints[delegatee][nCheckpoints] = Checkpoint(blockNumber, newVotes);
+          numCheckpoints[delegatee] = nCheckpoints + 1;
+      }
+
+      emit DelegateVotesChanged(delegatee, oldVotes, newVotes);
+    }
+
+    function safe32(uint n, string memory errorMessage) internal pure returns (uint32) {
+        require(n < 2**32, errorMessage);
+        return uint32(n);
+    }
+
+    function safe96(uint n, string memory errorMessage) internal pure returns (uint96) {
+        require(n < 2**96, errorMessage);
+        return uint96(n);
+    }
+
+    function add96(uint96 a, uint96 b, string memory errorMessage) internal pure returns (uint96) {
+        uint96 c = a + b;
+        require(c >= a, errorMessage);
+        return c;
+    }
+
+    function sub96(uint96 a, uint96 b, string memory errorMessage) internal pure returns (uint96) {
+        require(b <= a, errorMessage);
+        return a - b;
+    }
+
+    function getChainId() internal pure returns (uint) {
+        uint256 chainId;
+        assembly { chainId := chainid() }
+        return chainId;
     }
 }
 
@@ -3199,7 +3686,7 @@ contract BAI is LibNote {
     }
 }
 
-// File: contracts/BAIController.sol
+// File: contracts/Comptroller.sol
 
 pragma solidity ^0.5.16;
 
@@ -3210,391 +3697,675 @@ pragma solidity ^0.5.16;
 
 
 
-interface ComptrollerImplInterface {
-    function protocolPaused() external view returns (bool);
-    function mintedBAIs(address account) external view returns (uint);
-    function baiMintRate() external view returns (uint);
-    function btntexBAIRate() external view returns (uint);
-    function btntexAccrued(address account) external view returns(uint);
-    function getAssetsIn(address account) external view returns (BToken[] memory);
-    function oracle() external view returns (PriceOracle);
 
-    function distributeBAIMinterBtntex(address baiMinter) external;
-}
 
 /**
- * @title Btntex's BAI Comptroller Contract
+ * @title Btntex's Comptroller Contract
  * @author Btntex
  */
-contract BAIController is BAIControllerStorageG2, BAIControllerErrorReporter, Exponential {
+contract Comptroller is ComptrollerV4Storage, ComptrollerInterfaceG2, ComptrollerErrorReporter, ExponentialNoError {
+    /// @notice Emitted when an admin supports a market
+    event MarketListed(BToken bToken);
 
-    /// @notice Emitted when Comptroller is changed
-    event NewComptroller(ComptrollerInterface oldComptroller, ComptrollerInterface newComptroller);
+    /// @notice Emitted when an account enters a market
+    event MarketEntered(BToken bToken, address account);
 
-    /**
-     * @notice Event emitted when BAI is minted
-     */
-    event MintBAI(address minter, uint mintBAIAmount);
+    /// @notice Emitted when an account exits a market
+    event MarketExited(BToken bToken, address account);
 
-    /**
-     * @notice Event emitted when BAI is repaid
-     */
-    event RepayBAI(address payer, address borrower, uint repayBAIAmount);
+    /// @notice Emitted when close factor is changed by admin
+    event NewCloseFactor(uint oldCloseFactorMantissa, uint newCloseFactorMantissa);
+
+    /// @notice Emitted when a collateral factor is changed by admin
+    event NewCollateralFactor(BToken bToken, uint oldCollateralFactorMantissa, uint newCollateralFactorMantissa);
+
+    /// @notice Emitted when liquidation incentive is changed by admin
+    event NewLiquidationIncentive(uint oldLiquidationIncentiveMantissa, uint newLiquidationIncentiveMantissa);
+
+    /// @notice Emitted when price oracle is changed
+    event NewPriceOracle(PriceOracle oldPriceOracle, PriceOracle newPriceOracle);
+
+    /// @notice Emitted when BAI Vault info is changed
+    event NewBAIVaultInfo(address vault_, uint releaseStartBlock_, uint releaseInterval_);
+
+    /// @notice Emitted when pause guardian is changed
+    event NewPauseGuardian(address oldPauseGuardian, address newPauseGuardian);
+
+    /// @notice Emitted when an action is paused globally
+    event ActionPaused(string action, bool pauseState);
+
+    /// @notice Emitted when an action is paused on a market
+    event ActionPaused(BToken bToken, string action, bool pauseState);
+
+    /// @notice Emitted when Btntex BAI rate is changed
+    event NewBtntexBAIRate(uint oldBtntexBAIRate, uint newBtntexBAIRate);
+
+    /// @notice Emitted when Btntex BAI Vault rate is changed
+    event NewBtntexBAIVaultRate(uint oldBtntexBAIVaultRate, uint newBtntexBAIVaultRate);
+
+    /// @notice Emitted when a new Btntex speed is calculated for a market
+    event BtntexSpeedUpdated(BToken indexed bToken, uint newSpeed);
+
+    /// @notice Emitted when BTNT is distributed to a supplier
+    event DistributedSupplierBtntex(BToken indexed bToken, address indexed supplier, uint btntexDelta, uint btntexSupplyIndex);
+
+    /// @notice Emitted when BTNT is distributed to a borrower
+    event DistributedBorrowerBtntex(BToken indexed bToken, address indexed borrower, uint btntexDelta, uint btntexBorrowIndex);
+
+    /// @notice Emitted when BTNT is distributed to a BAI minter
+    event DistributedBAIMinterBtntex(address indexed baiMinter, uint btntexDelta, uint btntexBAIMintIndex);
+
+    /// @notice Emitted when BTNT is distributed to BAI Vault
+    event DistributedBAIVaultBtntex(uint amount);
+
+    /// @notice Emitted when BAIController is changed
+    event NewBAIController(BAIControllerInterface oldBAIController, BAIControllerInterface newBAIController);
+
+    /// @notice Emitted when BAI mint rate is changed by admin
+    event NewBAIMintRate(uint oldBAIMintRate, uint newBAIMintRate);
+
+    /// @notice Emitted when protocol state is changed by admin
+    event ActionProtocolPaused(bool state);
+
+    /// @notice Emitted when borrow cap for a bToken is changed
+    event NewBorrowCap(BToken indexed bToken, uint newBorrowCap);
+
+    /// @notice Emitted when borrow cap guardian is changed
+    event NewBorrowCapGuardian(address oldBorrowCapGuardian, address newBorrowCapGuardian);
+
+    /// @notice Emitted when treasury guardian is changed
+    event NewTreasuryGuardian(address oldTreasuryGuardian, address newTreasuryGuardian);
+
+    /// @notice Emitted when treasury address is changed
+    event NewTreasuryAddress(address oldTreasuryAddress, address newTreasuryAddress);
+
+    /// @notice Emitted when treasury percent is changed
+    event NewTreasuryPercent(uint oldTreasuryPercent, uint newTreasuryPercent);
 
     /// @notice The initial Btntex index for a market
     uint224 public constant btntexInitialIndex = 1e36;
 
-    /**
-     * @notice Event emitted when a borrow is liquidated
-     */
-    event LiquidateBAI(address liquidator, address borrower, uint repayAmount, address bTokenCollateral, uint seizeTokens);
+    // closeFactorMantissa must be strictly greater than this value
+    uint internal constant closeFactorMinMantissa = 0.05e18; // 0.05
 
-    /**
-     * @notice Emitted when treasury guardian is changed
-     */
-    event NewTreasuryGuardian(address oldTreasuryGuardian, address newTreasuryGuardian);
+    // closeFactorMantissa must not exceed this value
+    uint internal constant closeFactorMaxMantissa = 0.9e18; // 0.9
 
-    /**
-     * @notice Emitted when treasury address is changed
-     */
-    event NewTreasuryAddress(address oldTreasuryAddress, address newTreasuryAddress);
+    // No collateralFactorMantissa may exceed this value
+    uint internal constant collateralFactorMaxMantissa = 0.9e18; // 0.9
 
-    /**
-     * @notice Emitted when treasury percent is changed
-     */
-    event NewTreasuryPercent(uint oldTreasuryPercent, uint newTreasuryPercent);
-
-    /**
-     * @notice Event emitted when BAIs are minted and fee are transferred
-     */
-    event MintFee(address minter, uint feeAmount);
-
-    /*** Main Actions ***/
-    struct MintLocalVars {
-        Error err;
-        MathError mathErr;
-        uint mintAmount;
+    constructor() public {
+        admin = msg.sender;
     }
 
-    function mintBAI(uint mintBAIAmount) external nonReentrant returns (uint) {
-        if(address(comptroller) != address(0)) {
-            require(mintBAIAmount > 0, "mintBAIAmount cbtntt be zero");
+    modifier onlyProtocolAllowed {
+        require(!protocolPaused, "protocol is paused");
+        _;
+    }
 
-            require(!ComptrollerImplInterface(address(comptroller)).protocolPaused(), "protocol is paused");
+    modifier onlyAdmin() {
+        require(msg.sender == admin, "only admin can");
+        _;
+    }
 
-            MintLocalVars memory vars;
+    modifier onlyListedMarket(BToken bToken) {
+        require(markets[address(bToken)].isListed, "btntex market is not listed");
+        _;
+    }
 
-            address minter = msg.sender;
+    modifier validPauseState(bool state) {
+        require(msg.sender == pauseGuardian || msg.sender == admin, "only pause guardian and admin can");
+        require(msg.sender == admin || state == true, "only admin can unpause");
+        _;
+    }
 
-            // Keep the flywheel moving
-            updateBtntexBAIMintIndex();
-            ComptrollerImplInterface(address(comptroller)).distributeBAIMinterBtntex(minter);
+    /*** Assets You Are In ***/
 
-            uint oErr;
-            MathError mErr;
-            uint accountMintBAINew;
-            uint accountMintableBAI;
+    /**
+     * @notice Returns the assets an account has entered
+     * @param account The address of the account to pull assets for
+     * @return A dynamic list with the assets the account has entered
+     */
+    function getAssetsIn(address account) external view returns (BToken[] memory) {
+        return accountAssets[account];
+    }
 
-            (oErr, accountMintableBAI) = getMintableBAI(minter);
-            if (oErr != uint(Error.NO_ERROR)) {
-                return uint(Error.REJECTION);
-            }
+    /**
+     * @notice Returns whether the given account is entered in the given asset
+     * @param account The address of the account to check
+     * @param bToken The bToken to check
+     * @return True if the account is in the asset, otherwise false.
+     */
+    function checkMembership(address account, BToken bToken) external view returns (bool) {
+        return markets[address(bToken)].accountMembership[account];
+    }
 
-            // check that user have sufficient mintableBAI balance
-            if (mintBAIAmount > accountMintableBAI) {
-                return fail(Error.REJECTION, FailureInfo.BAI_MINT_REJECTION);
-            }
+    /**
+     * @notice Add assets to be included in account liquidity calculation
+     * @param bTokens The list of addresses of the bToken markets to be enabled
+     * @return Success indicator for whether each corresponding market was entered
+     */
+    function enterMarkets(address[] calldata bTokens) external returns (uint[] memory) {
+        uint len = bTokens.length;
 
-            (mErr, accountMintBAINew) = addUInt(ComptrollerImplInterface(address(comptroller)).mintedBAIs(minter), mintBAIAmount);
-            require(mErr == MathError.NO_ERROR, "BAI_MINT_AMOUNT_CALCULATION_FAILED");
-            uint error = comptroller.setMintedBAIOf(minter, accountMintBAINew);
-            if (error != 0 ) {
-                return error;
-            }
+        uint[] memory results = new uint[](len);
+        for (uint i = 0; i < len; i++) {
+            results[i] = uint(addToMarketInternal(BToken(bTokens[i]), msg.sender));
+        }
 
-            uint feeAmount;
-            uint remainedAmount;
-            vars.mintAmount = mintBAIAmount;
-            if (treasuryPercent != 0) {
-                (vars.mathErr, feeAmount) = mulUInt(vars.mintAmount, treasuryPercent);
-                if (vars.mathErr != MathError.NO_ERROR) {
-                    return failOpaque(Error.MATH_ERROR, FailureInfo.MINT_FEE_CALCULATION_FAILED, uint(vars.mathErr));
-                }
+        return results;
+    }
 
-                (vars.mathErr, feeAmount) = divUInt(feeAmount, 1e18);
-                if (vars.mathErr != MathError.NO_ERROR) {
-                    return failOpaque(Error.MATH_ERROR, FailureInfo.MINT_FEE_CALCULATION_FAILED, uint(vars.mathErr));
-                }
+    /**
+     * @notice Add the market to the borrower's "assets in" for liquidity calculations
+     * @param bToken The market to enter
+     * @param borrower The address of the account to modify
+     * @return Success indicator for whether the market was entered
+     */
+    function addToMarketInternal(BToken bToken, address borrower) internal returns (Error) {
+        Market storage marketToJoin = markets[address(bToken)];
 
-                (vars.mathErr, remainedAmount) = subUInt(vars.mintAmount, feeAmount);
-                if (vars.mathErr != MathError.NO_ERROR) {
-                    return failOpaque(Error.MATH_ERROR, FailureInfo.MINT_FEE_CALCULATION_FAILED, uint(vars.mathErr));
-                }
+        if (!marketToJoin.isListed) {
+            // market is not listed, cbtntot join
+            return Error.MARKET_NOT_LISTED;
+        }
 
-                BAI(getBAIAddress()).mint(treasuryAddress, feeAmount);
+        if (marketToJoin.accountMembership[borrower]) {
+            // already joined
+            return Error.NO_ERROR;
+        }
 
-                emit MintFee(minter, feeAmount);
-            } else {
-                remainedAmount = vars.mintAmount;
-            }
+        // survived the gauntlet, add to list
+        // NOTE: we store these somewhat redundantly as a significant optimization
+        //  this avoids having to iterate through the list for the most common use cases
+        //  that is, only when we need to perform liquidity checks
+        //  and not whenever we want to check if an account is in a particular market
+        marketToJoin.accountMembership[borrower] = true;
+        accountAssets[borrower].push(bToken);
 
-            BAI(getBAIAddress()).mint(minter, remainedAmount);
+        emit MarketEntered(bToken, borrower);
 
-            emit MintBAI(minter, remainedAmount);
+        return Error.NO_ERROR;
+    }
 
+    /**
+     * @notice Removes asset from sender's account liquidity calculation
+     * @dev Sender must not have an outstanding borrow balance in the asset,
+     *  or be providing necessary collateral for an outstanding borrow.
+     * @param bTokenAddress The address of the asset to be removed
+     * @return Whether or not the account successfully exited the market
+     */
+    function exitMarket(address bTokenAddress) external returns (uint) {
+        BToken bToken = BToken(bTokenAddress);
+        /* Get sender tokensHeld and amountOwed underlying from the bToken */
+        (uint oErr, uint tokensHeld, uint amountOwed, ) = bToken.getAccountSnapshot(msg.sender);
+        require(oErr == 0, "getAccountSnapshot failed"); // semi-opaque error code
+
+        /* Fail if the sender has a borrow balance */
+        if (amountOwed != 0) {
+            return fail(Error.NONZERO_BORROW_BALANCE, FailureInfo.EXIT_MARKET_BALANCE_OWED);
+        }
+
+        /* Fail if the sender is not permitted to redeem all of their tokens */
+        uint allowed = redeemAllowedInternal(bTokenAddress, msg.sender, tokensHeld);
+        if (allowed != 0) {
+            return failOpaque(Error.REJECTION, FailureInfo.EXIT_MARKET_REJECTION, allowed);
+        }
+
+        Market storage marketToExit = markets[address(bToken)];
+
+        /* Return true if the sender is not already ‘in’ the market */
+        if (!marketToExit.accountMembership[msg.sender]) {
             return uint(Error.NO_ERROR);
         }
+
+        /* Set bToken account membership to false */
+        delete marketToExit.accountMembership[msg.sender];
+
+        /* Delete bToken from the account’s list of assets */
+        // In order to delete bToken, copy last item in list to location of item to be removed, reduce length by 1
+        BToken[] storage userAssetList = accountAssets[msg.sender];
+        uint len = userAssetList.length;
+        uint i;
+        for (; i < len; i++) {
+            if (userAssetList[i] == bToken) {
+                userAssetList[i] = userAssetList[len - 1];
+                userAssetList.length--;
+                break;
+            }
+        }
+
+        // We *must* have found the asset in the list or our redundant data structure is broken
+        assert(i < len);
+
+        emit MarketExited(bToken, msg.sender);
+
+        return uint(Error.NO_ERROR);
+    }
+
+    /*** Policy Hooks ***/
+
+    /**
+     * @notice Checks if the account should be allowed to mint tokens in the given market
+     * @param bToken The market to verify the mint against
+     * @param minter The account which would get the minted tokens
+     * @param mintAmount The amount of underlying being supplied to the market in exchange for tokens
+     * @return 0 if the mint is allowed, otherwise a semi-opaque error code (See ErrorReporter.sol)
+     */
+    function mintAllowed(address bToken, address minter, uint mintAmount) external onlyProtocolAllowed returns (uint) {
+        // Pausing is a very serious situation - we revert to sound the alarms
+        require(!mintGuardianPaused[bToken], "mint is paused");
+
+        // Shh - currently unused
+        mintAmount;
+
+        if (!markets[bToken].isListed) {
+            return uint(Error.MARKET_NOT_LISTED);
+        }
+
+        // Keep the flywheel moving
+        updateBtntexSupplyIndex(bToken);
+        distributeSupplierBtntex(bToken, minter);
+
+        return uint(Error.NO_ERROR);
     }
 
     /**
-     * @notice Repay BAI
+     * @notice Validates mint and reverts on rejection. May emit logs.
+     * @param bToken Asset being minted
+     * @param minter The address minting the tokens
+     * @param actualMintAmount The amount of the underlying asset being minted
+     * @param mintTokens The number of tokens being minted
      */
-    function repayBAI(uint repayBAIAmount) external nonReentrant returns (uint, uint) {
-        if(address(comptroller) != address(0)) {
-            require(repayBAIAmount > 0, "repayBAIAmount cbtntt be zero");
+    function mintVerify(address bToken, address minter, uint actualMintAmount, uint mintTokens) external {
+        // Shh - currently unused
+        bToken;
+        minter;
+        actualMintAmount;
+        mintTokens;
+    }
 
-            require(!ComptrollerImplInterface(address(comptroller)).protocolPaused(), "protocol is paused");
+    /**
+     * @notice Checks if the account should be allowed to redeem tokens in the given market
+     * @param bToken The market to verify the redeem against
+     * @param redeemer The account which would redeem the tokens
+     * @param redeemTokens The number of bTokens to exchange for the underlying asset in the market
+     * @return 0 if the redeem is allowed, otherwise a semi-opaque error code (See ErrorReporter.sol)
+     */
+    function redeemAllowed(address bToken, address redeemer, uint redeemTokens) external onlyProtocolAllowed returns (uint) {
+        uint allowed = redeemAllowedInternal(bToken, redeemer, redeemTokens);
+        if (allowed != uint(Error.NO_ERROR)) {
+            return allowed;
+        }
 
-            address payer = msg.sender;
+        // Keep the flywheel moving
+        updateBtntexSupplyIndex(bToken);
+        distributeSupplierBtntex(bToken, redeemer);
 
-            updateBtntexBAIMintIndex();
-            ComptrollerImplInterface(address(comptroller)).distributeBAIMinterBtntex(payer);
+        return uint(Error.NO_ERROR);
+    }
 
-            return repayBAIFresh(msg.sender, msg.sender, repayBAIAmount);
+    function redeemAllowedInternal(address bToken, address redeemer, uint redeemTokens) internal view returns (uint) {
+        if (!markets[bToken].isListed) {
+            return uint(Error.MARKET_NOT_LISTED);
+        }
+
+        /* If the redeemer is not 'in' the market, then we can bypass the liquidity check */
+        if (!markets[bToken].accountMembership[redeemer]) {
+            return uint(Error.NO_ERROR);
+        }
+
+        /* Otherwise, perform a hypothetical liquidity check to guard against shortfall */
+        (Error err, , uint shortfall) = getHypotheticalAccountLiquidityInternal(redeemer, BToken(bToken), redeemTokens, 0);
+        if (err != Error.NO_ERROR) {
+            return uint(err);
+        }
+        if (shortfall != 0) {
+            return uint(Error.INSUFFICIENT_LIQUIDITY);
+        }
+
+        return uint(Error.NO_ERROR);
+    }
+
+    /**
+     * @notice Validates redeem and reverts on rejection. May emit logs.
+     * @param bToken Asset being redeemed
+     * @param redeemer The address redeeming the tokens
+     * @param redeemAmount The amount of the underlying asset being redeemed
+     * @param redeemTokens The number of tokens being redeemed
+     */
+    function redeemVerify(address bToken, address redeemer, uint redeemAmount, uint redeemTokens) external {
+        // Shh - currently unused
+        bToken;
+        redeemer;
+
+        // Require tokens is zero or amount is also zero
+        require(redeemTokens != 0 || redeemAmount == 0, "redeemTokens zero");
+    }
+
+    /**
+     * @notice Checks if the account should be allowed to borrow the underlying asset of the given market
+     * @param bToken The market to verify the borrow against
+     * @param borrower The account which would borrow the asset
+     * @param borrowAmount The amount of underlying the account would borrow
+     * @return 0 if the borrow is allowed, otherwise a semi-opaque error code (See ErrorReporter.sol)
+     */
+    function borrowAllowed(address bToken, address borrower, uint borrowAmount) external onlyProtocolAllowed returns (uint) {
+        // Pausing is a very serious situation - we revert to sound the alarms
+        require(!borrowGuardianPaused[bToken], "borrow is paused");
+
+        if (!markets[bToken].isListed) {
+            return uint(Error.MARKET_NOT_LISTED);
+        }
+
+        if (!markets[bToken].accountMembership[borrower]) {
+            // only bTokens may call borrowAllowed if borrower not in market
+            require(msg.sender == bToken, "sender must be bToken");
+
+            // attempt to add borrower to the market
+            Error err = addToMarketInternal(BToken(bToken), borrower);
+            if (err != Error.NO_ERROR) {
+                return uint(err);
+            }
+        }
+
+        if (oracle.getUnderlyingPrice(BToken(bToken)) == 0) {
+            return uint(Error.PRICE_ERROR);
+        }
+
+        uint borrowCap = borrowCaps[bToken];
+        // Borrow cap of 0 corresponds to unlimited borrowing
+        if (borrowCap != 0) {
+            uint totalBorrows = BToken(bToken).totalBorrows();
+            uint nextTotalBorrows = add_(totalBorrows, borrowAmount);
+            require(nextTotalBorrows < borrowCap, "market borrow cap reached");
+        }
+
+        (Error err, , uint shortfall) = getHypotheticalAccountLiquidityInternal(borrower, BToken(bToken), 0, borrowAmount);
+        if (err != Error.NO_ERROR) {
+            return uint(err);
+        }
+        if (shortfall != 0) {
+            return uint(Error.INSUFFICIENT_LIQUIDITY);
+        }
+
+        // Keep the flywheel moving
+        Exp memory borrowIndex = Exp({mantissa: BToken(bToken).borrowIndex()});
+        updateBtntexBorrowIndex(bToken, borrowIndex);
+        distributeBorrowerBtntex(bToken, borrower, borrowIndex);
+
+        return uint(Error.NO_ERROR);
+    }
+
+    /**
+     * @notice Validates borrow and reverts on rejection. May emit logs.
+     * @param bToken Asset whose underlying is being borrowed
+     * @param borrower The address borrowing the underlying
+     * @param borrowAmount The amount of the underlying asset requested to borrow
+     */
+    function borrowVerify(address bToken, address borrower, uint borrowAmount) external {
+        // Shh - currently unused
+        bToken;
+        borrower;
+        borrowAmount;
+
+        // Shh - we don't ever want this hook to be marked pure
+        if (false) {
+            maxAssets = maxAssets;
         }
     }
 
     /**
-     * @notice Repay BAI Internal
-     * @notice Borrowed BAIs are repaid by another user (possibly the borrower).
-     * @param payer the account paying off the BAI
-     * @param borrower the account with the debt being payed off
-     * @param repayAmount the amount of BAI being returned
-     * @return (uint, uint) An error code (0=success, otherwise a failure, see ErrorReporter.sol), and the actual repayment amount.
+     * @notice Checks if the account should be allowed to repay a borrow in the given market
+     * @param bToken The market to verify the repay against
+     * @param payer The account which would repay the asset
+     * @param borrower The account which would repay the asset
+     * @param repayAmount The amount of the underlying asset the account would repay
+     * @return 0 if the repay is allowed, otherwise a semi-opaque error code (See ErrorReporter.sol)
      */
-    function repayBAIFresh(address payer, address borrower, uint repayAmount) internal returns (uint, uint) {
-        uint actualBurnAmount;
+    function repayBorrowAllowed(
+        address bToken,
+        address payer,
+        address borrower,
+        uint repayAmount) external onlyProtocolAllowed returns (uint) {
+        // Shh - currently unused
+        payer;
+        borrower;
+        repayAmount;
 
-        uint baiBalanceBorrower = ComptrollerImplInterface(address(comptroller)).mintedBAIs(borrower);
+        if (!markets[bToken].isListed) {
+            return uint(Error.MARKET_NOT_LISTED);
+        }
 
-        if(baiBalanceBorrower > repayAmount) {
-            actualBurnAmount = repayAmount;
+        // Keep the flywheel moving
+        Exp memory borrowIndex = Exp({mantissa: BToken(bToken).borrowIndex()});
+        updateBtntexBorrowIndex(bToken, borrowIndex);
+        distributeBorrowerBtntex(bToken, borrower, borrowIndex);
+
+        return uint(Error.NO_ERROR);
+    }
+
+    /**
+     * @notice Validates repayBorrow and reverts on rejection. May emit logs.
+     * @param bToken Asset being repaid
+     * @param payer The address repaying the borrow
+     * @param borrower The address of the borrower
+     * @param actualRepayAmount The amount of underlying being repaid
+     */
+    function repayBorrowVerify(
+        address bToken,
+        address payer,
+        address borrower,
+        uint actualRepayAmount,
+        uint borrowerIndex) external {
+        // Shh - currently unused
+        bToken;
+        payer;
+        borrower;
+        actualRepayAmount;
+        borrowerIndex;
+
+        // Shh - we don't ever want this hook to be marked pure
+        if (false) {
+            maxAssets = maxAssets;
+        }
+    }
+
+    /**
+     * @notice Checks if the liquidation should be allowed to occur
+     * @param bTokenBorrowed Asset which was borrowed by the borrower
+     * @param bTokenCollateral Asset which was used as collateral and will be seized
+     * @param liquidator The address repaying the borrow and seizing the collateral
+     * @param borrower The address of the borrower
+     * @param repayAmount The amount of underlying being repaid
+     */
+    function liquidateBorrowAllowed(
+        address bTokenBorrowed,
+        address bTokenCollateral,
+        address liquidator,
+        address borrower,
+        uint repayAmount) external onlyProtocolAllowed returns (uint) {
+        // Shh - currently unused
+        liquidator;
+
+        if (!(markets[bTokenBorrowed].isListed || address(bTokenBorrowed) == address(baiController)) || !markets[bTokenCollateral].isListed) {
+            return uint(Error.MARKET_NOT_LISTED);
+        }
+
+        /* The borrower must have shortfall in order to be liquidatable */
+        (Error err, , uint shortfall) = getHypotheticalAccountLiquidityInternal(borrower, BToken(0), 0, 0);
+        if (err != Error.NO_ERROR) {
+            return uint(err);
+        }
+        if (shortfall == 0) {
+            return uint(Error.INSUFFICIENT_SHORTFALL);
+        }
+
+        /* The liquidator may not repay more than what is allowed by the closeFactor */
+        uint borrowBalance;
+        if (address(bTokenBorrowed) != address(baiController)) {
+            borrowBalance = BToken(bTokenBorrowed).borrowBalanceStored(borrower);
         } else {
-            actualBurnAmount = baiBalanceBorrower;
+            borrowBalance = mintedBAIs[borrower];
         }
 
-        MathError mErr;
-        uint accountBAINew;
-
-        BAI(getBAIAddress()).burn(payer, actualBurnAmount);
-
-        (mErr, accountBAINew) = subUInt(baiBalanceBorrower, actualBurnAmount);
-        require(mErr == MathError.NO_ERROR, "BAI_BURN_AMOUNT_CALCULATION_FAILED");
-
-        uint error = comptroller.setMintedBAIOf(borrower, accountBAINew);
-        if (error != 0) {
-            return (error, 0);
-        }
-        emit RepayBAI(payer, borrower, actualBurnAmount);
-
-        return (uint(Error.NO_ERROR), actualBurnAmount);
-    }
-
-    /**
-     * @notice The sender liquidates the bai minters collateral.
-     *  The collateral seized is transferred to the liquidator.
-     * @param borrower The borrower of bai to be liquidated
-     * @param bTokenCollateral The market in which to seize collateral from the borrower
-     * @param repayAmount The amount of the underlying borrowed asset to repay
-     * @return (uint, uint) An error code (0=success, otherwise a failure, see ErrorReporter.sol), and the actual repayment amount.
-     */
-    function liquidateBAI(address borrower, uint repayAmount, BTokenInterface bTokenCollateral) external nonReentrant returns (uint, uint) {
-        require(!ComptrollerImplInterface(address(comptroller)).protocolPaused(), "protocol is paused");
-
-        uint error = bTokenCollateral.accrueInterest();
-        if (error != uint(Error.NO_ERROR)) {
-            // accrueInterest emits logs on errors, but we still want to log the fact that an attempted liquidation failed
-            return (fail(Error(error), FailureInfo.BAI_LIQUIDATE_ACCRUE_COLLATERAL_INTEREST_FAILED), 0);
-        }
-
-        // liquidateBAIFresh emits borrow-specific logs on errors, so we don't need to
-        return liquidateBAIFresh(msg.sender, borrower, repayAmount, bTokenCollateral);
-    }
-
-    /**
-     * @notice The liquidator liquidates the borrowers collateral by repay borrowers BAI.
-     *  The collateral seized is transferred to the liquidator.
-     * @param liquidator The address repaying the BAI and seizing collateral
-     * @param borrower The borrower of this BAI to be liquidated
-     * @param bTokenCollateral The market in which to seize collateral from the borrower
-     * @param repayAmount The amount of the BAI to repay
-     * @return (uint, uint) An error code (0=success, otherwise a failure, see ErrorReporter.sol), and the actual repayment BAI.
-     */
-    function liquidateBAIFresh(address liquidator, address borrower, uint repayAmount, BTokenInterface bTokenCollateral) internal returns (uint, uint) {
-        if(address(comptroller) != address(0)) {
-            /* Fail if liquidate not allowed */
-            uint allowed = comptroller.liquidateBorrowAllowed(address(this), address(bTokenCollateral), liquidator, borrower, repayAmount);
-            if (allowed != 0) {
-                return (failOpaque(Error.REJECTION, FailureInfo.BAI_LIQUIDATE_COMPTROLLER_REJECTION, allowed), 0);
-            }
-
-            /* Verify bTokenCollateral market's block number equals current block number */
-            //if (bTokenCollateral.accrualBlockNumber() != accrualBlockNumber) {
-            if (bTokenCollateral.accrualBlockNumber() != getBlockNumber()) {
-                return (fail(Error.REJECTION, FailureInfo.BAI_LIQUIDATE_COLLATERAL_FRESHNESS_CHECK), 0);
-            }
-
-            /* Fail if borrower = liquidator */
-            if (borrower == liquidator) {
-                return (fail(Error.REJECTION, FailureInfo.BAI_LIQUIDATE_LIQUIDATOR_IS_BORROWER), 0);
-            }
-
-            /* Fail if repayAmount = 0 */
-            if (repayAmount == 0) {
-                return (fail(Error.REJECTION, FailureInfo.BAI_LIQUIDATE_CLOSE_AMOUNT_IS_ZERO), 0);
-            }
-
-            /* Fail if repayAmount = -1 */
-            if (repayAmount == uint(-1)) {
-                return (fail(Error.REJECTION, FailureInfo.BAI_LIQUIDATE_CLOSE_AMOUNT_IS_UINT_MAX), 0);
-            }
-
-
-            /* Fail if repayBAI fails */
-            (uint repayBorrowError, uint actualRepayAmount) = repayBAIFresh(liquidator, borrower, repayAmount);
-            if (repayBorrowError != uint(Error.NO_ERROR)) {
-                return (fail(Error(repayBorrowError), FailureInfo.BAI_LIQUIDATE_REPAY_BORROW_FRESH_FAILED), 0);
-            }
-
-            /////////////////////////
-            // EFFECTS & INTERACTIONS
-            // (No safe failures beyond this point)
-
-            /* We calculate the number of collateral tokens that will be seized */
-            (uint amountSeizeError, uint seizeTokens) = comptroller.liquidateBAICalculateSeizeTokens(address(bTokenCollateral), actualRepayAmount);
-            require(amountSeizeError == uint(Error.NO_ERROR), "BAI_LIQUIDATE_COMPTROLLER_CALCULATE_AMOUNT_SEIZE_FAILED");
-
-            /* Revert if borrower collateral token balance < seizeTokens */
-            require(bTokenCollateral.balanceOf(borrower) >= seizeTokens, "BAI_LIQUIDATE_SEIZE_TOO_MUCH");
-
-            uint seizeError;
-            seizeError = bTokenCollateral.seize(liquidator, borrower, seizeTokens);
-
-            /* Revert if seize tokens fails (since we cbtntot be sure of side effects) */
-            require(seizeError == uint(Error.NO_ERROR), "token seizure failed");
-
-            /* We emit a LiquidateBorrow event */
-            emit LiquidateBAI(liquidator, borrower, actualRepayAmount, address(bTokenCollateral), seizeTokens);
-
-            /* We call the defense hook */
-            comptroller.liquidateBorrowVerify(address(this), address(bTokenCollateral), liquidator, borrower, actualRepayAmount, seizeTokens);
-
-            return (uint(Error.NO_ERROR), actualRepayAmount);
-        }
-    }
-
-    /**
-     * @notice Initialize the BtntexBAIState
-     */
-    function _initializeBtntexBAIState(uint blockNumber) external returns (uint) {
-        // Check caller is admin
-        if (msg.sender != admin) {
-            return fail(Error.UNAUTHORIZED, FailureInfo.SET_COMPTROLLER_OWNER_CHECK);
-        }
-
-        if (isBtntexBAIInitialized == false) {
-            isBtntexBAIInitialized = true;
-            uint baiBlockNumber = blockNumber == 0 ? getBlockNumber() : blockNumber;
-            btntexBAIState = BtntexBAIState({
-                index: btntexInitialIndex,
-                block: safe32(baiBlockNumber, "block number overflows")
-            });
+        uint maxClose = mul_ScalarTruncate(Exp({mantissa: closeFactorMantissa}), borrowBalance);
+        if (repayAmount > maxClose) {
+            return uint(Error.TOO_MUCH_REPAY);
         }
 
         return uint(Error.NO_ERROR);
     }
 
     /**
-     * @notice Accrue BTNT to by updating the BAI minter index
+     * @notice Validates liquidateBorrow and reverts on rejection. May emit logs.
+     * @param bTokenBorrowed Asset which was borrowed by the borrower
+     * @param bTokenCollateral Asset which was used as collateral and will be seized
+     * @param liquidator The address repaying the borrow and seizing the collateral
+     * @param borrower The address of the borrower
+     * @param actualRepayAmount The amount of underlying being repaid
      */
-    function updateBtntexBAIMintIndex() public returns (uint) {
-        uint baiMinterSpeed = ComptrollerImplInterface(address(comptroller)).btntexBAIRate();
-        uint blockNumber = getBlockNumber();
-        uint deltaBlocks = sub_(blockNumber, uint(btntexBAIState.block));
-        if (deltaBlocks > 0 && baiMinterSpeed > 0) {
-            uint baiAmount = BAI(getBAIAddress()).totalSupply();
-            uint btntexAccrued = mul_(deltaBlocks, baiMinterSpeed);
-            Double memory ratio = baiAmount > 0 ? fraction(btntexAccrued, baiAmount) : Double({mantissa: 0});
-            Double memory index = add_(Double({mantissa: btntexBAIState.index}), ratio);
-            btntexBAIState = BtntexBAIState({
-                index: safe224(index.mantissa, "new index overflows"),
-                block: safe32(blockNumber, "block number overflows")
-            });
-        } else if (deltaBlocks > 0) {
-            btntexBAIState.block = safe32(blockNumber, "block number overflows");
+    function liquidateBorrowVerify(
+        address bTokenBorrowed,
+        address bTokenCollateral,
+        address liquidator,
+        address borrower,
+        uint actualRepayAmount,
+        uint seizeTokens) external {
+        // Shh - currently unused
+        bTokenBorrowed;
+        bTokenCollateral;
+        liquidator;
+        borrower;
+        actualRepayAmount;
+        seizeTokens;
+
+        // Shh - we don't ever want this hook to be marked pure
+        if (false) {
+            maxAssets = maxAssets;
         }
+    }
+
+    /**
+     * @notice Checks if the seizing of assets should be allowed to occur
+     * @param bTokenCollateral Asset which was used as collateral and will be seized
+     * @param bTokenBorrowed Asset which was borrowed by the borrower
+     * @param liquidator The address repaying the borrow and seizing the collateral
+     * @param borrower The address of the borrower
+     * @param seizeTokens The number of collateral tokens to seize
+     */
+    function seizeAllowed(
+        address bTokenCollateral,
+        address bTokenBorrowed,
+        address liquidator,
+        address borrower,
+        uint seizeTokens) external onlyProtocolAllowed returns (uint) {
+        // Pausing is a very serious situation - we revert to sound the alarms
+        require(!seizeGuardianPaused, "seize is paused");
+
+        // Shh - currently unused
+        seizeTokens;
+
+        // We've added BAIController as a borrowed token list check for seize
+        if (!markets[bTokenCollateral].isListed || !(markets[bTokenBorrowed].isListed || address(bTokenBorrowed) == address(baiController))) {
+            return uint(Error.MARKET_NOT_LISTED);
+        }
+
+        if (BToken(bTokenCollateral).comptroller() != BToken(bTokenBorrowed).comptroller()) {
+            return uint(Error.COMPTROLLER_MISMATCH);
+        }
+
+        // Keep the flywheel moving
+        updateBtntexSupplyIndex(bTokenCollateral);
+        distributeSupplierBtntex(bTokenCollateral, borrower);
+        distributeSupplierBtntex(bTokenCollateral, liquidator);
 
         return uint(Error.NO_ERROR);
     }
 
     /**
-     * @notice Calculate BTNT accrued by a BAI minter
-     * @param baiMinter The address of the BAI minter to distribute BTNT to
+     * @notice Validates seize and reverts on rejection. May emit logs.
+     * @param bTokenCollateral Asset which was used as collateral and will be seized
+     * @param bTokenBorrowed Asset which was borrowed by the borrower
+     * @param liquidator The address repaying the borrow and seizing the collateral
+     * @param borrower The address of the borrower
+     * @param seizeTokens The number of collateral tokens to seize
      */
-    function calcDistributeBAIMinterBtntex(address baiMinter) public returns(uint, uint, uint, uint) {
-        // Check caller is comptroller
-        if (msg.sender != address(comptroller)) {
-            return (fail(Error.UNAUTHORIZED, FailureInfo.SET_COMPTROLLER_OWNER_CHECK), 0, 0, 0);
+    function seizeVerify(
+        address bTokenCollateral,
+        address bTokenBorrowed,
+        address liquidator,
+        address borrower,
+        uint seizeTokens) external {
+        // Shh - currently unused
+        bTokenCollateral;
+        bTokenBorrowed;
+        liquidator;
+        borrower;
+        seizeTokens;
+
+        // Shh - we don't ever want this hook to be marked pure
+        if (false) {
+            maxAssets = maxAssets;
         }
-
-        Double memory baiMintIndex = Double({mantissa: btntexBAIState.index});
-        Double memory baiMinterIndex = Double({mantissa: btntexBAIMinterIndex[baiMinter]});
-        btntexBAIMinterIndex[baiMinter] = baiMintIndex.mantissa;
-
-        if (baiMinterIndex.mantissa == 0 && baiMintIndex.mantissa > 0) {
-            baiMinterIndex.mantissa = btntexInitialIndex;
-        }
-
-        Double memory deltaIndex = sub_(baiMintIndex, baiMinterIndex);
-        uint baiMinterAmount = ComptrollerImplInterface(address(comptroller)).mintedBAIs(baiMinter);
-        uint baiMinterDelta = mul_(baiMinterAmount, deltaIndex);
-        uint baiMinterAccrued = add_(ComptrollerImplInterface(address(comptroller)).btntexAccrued(baiMinter), baiMinterDelta);
-        return (uint(Error.NO_ERROR), baiMinterAccrued, baiMinterDelta, baiMintIndex.mantissa);
     }
 
-    /*** Admin Functions ***/
-
     /**
-      * @notice Sets a new comptroller
-      * @dev Admin function to set a new comptroller
-      * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
-      */
-    function _setComptroller(ComptrollerInterface comptroller_) external returns (uint) {
-        // Check caller is admin
-        if (msg.sender != admin) {
-            return fail(Error.UNAUTHORIZED, FailureInfo.SET_COMPTROLLER_OWNER_CHECK);
+     * @notice Checks if the account should be allowed to transfer tokens in the given market
+     * @param bToken The market to verify the transfer against
+     * @param src The account which sources the tokens
+     * @param dst The account which receives the tokens
+     * @param transferTokens The number of bTokens to transfer
+     * @return 0 if the transfer is allowed, otherwise a semi-opaque error code (See ErrorReporter.sol)
+     */
+    function transferAllowed(address bToken, address src, address dst, uint transferTokens) external onlyProtocolAllowed returns (uint) {
+        // Pausing is a very serious situation - we revert to sound the alarms
+        require(!transferGuardianPaused, "transfer is paused");
+
+        // Currently the only consideration is whether or not
+        //  the src is allowed to redeem this many tokens
+        uint allowed = redeemAllowedInternal(bToken, src, transferTokens);
+        if (allowed != uint(Error.NO_ERROR)) {
+            return allowed;
         }
 
-        ComptrollerInterface oldComptroller = comptroller;
-        comptroller = comptroller_;
-        emit NewComptroller(oldComptroller, comptroller_);
+        // Keep the flywheel moving
+        updateBtntexSupplyIndex(bToken);
+        distributeSupplierBtntex(bToken, src);
+        distributeSupplierBtntex(bToken, dst);
 
         return uint(Error.NO_ERROR);
     }
 
-    function _become(BAIUnitroller unitroller) external {
-        require(msg.sender == unitroller.admin(), "only unitroller admin can change brains");
-        require(unitroller._acceptImplementation() == 0, "change not authorized");
+    /**
+     * @notice Validates transfer and reverts on rejection. May emit logs.
+     * @param bToken Asset being transferred
+     * @param src The account which sources the tokens
+     * @param dst The account which receives the tokens
+     * @param transferTokens The number of bTokens to transfer
+     */
+    function transferVerify(address bToken, address src, address dst, uint transferTokens) external {
+        // Shh - currently unused
+        bToken;
+        src;
+        dst;
+        transferTokens;
+
+        // Shh - we don't ever want this hook to be marked pure
+        if (false) {
+            maxAssets = maxAssets;
+        }
     }
 
+    /*** Liquidity/Liquidation Calculations ***/
+
     /**
-     * @dev Local vars for avoiding stack-depth limits in calculating account total supply balance.
+     * @dev Local vars for avoiding stack-depth limits in calculating account liquidity.
      *  Note that `bTokenBalance` is the number of bTokens the account owns in the market,
      *  whereas `borrowBalance` is the amount of underlying that the account has borrowed.
      */
-    struct AccountAmountLocalVars {
-        uint totalSupplyAmount;
-        uint sumSupply;
+    struct AccountLiquidityLocalVars {
+        uint sumCollateral;
         uint sumBorrowPlusEffects;
         uint bTokenBalance;
         uint borrowBalance;
@@ -3606,72 +4377,417 @@ contract BAIController is BAIControllerStorageG2, BAIControllerErrorReporter, Ex
         Exp tokensToDenom;
     }
 
-    function getMintableBAI(address minter) public view returns (uint, uint) {
-        PriceOracle oracle = ComptrollerImplInterface(address(comptroller)).oracle();
-        BToken[] memory enteredMarkets = ComptrollerImplInterface(address(comptroller)).getAssetsIn(minter);
+    /**
+     * @notice Determine the current account liquidity wrt collateral requirements
+     * @return (possible error code (semi-opaque),
+                account liquidity in excess of collateral requirements,
+     *          account shortfall below collateral requirements)
+     */
+    function getAccountLiquidity(address account) public view returns (uint, uint, uint) {
+        (Error err, uint liquidity, uint shortfall) = getHypotheticalAccountLiquidityInternal(account, BToken(0), 0, 0);
 
-        AccountAmountLocalVars memory vars; // Holds all our calculation results
+        return (uint(err), liquidity, shortfall);
+    }
 
+    /**
+     * @notice Determine what the account liquidity would be if the given amounts were redeemed/borrowed
+     * @param bTokenModify The market to hypothetically redeem/borrow in
+     * @param account The account to determine liquidity for
+     * @param redeemTokens The number of tokens to hypothetically redeem
+     * @param borrowAmount The amount of underlying to hypothetically borrow
+     * @return (possible error code (semi-opaque),
+                hypothetical account liquidity in excess of collateral requirements,
+     *          hypothetical account shortfall below collateral requirements)
+     */
+    function getHypotheticalAccountLiquidity(
+        address account,
+        address bTokenModify,
+        uint redeemTokens,
+        uint borrowAmount) public view returns (uint, uint, uint) {
+        (Error err, uint liquidity, uint shortfall) = getHypotheticalAccountLiquidityInternal(account, BToken(bTokenModify), redeemTokens, borrowAmount);
+        return (uint(err), liquidity, shortfall);
+    }
+
+    /**
+     * @notice Determine what the account liquidity would be if the given amounts were redeemed/borrowed
+     * @param bTokenModify The market to hypothetically redeem/borrow in
+     * @param account The account to determine liquidity for
+     * @param redeemTokens The number of tokens to hypothetically redeem
+     * @param borrowAmount The amount of underlying to hypothetically borrow
+     * @dev Note that we calculate the exchangeRateStored for each collateral bToken using stored data,
+     *  without calculating accumulated interest.
+     * @return (possible error code,
+                hypothetical account liquidity in excess of collateral requirements,
+     *          hypothetical account shortfall below collateral requirements)
+     */
+    function getHypotheticalAccountLiquidityInternal(
+        address account,
+        BToken bTokenModify,
+        uint redeemTokens,
+        uint borrowAmount) internal view returns (Error, uint, uint) {
+
+        AccountLiquidityLocalVars memory vars; // Holds all our calculation results
         uint oErr;
-        MathError mErr;
 
-        uint accountMintableBAI;
-        uint i;
+        // For each asset the account is in
+        BToken[] memory assets = accountAssets[account];
+        for (uint i = 0; i < assets.length; i++) {
+            BToken asset = assets[i];
 
-        /**
-         * We use this formula to calculate mintable BAI amount.
-         * totalSupplyAmount * BAIMintRate - (totalBorrowAmount + mintedBAIOf)
-         */
-        for (i = 0; i < enteredMarkets.length; i++) {
-            (oErr, vars.bTokenBalance, vars.borrowBalance, vars.exchangeRateMantissa) = enteredMarkets[i].getAccountSnapshot(minter);
+            // Read the balances and exchange rate from the bToken
+            (oErr, vars.bTokenBalance, vars.borrowBalance, vars.exchangeRateMantissa) = asset.getAccountSnapshot(account);
             if (oErr != 0) { // semi-opaque error code, we assume NO_ERROR == 0 is invariant between upgrades
-                return (uint(Error.SNAPSHOT_ERROR), 0);
+                return (Error.SNAPSHOT_ERROR, 0, 0);
             }
+            vars.collateralFactor = Exp({mantissa: markets[address(asset)].collateralFactorMantissa});
             vars.exchangeRate = Exp({mantissa: vars.exchangeRateMantissa});
 
             // Get the normalized price of the asset
-            vars.oraclePriceMantissa = oracle.getUnderlyingPrice(enteredMarkets[i]);
+            vars.oraclePriceMantissa = oracle.getUnderlyingPrice(asset);
             if (vars.oraclePriceMantissa == 0) {
-                return (uint(Error.PRICE_ERROR), 0);
+                return (Error.PRICE_ERROR, 0, 0);
             }
             vars.oraclePrice = Exp({mantissa: vars.oraclePriceMantissa});
 
-            (mErr, vars.tokensToDenom) = mulExp(vars.exchangeRate, vars.oraclePrice);
-            if (mErr != MathError.NO_ERROR) {
-                return (uint(Error.MATH_ERROR), 0);
-            }
+            // Pre-compute a conversion factor from tokens -> bnb (normalized price value)
+            vars.tokensToDenom = mul_(mul_(vars.collateralFactor, vars.exchangeRate), vars.oraclePrice);
 
-            // sumSupply += tokensToDenom * bTokenBalance
-            (mErr, vars.sumSupply) = mulScalarTruncateAddUInt(vars.tokensToDenom, vars.bTokenBalance, vars.sumSupply);
-            if (mErr != MathError.NO_ERROR) {
-                return (uint(Error.MATH_ERROR), 0);
-            }
+            // sumCollateral += tokensToDenom * bTokenBalance
+            vars.sumCollateral = mul_ScalarTruncateAddUInt(vars.tokensToDenom, vars.bTokenBalance, vars.sumCollateral);
 
             // sumBorrowPlusEffects += oraclePrice * borrowBalance
-            (mErr, vars.sumBorrowPlusEffects) = mulScalarTruncateAddUInt(vars.oraclePrice, vars.borrowBalance, vars.sumBorrowPlusEffects);
-            if (mErr != MathError.NO_ERROR) {
-                return (uint(Error.MATH_ERROR), 0);
+            vars.sumBorrowPlusEffects = mul_ScalarTruncateAddUInt(vars.oraclePrice, vars.borrowBalance, vars.sumBorrowPlusEffects);
+
+            // Calculate effects of interacting with bTokenModify
+            if (asset == bTokenModify) {
+                // redeem effect
+                // sumBorrowPlusEffects += tokensToDenom * redeemTokens
+                vars.sumBorrowPlusEffects = mul_ScalarTruncateAddUInt(vars.tokensToDenom, redeemTokens, vars.sumBorrowPlusEffects);
+
+                // borrow effect
+                // sumBorrowPlusEffects += oraclePrice * borrowAmount
+                vars.sumBorrowPlusEffects = mul_ScalarTruncateAddUInt(vars.oraclePrice, borrowAmount, vars.sumBorrowPlusEffects);
             }
         }
 
-        (mErr, vars.sumBorrowPlusEffects) = addUInt(vars.sumBorrowPlusEffects, ComptrollerImplInterface(address(comptroller)).mintedBAIs(minter));
-        if (mErr != MathError.NO_ERROR) {
-            return (uint(Error.MATH_ERROR), 0);
+        vars.sumBorrowPlusEffects = add_(vars.sumBorrowPlusEffects, mintedBAIs[account]);
+
+        // These are safe, as the underflow condition is checked first
+        if (vars.sumCollateral > vars.sumBorrowPlusEffects) {
+            return (Error.NO_ERROR, vars.sumCollateral - vars.sumBorrowPlusEffects, 0);
+        } else {
+            return (Error.NO_ERROR, 0, vars.sumBorrowPlusEffects - vars.sumCollateral);
+        }
+    }
+
+    /**
+     * @notice Calculate number of tokens of collateral asset to seize given an underlying amount
+     * @dev Used in liquidation (called in bToken.liquidateBorrowFresh)
+     * @param bTokenBorrowed The address of the borrowed bToken
+     * @param bTokenCollateral The address of the collateral bToken
+     * @param actualRepayAmount The amount of bTokenBorrowed underlying to convert into bTokenCollateral tokens
+     * @return (errorCode, number of bTokenCollateral tokens to be seized in a liquidation)
+     */
+    function liquidateCalculateSeizeTokens(address bTokenBorrowed, address bTokenCollateral, uint actualRepayAmount) external view returns (uint, uint) {
+        /* Read oracle prices for borrowed and collateral markets */
+        uint priceBorrowedMantissa = oracle.getUnderlyingPrice(BToken(bTokenBorrowed));
+        uint priceCollateralMantissa = oracle.getUnderlyingPrice(BToken(bTokenCollateral));
+        if (priceBorrowedMantissa == 0 || priceCollateralMantissa == 0) {
+            return (uint(Error.PRICE_ERROR), 0);
         }
 
-        (mErr, accountMintableBAI) = mulUInt(vars.sumSupply, ComptrollerImplInterface(address(comptroller)).baiMintRate());
-        require(mErr == MathError.NO_ERROR, "BAI_MINT_AMOUNT_CALCULATION_FAILED");
+        /*
+         * Get the exchange rate and calculate the number of collateral tokens to seize:
+         *  seizeAmount = actualRepayAmount * liquidationIncentive * priceBorrowed / priceCollateral
+         *  seizeTokens = seizeAmount / exchangeRate
+         *   = actualRepayAmount * (liquidationIncentive * priceBorrowed) / (priceCollateral * exchangeRate)
+         */
+        uint exchangeRateMantissa = BToken(bTokenCollateral).exchangeRateStored(); // Note: reverts on error
+        uint seizeTokens;
+        Exp memory numerator;
+        Exp memory denominator;
+        Exp memory ratio;
 
-        (mErr, accountMintableBAI) = divUInt(accountMintableBAI, 10000);
-        require(mErr == MathError.NO_ERROR, "BAI_MINT_AMOUNT_CALCULATION_FAILED");
+        numerator = mul_(Exp({mantissa: liquidationIncentiveMantissa}), Exp({mantissa: priceBorrowedMantissa}));
+        denominator = mul_(Exp({mantissa: priceCollateralMantissa}), Exp({mantissa: exchangeRateMantissa}));
+        ratio = div_(numerator, denominator);
 
+        seizeTokens = mul_ScalarTruncate(ratio, actualRepayAmount);
 
-        (mErr, accountMintableBAI) = subUInt(accountMintableBAI, vars.sumBorrowPlusEffects);
-        if (mErr != MathError.NO_ERROR) {
-            return (uint(Error.REJECTION), 0);
+        return (uint(Error.NO_ERROR), seizeTokens);
+    }
+
+    /**
+     * @notice Calculate number of tokens of collateral asset to seize given an underlying amount
+     * @dev Used in liquidation (called in bToken.liquidateBorrowFresh)
+     * @param bTokenCollateral The address of the collateral bToken
+     * @param actualRepayAmount The amount of bTokenBorrowed underlying to convert into bTokenCollateral tokens
+     * @return (errorCode, number of bTokenCollateral tokens to be seized in a liquidation)
+     */
+    function liquidateBAICalculateSeizeTokens(address bTokenCollateral, uint actualRepayAmount) external view returns (uint, uint) {
+        /* Read oracle prices for borrowed and collateral markets */
+        uint priceBorrowedMantissa = 1e18;  // Note: this is BAI
+        uint priceCollateralMantissa = oracle.getUnderlyingPrice(BToken(bTokenCollateral));
+        if (priceCollateralMantissa == 0) {
+            return (uint(Error.PRICE_ERROR), 0);
         }
 
-        return (uint(Error.NO_ERROR), accountMintableBAI);
+        /*
+         * Get the exchange rate and calculate the number of collateral tokens to seize:
+         *  seizeAmount = actualRepayAmount * liquidationIncentive * priceBorrowed / priceCollateral
+         *  seizeTokens = seizeAmount / exchangeRate
+         *   = actualRepayAmount * (liquidationIncentive * priceBorrowed) / (priceCollateral * exchangeRate)
+         */
+        uint exchangeRateMantissa = BToken(bTokenCollateral).exchangeRateStored(); // Note: reverts on error
+        uint seizeTokens;
+        Exp memory numerator;
+        Exp memory denominator;
+        Exp memory ratio;
+
+        numerator = mul_(Exp({mantissa: liquidationIncentiveMantissa}), Exp({mantissa: priceBorrowedMantissa}));
+        denominator = mul_(Exp({mantissa: priceCollateralMantissa}), Exp({mantissa: exchangeRateMantissa}));
+        ratio = div_(numerator, denominator);
+
+        seizeTokens = mul_ScalarTruncate(ratio, actualRepayAmount);
+
+        return (uint(Error.NO_ERROR), seizeTokens);
+    }
+
+    /*** Admin Functions ***/
+
+    /**
+      * @notice Sets a new price oracle for the comptroller
+      * @dev Admin function to set a new price oracle
+      * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
+      */
+    function _setPriceOracle(PriceOracle newOracle) public returns (uint) {
+        // Check caller is admin
+        if (msg.sender != admin) {
+            return fail(Error.UNAUTHORIZED, FailureInfo.SET_PRICE_ORACLE_OWNER_CHECK);
+        }
+
+        // Track the old oracle for the comptroller
+        PriceOracle oldOracle = oracle;
+
+        // Set comptroller's oracle to newOracle
+        oracle = newOracle;
+
+        // Emit NewPriceOracle(oldOracle, newOracle)
+        emit NewPriceOracle(oldOracle, newOracle);
+
+        return uint(Error.NO_ERROR);
+    }
+
+    /**
+      * @notice Sets the closeFactor used when liquidating borrows
+      * @dev Admin function to set closeFactor
+      * @param newCloseFactorMantissa New close factor, scaled by 1e18
+      * @return uint 0=success, otherwise a failure
+      */
+    function _setCloseFactor(uint newCloseFactorMantissa) external returns (uint) {
+        // Check caller is admin
+    	require(msg.sender == admin, "only admin can set close factor");
+
+        uint oldCloseFactorMantissa = closeFactorMantissa;
+        closeFactorMantissa = newCloseFactorMantissa;
+        emit NewCloseFactor(oldCloseFactorMantissa, newCloseFactorMantissa);
+
+        return uint(Error.NO_ERROR);
+    }
+
+    /**
+      * @notice Sets the collateralFactor for a market
+      * @dev Admin function to set per-market collateralFactor
+      * @param bToken The market to set the factor on
+      * @param newCollateralFactorMantissa The new collateral factor, scaled by 1e18
+      * @return uint 0=success, otherwise a failure. (See ErrorReporter for details)
+      */
+    function _setCollateralFactor(BToken bToken, uint newCollateralFactorMantissa) external returns (uint) {
+        // Check caller is admin
+        if (msg.sender != admin) {
+            return fail(Error.UNAUTHORIZED, FailureInfo.SET_COLLATERAL_FACTOR_OWNER_CHECK);
+        }
+
+        // Verify market is listed
+        Market storage market = markets[address(bToken)];
+        if (!market.isListed) {
+            return fail(Error.MARKET_NOT_LISTED, FailureInfo.SET_COLLATERAL_FACTOR_NO_EXISTS);
+        }
+
+        Exp memory newCollateralFactorExp = Exp({mantissa: newCollateralFactorMantissa});
+
+        // Check collateral factor <= 0.9
+        Exp memory highLimit = Exp({mantissa: collateralFactorMaxMantissa});
+        if (lessThanExp(highLimit, newCollateralFactorExp)) {
+            return fail(Error.INVALID_COLLATERAL_FACTOR, FailureInfo.SET_COLLATERAL_FACTOR_VALIDATION);
+        }
+
+        // If collateral factor != 0, fail if price == 0
+        if (newCollateralFactorMantissa != 0 && oracle.getUnderlyingPrice(bToken) == 0) {
+            return fail(Error.PRICE_ERROR, FailureInfo.SET_COLLATERAL_FACTOR_WITHOUT_PRICE);
+        }
+
+        // Set market's collateral factor to new collateral factor, remember old value
+        uint oldCollateralFactorMantissa = market.collateralFactorMantissa;
+        market.collateralFactorMantissa = newCollateralFactorMantissa;
+
+        // Emit event with asset, old collateral factor, and new collateral factor
+        emit NewCollateralFactor(bToken, oldCollateralFactorMantissa, newCollateralFactorMantissa);
+
+        return uint(Error.NO_ERROR);
+    }
+
+    /**
+      * @notice Sets liquidationIncentive
+      * @dev Admin function to set liquidationIncentive
+      * @param newLiquidationIncentiveMantissa New liquidationIncentive scaled by 1e18
+      * @return uint 0=success, otherwise a failure. (See ErrorReporter for details)
+      */
+    function _setLiquidationIncentive(uint newLiquidationIncentiveMantissa) external returns (uint) {
+        // Check caller is admin
+        if (msg.sender != admin) {
+            return fail(Error.UNAUTHORIZED, FailureInfo.SET_LIQUIDATION_INCENTIVE_OWNER_CHECK);
+        }
+
+        // Save current value for use in log
+        uint oldLiquidationIncentiveMantissa = liquidationIncentiveMantissa;
+
+        // Set liquidation incentive to new incentive
+        liquidationIncentiveMantissa = newLiquidationIncentiveMantissa;
+
+        // Emit event with old incentive, new incentive
+        emit NewLiquidationIncentive(oldLiquidationIncentiveMantissa, newLiquidationIncentiveMantissa);
+
+        return uint(Error.NO_ERROR);
+    }
+
+    /**
+      * @notice Add the market to the markets mapping and set it as listed
+      * @dev Admin function to set isListed and add support for the market
+      * @param bToken The address of the market (token) to list
+      * @return uint 0=success, otherwise a failure. (See enum Error for details)
+      */
+    function _supportMarket(BToken bToken) external returns (uint) {
+        if (msg.sender != admin) {
+            return fail(Error.UNAUTHORIZED, FailureInfo.SUPPORT_MARKET_OWNER_CHECK);
+        }
+
+        if (markets[address(bToken)].isListed) {
+            return fail(Error.MARKET_ALREADY_LISTED, FailureInfo.SUPPORT_MARKET_EXISTS);
+        }
+
+        bToken.isBToken(); // Sanity check to make sure its really a BToken
+
+        // Note that isBtntex is not in active use anymore
+        markets[address(bToken)] = Market({isListed: true, isBtntex: false, collateralFactorMantissa: 0});
+
+        _addMarketInternal(bToken);
+
+        emit MarketListed(bToken);
+
+        return uint(Error.NO_ERROR);
+    }
+
+    function _addMarketInternal(BToken bToken) internal {
+        for (uint i = 0; i < allMarkets.length; i ++) {
+            require(allMarkets[i] != bToken, "market already added");
+        }
+        allMarkets.push(bToken);
+    }
+
+    /**
+     * @notice Admin function to change the Pause Guardian
+     * @param newPauseGuardian The address of the new Pause Guardian
+     * @return uint 0=success, otherwise a failure. (See enum Error for details)
+     */
+    function _setPauseGuardian(address newPauseGuardian) public returns (uint) {
+        if (msg.sender != admin) {
+            return fail(Error.UNAUTHORIZED, FailureInfo.SET_PAUSE_GUARDIAN_OWNER_CHECK);
+        }
+
+        // Save current value for inclusion in log
+        address oldPauseGuardian = pauseGuardian;
+
+        // Store pauseGuardian with value newPauseGuardian
+        pauseGuardian = newPauseGuardian;
+
+        // Emit NewPauseGuardian(OldPauseGuardian, NewPauseGuardian)
+        emit NewPauseGuardian(oldPauseGuardian, newPauseGuardian);
+
+        return uint(Error.NO_ERROR);
+    }
+
+    /**
+      * @notice Set the given borrow caps for the given bToken markets. Borrowing that brings total borrows to or above borrow cap will revert.
+      * @dev Admin or borrowCapGuardian function to set the borrow caps. A borrow cap of 0 corresponds to unlimited borrowing.
+      * @param bTokens The addresses of the markets (tokens) to change the borrow caps for
+      * @param newBorrowCaps The new borrow cap values in underlying to be set. A value of 0 corresponds to unlimited borrowing.
+      */
+    function _setMarketBorrowCaps(BToken[] calldata bTokens, uint[] calldata newBorrowCaps) external {
+        require(msg.sender == admin || msg.sender == borrowCapGuardian, "only admin or borrow cap guardian can set borrow caps");
+
+        uint numMarkets = bTokens.length;
+        uint numBorrowCaps = newBorrowCaps.length;
+
+        require(numMarkets != 0 && numMarkets == numBorrowCaps, "invalid input");
+
+        for(uint i = 0; i < numMarkets; i++) {
+            borrowCaps[address(bTokens[i])] = newBorrowCaps[i];
+            emit NewBorrowCap(bTokens[i], newBorrowCaps[i]);
+        }
+    }
+
+    /**
+     * @notice Admin function to change the Borrow Cap Guardian
+     * @param newBorrowCapGuardian The address of the new Borrow Cap Guardian
+     */
+    function _setBorrowCapGuardian(address newBorrowCapGuardian) external onlyAdmin {
+        // Save current value for inclusion in log
+        address oldBorrowCapGuardian = borrowCapGuardian;
+
+        // Store borrowCapGuardian with value newBorrowCapGuardian
+        borrowCapGuardian = newBorrowCapGuardian;
+
+        // Emit NewBorrowCapGuardian(OldBorrowCapGuardian, NewBorrowCapGuardian)
+        emit NewBorrowCapGuardian(oldBorrowCapGuardian, newBorrowCapGuardian);
+    }
+
+    /**
+     * @notice Set whole protocol pause/unpause state
+     */
+    function _setProtocolPaused(bool state) public validPauseState(state) returns(bool) {
+        protocolPaused = state;
+        emit ActionProtocolPaused(state);
+        return state;
+    }
+
+    /**
+      * @notice Sets a new BAI controller
+      * @dev Admin function to set a new BAI controller
+      * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
+      */
+    function _setBAIController(BAIControllerInterface baiController_) external returns (uint) {
+        // Check caller is admin
+        if (msg.sender != admin) {
+            return fail(Error.UNAUTHORIZED, FailureInfo.SET_BAICONTROLLER_OWNER_CHECK);
+        }
+
+        BAIControllerInterface oldRate = baiController;
+        baiController = baiController_;
+        emit NewBAIController(oldRate, baiController_);
+    }
+
+    function _setBAIMintRate(uint newBAIMintRate) external returns (uint) {
+        // Check caller is admin
+        if (msg.sender != admin) {
+            return fail(Error.UNAUTHORIZED, FailureInfo.SET_BAI_MINT_RATE_CHECK);
+        }
+
+        uint oldBAIMintRate = baiMintRate;
+        baiMintRate = newBAIMintRate;
+        emit NewBAIMintRate(oldBAIMintRate, newBAIMintRate);
+
+        return uint(Error.NO_ERROR);
     }
 
     function _setTreasuryData(address newTreasuryGuardian, address newTreasuryAddress, uint newTreasuryPercent) external returns (uint) {
@@ -3697,37 +4813,371 @@ contract BAIController is BAIControllerStorageG2, BAIControllerErrorReporter, Ex
         return uint(Error.NO_ERROR);
     }
 
+    function _become(Unitroller unitroller) public {
+        require(msg.sender == unitroller.admin(), "only unitroller admin can");
+        require(unitroller._acceptImplementation() == 0, "not authorized");
+    }
+
+    /**
+     * @notice Checks caller is admin, or this contract is becoming the new implementation
+     */
+    function adminOrInitializing() internal view returns (bool) {
+        return msg.sender == admin || msg.sender == comptrollerImplementation;
+    }
+
+    /*** Btntex Distribution ***/
+
+    function setBtntexSpeedInternal(BToken bToken, uint btntexSpeed) internal {
+        uint currentBtntexSpeed = btntexSpeeds[address(bToken)];
+        if (currentBtntexSpeed != 0) {
+            // note that BTNT speed could be set to 0 to halt liquidity rewards for a market
+            Exp memory borrowIndex = Exp({mantissa: bToken.borrowIndex()});
+            updateBtntexSupplyIndex(address(bToken));
+            updateBtntexBorrowIndex(address(bToken), borrowIndex);
+        } else if (btntexSpeed != 0) {
+            // Add the BTNT market
+            Market storage market = markets[address(bToken)];
+            require(market.isListed == true, "btntex market is not listed");
+
+            if (btntexSupplyState[address(bToken)].index == 0 && btntexSupplyState[address(bToken)].block == 0) {
+                btntexSupplyState[address(bToken)] = BtntexMarketState({
+                    index: btntexInitialIndex,
+                    block: safe32(getBlockNumber(), "block number exceeds 32 bits")
+                });
+            }
+
+
+        if (btntexBorrowState[address(bToken)].index == 0 && btntexBorrowState[address(bToken)].block == 0) {
+                btntexBorrowState[address(bToken)] = BtntexMarketState({
+                    index: btntexInitialIndex,
+                    block: safe32(getBlockNumber(), "block number exceeds 32 bits")
+                });
+            }
+        }
+
+        if (currentBtntexSpeed != btntexSpeed) {
+            btntexSpeeds[address(bToken)] = btntexSpeed;
+            emit BtntexSpeedUpdated(bToken, btntexSpeed);
+        }
+    }
+
+    /**
+     * @notice Accrue BTNT to the market by updating the supply index
+     * @param bToken The market whose supply index to update
+     */
+    function updateBtntexSupplyIndex(address bToken) internal {
+        BtntexMarketState storage supplyState = btntexSupplyState[bToken];
+        uint supplySpeed = btntexSpeeds[bToken];
+        uint blockNumber = getBlockNumber();
+        uint deltaBlocks = sub_(blockNumber, uint(supplyState.block));
+        if (deltaBlocks > 0 && supplySpeed > 0) {
+            uint supplyTokens = BToken(bToken).totalSupply();
+            uint btntexAccrued = mul_(deltaBlocks, supplySpeed);
+            Double memory ratio = supplyTokens > 0 ? fraction(btntexAccrued, supplyTokens) : Double({mantissa: 0});
+            Double memory index = add_(Double({mantissa: supplyState.index}), ratio);
+            btntexSupplyState[bToken] = BtntexMarketState({
+                index: safe224(index.mantissa, "new index overflows"),
+                block: safe32(blockNumber, "block number overflows")
+            });
+        } else if (deltaBlocks > 0) {
+            supplyState.block = safe32(blockNumber, "block number overflows");
+        }
+    }
+
+    /**
+     * @notice Accrue BTNT to the market by updating the borrow index
+     * @param bToken The market whose borrow index to update
+     */
+    function updateBtntexBorrowIndex(address bToken, Exp memory marketBorrowIndex) internal {
+        BtntexMarketState storage borrowState = btntexBorrowState[bToken];
+        uint borrowSpeed = btntexSpeeds[bToken];
+        uint blockNumber = getBlockNumber();
+        uint deltaBlocks = sub_(blockNumber, uint(borrowState.block));
+        if (deltaBlocks > 0 && borrowSpeed > 0) {
+            uint borrowAmount = div_(BToken(bToken).totalBorrows(), marketBorrowIndex);
+            uint btntexAccrued = mul_(deltaBlocks, borrowSpeed);
+            Double memory ratio = borrowAmount > 0 ? fraction(btntexAccrued, borrowAmount) : Double({mantissa: 0});
+            Double memory index = add_(Double({mantissa: borrowState.index}), ratio);
+            btntexBorrowState[bToken] = BtntexMarketState({
+                index: safe224(index.mantissa, "new index overflows"),
+                block: safe32(blockNumber, "block number overflows")
+            });
+        } else if (deltaBlocks > 0) {
+            borrowState.block = safe32(blockNumber, "block number overflows");
+        }
+    }
+
+    /**
+     * @notice Calculate BTNT accrued by a supplier and possibly transfer it to them
+     * @param bToken The market in which the supplier is interacting
+     * @param supplier The address of the supplier to distribute BTNT to
+     */
+    function distributeSupplierBtntex(address bToken, address supplier) internal {
+        if (address(baiVaultAddress) != address(0)) {
+            releaseToVault();
+        }
+
+        BtntexMarketState storage supplyState = btntexSupplyState[bToken];
+        Double memory supplyIndex = Double({mantissa: supplyState.index});
+        Double memory supplierIndex = Double({mantissa: btntexSupplierIndex[bToken][supplier]});
+        btntexSupplierIndex[bToken][supplier] = supplyIndex.mantissa;
+
+        if (supplierIndex.mantissa == 0 && supplyIndex.mantissa > 0) {
+            supplierIndex.mantissa = btntexInitialIndex;
+        }
+
+        Double memory deltaIndex = sub_(supplyIndex, supplierIndex);
+        uint supplierTokens = BToken(bToken).balanceOf(supplier);
+        uint supplierDelta = mul_(supplierTokens, deltaIndex);
+        uint supplierAccrued = add_(btntexAccrued[supplier], supplierDelta);
+        btntexAccrued[supplier] = supplierAccrued;
+        emit DistributedSupplierBtntex(BToken(bToken), supplier, supplierDelta, supplyIndex.mantissa);
+    }
+
+    /**
+     * @notice Calculate BTNT accrued by a borrower and possibly transfer it to them
+     * @dev Borrowers will not begin to accrue until after the first interaction with the protocol.
+     * @param bToken The market in which the borrower is interacting
+     * @param borrower The address of the borrower to distribute BTNT to
+     */
+    function distributeBorrowerBtntex(address bToken, address borrower, Exp memory marketBorrowIndex) internal {
+        if (address(baiVaultAddress) != address(0)) {
+            releaseToVault();
+        }
+
+        BtntexMarketState storage borrowState = btntexBorrowState[bToken];
+        Double memory borrowIndex = Double({mantissa: borrowState.index});
+        Double memory borrowerIndex = Double({mantissa: btntexBorrowerIndex[bToken][borrower]});
+        btntexBorrowerIndex[bToken][borrower] = borrowIndex.mantissa;
+
+        if (borrowerIndex.mantissa > 0) {
+            Double memory deltaIndex = sub_(borrowIndex, borrowerIndex);
+            uint borrowerAmount = div_(BToken(bToken).borrowBalanceStored(borrower), marketBorrowIndex);
+            uint borrowerDelta = mul_(borrowerAmount, deltaIndex);
+            uint borrowerAccrued = add_(btntexAccrued[borrower], borrowerDelta);
+            btntexAccrued[borrower] = borrowerAccrued;
+            emit DistributedBorrowerBtntex(BToken(bToken), borrower, borrowerDelta, borrowIndex.mantissa);
+        }
+    }
+
+    /**
+     * @notice Calculate BTNT accrued by a BAI minter and possibly transfer it to them
+     * @dev BAI minters will not begin to accrue until after the first interaction with the protocol.
+     * @param baiMinter The address of the BAI minter to distribute BTNT to
+     */
+    function distributeBAIMinterBtntex(address baiMinter) public {
+        if (address(baiVaultAddress) != address(0)) {
+            releaseToVault();
+        }
+
+        if (address(baiController) != address(0)) {
+            uint baiMinterAccrued;
+            uint baiMinterDelta;
+            uint baiMintIndexMantissa;
+            uint err;
+            (err, baiMinterAccrued, baiMinterDelta, baiMintIndexMantissa) = baiController.calcDistributeBAIMinterBtntex(baiMinter);
+            if (err == uint(Error.NO_ERROR)) {
+                btntexAccrued[baiMinter] = baiMinterAccrued;
+                emit DistributedBAIMinterBtntex(baiMinter, baiMinterDelta, baiMintIndexMantissa);
+            }
+        }
+    }
+
+    /**
+     * @notice Claim all the btnt accrued by holder in all markets and BAI
+     * @param holder The address to claim BTNT for
+     */
+    function claimBtntex(address holder) public {
+        return claimBtntex(holder, allMarkets);
+    }
+
+    /**
+     * @notice Claim all the btnt accrued by holder in the specified markets
+     * @param holder The address to claim BTNT for
+     * @param bTokens The list of markets to claim BTNT in
+     */
+    function claimBtntex(address holder, BToken[] memory bTokens) public {
+        address[] memory holders = new address[](1);
+        holders[0] = holder;
+        claimBtntex(holders, bTokens, true, true);
+    }
+
+    /**
+     * @notice Claim all btnt accrued by the holders
+     * @param holders The addresses to claim BTNT for
+     * @param bTokens The list of markets to claim BTNT in
+     * @param borrowers Whether or not to claim BTNT earned by borrowing
+     * @param suppliers Whether or not to claim BTNT earned by supplying
+     */
+    function claimBtntex(address[] memory holders, BToken[] memory bTokens, bool borrowers, bool suppliers) public {
+        uint j;
+        if(address(baiController) != address(0)) {
+            baiController.updateBtntexBAIMintIndex();
+        }
+        for (j = 0; j < holders.length; j++) {
+            distributeBAIMinterBtntex(holders[j]);
+            btntexAccrued[holders[j]] = grantBTNTInternal(holders[j], btntexAccrued[holders[j]]);
+        }
+        for (uint i = 0; i < bTokens.length; i++) {
+            BToken bToken = bTokens[i];
+            require(markets[address(bToken)].isListed, "not listed market");
+            if (borrowers) {
+                Exp memory borrowIndex = Exp({mantissa: bToken.borrowIndex()});
+                updateBtntexBorrowIndex(address(bToken), borrowIndex);
+                for (j = 0; j < holders.length; j++) {
+                    distributeBorrowerBtntex(address(bToken), holders[j], borrowIndex);
+                    btntexAccrued[holders[j]] = grantBTNTInternal(holders[j], btntexAccrued[holders[j]]);
+                }
+            }
+            if (suppliers) {
+                updateBtntexSupplyIndex(address(bToken));
+                for (j = 0; j < holders.length; j++) {
+                    distributeSupplierBtntex(address(bToken), holders[j]);
+                    btntexAccrued[holders[j]] = grantBTNTInternal(holders[j], btntexAccrued[holders[j]]);
+                }
+            }
+        }
+    }
+
+    /**
+     * @notice Transfer BTNT to the user
+     * @dev Note: If there is not enough BTNT, we do not perform the transfer all.
+     * @param user The address of the user to transfer BTNT to
+     * @param amount The amount of BTNT to (possibly) transfer
+     * @return The amount of BTNT which was NOT transferred to the user
+     */
+    function grantBTNTInternal(address user, uint amount) internal returns (uint) {
+        BTNT btnt = BTNT(getBTNTAddress());
+        uint btntexRemaining = btnt.balanceOf(address(this));
+        if (amount > 0 && amount <= btntexRemaining) {
+            btnt.transfer(user, amount);
+            return 0;
+        }
+        return amount;
+    }
+
+    /*** Btntex Distribution Admin ***/
+
+    /**
+     * @notice Set the amount of BTNT distributed per block to BAI Mint
+     * @param btntexBAIRate_ The amount of BTNT wei per block to distribute to BAI Mint
+     */
+    function _setBtntexBAIRate(uint btntexBAIRate_) public onlyAdmin {
+        uint oldBAIRate = btntexBAIRate;
+        btntexBAIRate = btntexBAIRate_;
+        emit NewBtntexBAIRate(oldBAIRate, btntexBAIRate_);
+    }
+
+    /**
+     * @notice Set the amount of BTNT distributed per block to BAI Vault
+     * @param btntexBAIVaultRate_ The amount of BTNT wei per block to distribute to BAI Vault
+     */
+    function _setBtntexBAIVaultRate(uint btntexBAIVaultRate_) public onlyAdmin {
+        uint oldBtntexBAIVaultRate = btntexBAIVaultRate;
+        btntexBAIVaultRate = btntexBAIVaultRate_;
+        emit NewBtntexBAIVaultRate(oldBtntexBAIVaultRate, btntexBAIVaultRate_);
+    }
+
+    /**
+     * @notice Set the BAI Vault infos
+     * @param vault_ The address of the BAI Vault
+     * @param releaseStartBlock_ The start block of release to BAI Vault
+     * @param minReleaseAmount_ The minimum release amount to BAI Vault
+     */
+    function _setBAIVaultInfo(address vault_, uint256 releaseStartBlock_, uint256 minReleaseAmount_) public onlyAdmin {
+        baiVaultAddress = vault_;
+        releaseStartBlock = releaseStartBlock_;
+        minReleaseAmount = minReleaseAmount_;
+        emit NewBAIVaultInfo(vault_, releaseStartBlock_, minReleaseAmount_);
+    }
+
+    /**
+     * @notice Set BTNT speed for a single market
+     * @param bToken The market whose BTNT speed to update
+     * @param btntexSpeed New BTNT speed for market
+     */
+    function _setBtntexSpeed(BToken bToken, uint btntexSpeed) public {
+        require(adminOrInitializing(), "only admin can set btntex speed");
+        setBtntexSpeedInternal(bToken, btntexSpeed);
+    }
+
+    /**
+     * @notice Return all of the markets
+     * @dev The automatic getter may be used to access an individual market.
+     * @return The list of market addresses
+     */
+    function getAllMarkets() public view returns (BToken[] memory) {
+        return allMarkets;
+    }
+
     function getBlockNumber() public view returns (uint) {
         return block.number;
     }
 
     /**
-     * @notice Return the address of the BAI token
-     * @return The address of BAI
+     * @notice Return the address of the BTNT token
+     * @return The address of BTNT
      */
-    function getBAIAddress() public view returns (address) {
-        return 0x4BD17003473389A42DAF6a0a729f6Fdb328BbBd7;
+    function getBTNTAddress() public view returns (address) {
+        return 0x139E25DF82f49b6A84Af74CA2f32030C06a9Dd81;
     }
 
-    function initialize() onlyAdmin public {
-        // The counter starts true to prevent changing it from zero to non-zero (i.e. smaller cost/refund)
-        _notEntered = true;
-    }
-
-    modifier onlyAdmin() {
-        require(msg.sender == admin, "only admin can");
-        _;
-    }
-
-    /*** Reentrancy Guard ***/
+    /*** BAI functions ***/
 
     /**
-     * @dev Prevents a contract from calling itself, directly or indirectly.
+     * @notice Set the minted BAI amount of the `owner`
+     * @param owner The address of the account to set
+     * @param amount The amount of BAI to set to the account
+     * @return The number of minted BAI by `owner`
      */
-    modifier nonReentrant() {
-        require(_notEntered, "re-entered");
-        _notEntered = false;
-        _;
-        _notEntered = true; // get a gas-refund post-Istanbul
+    function setMintedBAIOf(address owner, uint amount) external onlyProtocolAllowed returns (uint) {
+        // Pausing is a very serious situation - we revert to sound the alarms
+        require(!mintBAIGuardianPaused && !repayBAIGuardianPaused, "BAI is paused");
+        // Check caller is baiController
+        if (msg.sender != address(baiController)) {
+            return fail(Error.REJECTION, FailureInfo.SET_MINTED_BAI_REJECTION);
+        }
+        mintedBAIs[owner] = amount;
+
+        return uint(Error.NO_ERROR);
+    }
+
+    /**
+     * @notice Transfer BTNT to BAI Vault
+     */
+    function releaseToVault() public {
+        if(releaseStartBlock == 0 || getBlockNumber() < releaseStartBlock) {
+            return;
+        }
+
+        BTNT btnt = BTNT(getBTNTAddress());
+
+        uint256 btntBalance = btnt.balanceOf(address(this));
+        if(btntBalance == 0) {
+            return;
+        }
+
+
+        uint256 actualAmount;
+        uint256 deltaBlocks = sub_(getBlockNumber(), releaseStartBlock);
+        // releaseAmount = btntexBAIVaultRate * deltaBlocks
+        uint256 _releaseAmount = mul_(btntexBAIVaultRate, deltaBlocks);
+
+        if (_releaseAmount < minReleaseAmount) {
+            return;
+        }
+
+        if (btntBalance >= _releaseAmount) {
+            actualAmount = _releaseAmount;
+        } else {
+            actualAmount = btntBalance;
+        }
+
+        releaseStartBlock = getBlockNumber();
+
+        btnt.transfer(baiVaultAddress, actualAmount);
+        emit DistributedBAIVaultBtntex(actualAmount);
+
+        IBAIVault(baiVaultAddress).updatePendingRewards();
     }
 }

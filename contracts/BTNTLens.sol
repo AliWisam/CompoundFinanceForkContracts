@@ -2781,6 +2781,206 @@ contract BToken is BTokenInterface, Exponential, TokenErrorReporter {
     }
 }
 
+// File: contracts/BBep20.sol
+
+pragma solidity ^0.5.16;
+
+
+/**
+ * @title Btntex's BBep20 Contract
+ * @notice BTokens which wrap an EIP-20 underlying
+ * @author Btntex
+ */
+contract BBep20 is BToken, BBep20Interface {
+    /**
+     * @notice Initialize the new money market
+     * @param underlying_ The address of the underlying asset
+     * @param comptroller_ The address of the Comptroller
+     * @param interestRateModel_ The address of the interest rate model
+     * @param initialExchangeRateMantissa_ The initial exchange rate, scaled by 1e18
+     * @param name_ BEP-20 name of this token
+     * @param symbol_ BEP-20 symbol of this token
+     * @param decimals_ BEP-20 decimal precision of this token
+     */
+    function initialize(address underlying_,
+                        ComptrollerInterface comptroller_,
+                        InterestRateModel interestRateModel_,
+                        uint initialExchangeRateMantissa_,
+                        string memory name_,
+                        string memory symbol_,
+                        uint8 decimals_) public {
+        // BToken initialize does the bulk of the work
+        super.initialize(comptroller_, interestRateModel_, initialExchangeRateMantissa_, name_, symbol_, decimals_);
+
+        // Set underlying and sanity check it
+        underlying = underlying_;
+        EIP20Interface(underlying).totalSupply();
+    }
+
+    /*** User Interface ***/
+
+    /**
+     * @notice Sender supplies assets into the market and receives bTokens in exchange
+     * @dev Accrues interest whether or not the operation succeeds, unless reverted
+     * @param mintAmount The amount of the underlying asset to supply
+     * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
+     */
+    function mint(uint mintAmount) external returns (uint) {
+        (uint err,) = mintInternal(mintAmount);
+        return err;
+    }
+
+    /**
+     * @notice Sender redeems bTokens in exchange for the underlying asset
+     * @dev Accrues interest whether or not the operation succeeds, unless reverted
+     * @param redeemTokens The number of bTokens to redeem into underlying
+     * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
+     */
+    function redeem(uint redeemTokens) external returns (uint) {
+        return redeemInternal(redeemTokens);
+    }
+
+    /**
+     * @notice Sender redeems bTokens in exchange for a specified amount of underlying asset
+     * @dev Accrues interest whether or not the operation succeeds, unless reverted
+     * @param redeemAmount The amount of underlying to redeem
+     * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
+     */
+    function redeemUnderlying(uint redeemAmount) external returns (uint) {
+        return redeemUnderlyingInternal(redeemAmount);
+    }
+
+    /**
+      * @notice Sender borrows assets from the protocol to their own address
+      * @param borrowAmount The amount of the underlying asset to borrow
+      * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
+      */
+    function borrow(uint borrowAmount) external returns (uint) {
+        return borrowInternal(borrowAmount);
+    }
+
+    /**
+     * @notice Sender repays their own borrow
+     * @param repayAmount The amount to repay
+     * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
+     */
+    function repayBorrow(uint repayAmount) external returns (uint) {
+        (uint err,) = repayBorrowInternal(repayAmount);
+        return err;
+    }
+
+    /**
+     * @notice Sender repays a borrow belonging to borrower
+     * @param borrower the account with the debt being payed off
+     * @param repayAmount The amount to repay
+     * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
+     */
+    function repayBorrowBehalf(address borrower, uint repayAmount) external returns (uint) {
+        (uint err,) = repayBorrowBehalfInternal(borrower, repayAmount);
+        return err;
+    }
+
+    /**
+     * @notice The sender liquidates the borrowers collateral.
+     *  The collateral seized is transferred to the liquidator.
+     * @param borrower The borrower of this bToken to be liquidated
+     * @param repayAmount The amount of the underlying borrowed asset to repay
+     * @param bTokenCollateral The market in which to seize collateral from the borrower
+     * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
+     */
+    function liquidateBorrow(address borrower, uint repayAmount, BTokenInterface bTokenCollateral) external returns (uint) {
+        (uint err,) = liquidateBorrowInternal(borrower, repayAmount, bTokenCollateral);
+        return err;
+    }
+
+    /**
+     * @notice The sender adds to reserves.
+     * @param addAmount The amount fo underlying token to add as reserves
+     * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
+     */
+    function _addReserves(uint addAmount) external returns (uint) {
+        return _addReservesInternal(addAmount);
+    }
+
+    /*** Safe Token ***/
+
+    /**
+     * @notice Gets balance of this contract in terms of the underlying
+     * @dev This excludes the value of the current message, if any
+     * @return The quantity of underlying tokens owned by this contract
+     */
+    function getCashPrior() internal view returns (uint) {
+        EIP20Interface token = EIP20Interface(underlying);
+        return token.balanceOf(address(this));
+    }
+
+    /**
+     * @dev Similar to EIP20 transfer, except it handles a False result from `transferFrom` and reverts in that case.
+     *      This will revert due to insufficient balance or insufficient allowance.
+     *      This function returns the actual amount received,
+     *      which may be less than `amount` if there is a fee attached to the transfer.
+     *
+     *      Note: This wrapper safely handles non-standard BEP-20 tokens that do not return a value.
+     *            See here: https://medium.com/coinmonks/missing-return-value-bug-at-least-130-tokens-affected-d67bf08521ca
+     */
+    function doTransferIn(address from, uint amount) internal returns (uint) {
+        EIP20NonStandardInterface token = EIP20NonStandardInterface(underlying);
+        uint balanceBefore = EIP20Interface(underlying).balanceOf(address(this));
+        token.transferFrom(from, address(this), amount);
+
+        bool success;
+        assembly {
+            switch returndatasize()
+                case 0 {                       // This is a non-standard BEP-20
+                    success := not(0)          // set success to true
+                }
+                case 32 {                      // This is a compliant BEP-20
+                    returndatacopy(0, 0, 32)
+                    success := mload(0)        // Set `success = returndata` of external call
+                }
+                default {                      // This is an excessively non-compliant BEP-20, revert.
+                    revert(0, 0)
+                }
+        }
+        require(success, "TOKEN_TRANSFER_IN_FAILED");
+
+        // Calculate the amount that was *actually* transferred
+        uint balanceAfter = EIP20Interface(underlying).balanceOf(address(this));
+        require(balanceAfter >= balanceBefore, "TOKEN_TRANSFER_IN_OVERFLOW");
+        return balanceAfter - balanceBefore;   // underflow already checked above, just subtract
+    }
+
+    /**
+     * @dev Similar to EIP20 transfer, except it handles a False success from `transfer` and returns an explanatory
+     *      error code rather than reverting. If caller has not called checked protocol's balance, this may revert due to
+     *      insufficient cash held in this contract. If caller has checked protocol's balance prior to this call, and verified
+     *      it is >= amount, this should not revert in normal conditions.
+     *
+     *      Note: This wrapper safely handles non-standard BEP-20 tokens that do not return a value.
+     *            See here: https://medium.com/coinmonks/missing-return-value-bug-at-least-130-tokens-affected-d67bf08521ca
+     */
+    function doTransferOut(address payable to, uint amount) internal {
+        EIP20NonStandardInterface token = EIP20NonStandardInterface(underlying);
+        token.transfer(to, amount);
+
+        bool success;
+        assembly {
+            switch returndatasize()
+                case 0 {                      // This is a non-standard BEP-20
+                    success := not(0)          // set success to true
+                }
+                case 32 {                     // This is a complaint BEP-20
+                    returndatacopy(0, 0, 32)
+                    success := mload(0)        // Set `success = returndata` of external call
+                }
+                default {                     // This is an excessively non-compliant BEP-20, revert.
+                    revert(0, 0)
+                }
+        }
+        require(success, "TOKEN_TRANSFER_OUT_FAILED");
+    }
+}
+
 // File: contracts/PriceOracle.sol
 
 pragma solidity ^0.5.16;
@@ -2799,409 +2999,692 @@ contract PriceOracle {
     function getUnderlyingPrice(BToken bToken) external view returns (uint);
 }
 
-// File: contracts/BAIControllerStorage.sol
+// File: contracts/GovernorAlpha.sol
 
 pragma solidity ^0.5.16;
+pragma experimental ABIEncoderV2;
 
+contract GovernorAlpha {
+    /// @notice The name of this contract
+    string public constant name = "Btntex Governor Alpha";
 
-contract BAIUnitrollerAdminStorage {
-    /**
-    * @notice Administrator for this contract
-    */
-    address public admin;
+    /// @notice The number of votes in support of a proposal required in order for a quorum to be reached and for a vote to succeed
+    function quorumVotes() public pure returns (uint) { return 600000e18; } // 600,000 = 2% of BTNT
 
-    /**
-    * @notice Pending administrator for this contract
-    */
-    address public pendingAdmin;
+    /// @notice The number of votes required in order for a voter to become a proposer
+    function proposalThreshold() public pure returns (uint) { return 300000e18; } // 300,000 = 1% of BTNT
 
-    /**
-    * @notice Active brains of Unitroller
-    */
-    address public baiControllerImplementation;
+    /// @notice The maximum number of actions that can be included in a proposal
+    function proposalMaxOperations() public pure returns (uint) { return 10; } // 10 actions
 
-    /**
-    * @notice Pending brains of Unitroller
-    */
-    address public pendingBAIControllerImplementation;
-}
+    /// @notice The delay before voting on a proposal may take place, once proposed
+    function votingDelay() public pure returns (uint) { return 1; } // 1 block
 
-contract BAIControllerStorageG1 is BAIUnitrollerAdminStorage {
-    ComptrollerInterface public comptroller;
+    /// @notice The duration of voting on a proposal, in blocks
+    function votingPeriod() public pure returns (uint) { return 60 * 60 * 24 * 3 / 3; } // ~3 days in blocks (assuming 3s blocks)
 
-    struct BtntexBAIState {
-        /// @notice The last updated btntexBAIMintIndex
-        uint224 index;
+    /// @notice The address of the Btntex Protocol Timelock
+    TimelockInterface public timelock;
 
-        /// @notice The block number the index was last updated at
-        uint32 block;
+    /// @notice The address of the Btntex governance token
+    BTNTInterface public btnt;
+
+    /// @notice The address of the Governor Guardian
+    address public guardian;
+
+    /// @notice The total number of proposals
+    uint public proposalCount;
+
+    struct Proposal {
+        /// @notice Unique id for looking up a proposal
+        uint id;
+
+        /// @notice Creator of the proposal
+        address proposer;
+
+        /// @notice The timestamp that the proposal will be available for execution, set once the vote succeeds
+        uint eta;
+
+        /// @notice the ordered list of target addresses for calls to be made
+        address[] targets;
+
+        /// @notice The ordered list of values (i.e. msg.value) to be passed to the calls to be made
+        uint[] values;
+
+        /// @notice The ordered list of function signatures to be called
+        string[] signatures;
+
+        /// @notice The ordered list of calldata to be passed to each call
+        bytes[] calldatas;
+
+        /// @notice The block at which voting begins: holders must delegate their votes prior to this block
+        uint startBlock;
+
+        /// @notice The block at which voting ends: votes must be cast prior to this block
+        uint endBlock;
+
+        /// @notice Current number of votes in favor of this proposal
+        uint forVotes;
+
+        /// @notice Current number of votes in opposition to this proposal
+        uint againstVotes;
+
+        /// @notice Flag marking whether the proposal has been canceled
+        bool canceled;
+
+        /// @notice Flag marking whether the proposal has been executed
+        bool executed;
+
+        /// @notice Receipts of ballots for the entire set of voters
+        mapping (address => Receipt) receipts;
     }
 
-    /// @notice The Btntex BAI state
-    BtntexBAIState public btntexBAIState;
+    /// @notice Ballot receipt record for a voter
+    struct Receipt {
+        /// @notice Whether or not a vote has been cast
+        bool hasVoted;
 
-    /// @notice The Btntex BAI state initialized
-    bool public isBtntexBAIInitialized;
+        /// @notice Whether or not the voter supports the proposal
+        bool support;
 
-    /// @notice The Btntex BAI minter index as of the last time they accrued BTNT
-    mapping(address => uint) public btntexBAIMinterIndex;
+        /// @notice The number of votes the voter had, which were cast
+        uint96 votes;
+    }
+
+    /// @notice Possible states that a proposal may be in
+    enum ProposalState {
+        Pending,
+        Active,
+        Canceled,
+        Defeated,
+        Succeeded,
+        Queued,
+        Expired,
+        Executed
+    }
+
+    /// @notice The official record of all proposals ever proposed
+    mapping (uint => Proposal) public proposals;
+
+    /// @notice The latest proposal for each proposer
+    mapping (address => uint) public latestProposalIds;
+
+    /// @notice The EIP-712 typehash for the contract's domain
+    bytes32 public constant DOMAIN_TYPEHASH = keccak256("EIP712Domain(string name,uint256 chainId,address verifyingContract)");
+
+    /// @notice The EIP-712 typehash for the ballot struct used by the contract
+    bytes32 public constant BALLOT_TYPEHASH = keccak256("Ballot(uint256 proposalId,bool support)");
+
+    /// @notice An event emitted when a new proposal is created
+    event ProposalCreated(uint id, address proposer, address[] targets, uint[] values, string[] signatures, bytes[] calldatas, uint startBlock, uint endBlock, string description);
+
+    /// @notice An event emitted when a vote has been cast on a proposal
+    event VoteCast(address voter, uint proposalId, bool support, uint votes);
+
+    /// @notice An event emitted when a proposal has been canceled
+    event ProposalCanceled(uint id);
+
+    /// @notice An event emitted when a proposal has been queued in the Timelock
+    event ProposalQueued(uint id, uint eta);
+
+    /// @notice An event emitted when a proposal has been executed in the Timelock
+    event ProposalExecuted(uint id);
+
+    constructor(address timelock_, address btnt_, address guardian_) public {
+        timelock = TimelockInterface(timelock_);
+        btnt = BTNTInterface(btnt_);
+        guardian = guardian_;
+    }
+
+    function propose(address[] memory targets, uint[] memory values, string[] memory signatures, bytes[] memory calldatas, string memory description) public returns (uint) {
+        require(btnt.getPriorVotes(msg.sender, sub256(block.number, 1)) > proposalThreshold(), "GovernorAlpha::propose: proposer votes below proposal threshold");
+        require(targets.length == values.length && targets.length == signatures.length && targets.length == calldatas.length, "GovernorAlpha::propose: proposal function information arity mismatch");
+        require(targets.length != 0, "GovernorAlpha::propose: must provide actions");
+        require(targets.length <= proposalMaxOperations(), "GovernorAlpha::propose: too many actions");
+
+        uint latestProposalId = latestProposalIds[msg.sender];
+        if (latestProposalId != 0) {
+          ProposalState proposersLatestProposalState = state(latestProposalId);
+          require(proposersLatestProposalState != ProposalState.Active, "GovernorAlpha::propose: found an already active proposal");
+          require(proposersLatestProposalState != ProposalState.Pending, "GovernorAlpha::propose: found an already pending proposal");
+        }
+
+        uint startBlock = add256(block.number, votingDelay());
+        uint endBlock = add256(startBlock, votingPeriod());
+
+        proposalCount++;
+        Proposal memory newProposal = Proposal({
+            id: proposalCount,
+            proposer: msg.sender,
+            eta: 0,
+            targets: targets,
+            values: values,
+            signatures: signatures,
+            calldatas: calldatas,
+            startBlock: startBlock,
+            endBlock: endBlock,
+            forVotes: 0,
+            againstVotes: 0,
+            canceled: false,
+            executed: false
+        });
+
+        proposals[newProposal.id] = newProposal;
+        latestProposalIds[newProposal.proposer] = newProposal.id;
+
+        emit ProposalCreated(newProposal.id, msg.sender, targets, values, signatures, calldatas, startBlock, endBlock, description);
+        return newProposal.id;
+    }
+
+    function queue(uint proposalId) public {
+        require(state(proposalId) == ProposalState.Succeeded, "GovernorAlpha::queue: proposal can only be queued if it is succeeded");
+        Proposal storage proposal = proposals[proposalId];
+        uint eta = add256(block.timestamp, timelock.delay());
+        for (uint i = 0; i < proposal.targets.length; i++) {
+            _queueOrRevert(proposal.targets[i], proposal.values[i], proposal.signatures[i], proposal.calldatas[i], eta);
+        }
+        proposal.eta = eta;
+        emit ProposalQueued(proposalId, eta);
+    }
+
+    function _queueOrRevert(address target, uint value, string memory signature, bytes memory data, uint eta) internal {
+        require(!timelock.queuedTransactions(keccak256(abi.encode(target, value, signature, data, eta))), "GovernorAlpha::_queueOrRevert: proposal action already queued at eta");
+        timelock.queueTransaction(target, value, signature, data, eta);
+    }
+
+    function execute(uint proposalId) public payable {
+        require(state(proposalId) == ProposalState.Queued, "GovernorAlpha::execute: proposal can only be executed if it is queued");
+        Proposal storage proposal = proposals[proposalId];
+        proposal.executed = true;
+        for (uint i = 0; i < proposal.targets.length; i++) {
+            timelock.executeTransaction.value(proposal.values[i])(proposal.targets[i], proposal.values[i], proposal.signatures[i], proposal.calldatas[i], proposal.eta);
+        }
+        emit ProposalExecuted(proposalId);
+    }
+
+    function cancel(uint proposalId) public {
+        ProposalState state = state(proposalId);
+        require(state != ProposalState.Executed, "GovernorAlpha::cancel: cbtntot cancel executed proposal");
+
+        Proposal storage proposal = proposals[proposalId];
+        require(msg.sender == guardian || btnt.getPriorVotes(proposal.proposer, sub256(block.number, 1)) < proposalThreshold(), "GovernorAlpha::cancel: proposer above threshold");
+
+        proposal.canceled = true;
+        for (uint i = 0; i < proposal.targets.length; i++) {
+            timelock.cancelTransaction(proposal.targets[i], proposal.values[i], proposal.signatures[i], proposal.calldatas[i], proposal.eta);
+        }
+
+        emit ProposalCanceled(proposalId);
+    }
+
+    function getActions(uint proposalId) public view returns (address[] memory targets, uint[] memory values, string[] memory signatures, bytes[] memory calldatas) {
+        Proposal storage p = proposals[proposalId];
+        return (p.targets, p.values, p.signatures, p.calldatas);
+    }
+
+    function getReceipt(uint proposalId, address voter) public view returns (Receipt memory) {
+        return proposals[proposalId].receipts[voter];
+    }
+
+    function state(uint proposalId) public view returns (ProposalState) {
+        require(proposalCount >= proposalId && proposalId > 0, "GovernorAlpha::state: invalid proposal id");
+        Proposal storage proposal = proposals[proposalId];
+        if (proposal.canceled) {
+            return ProposalState.Canceled;
+        } else if (block.number <= proposal.startBlock) {
+            return ProposalState.Pending;
+        } else if (block.number <= proposal.endBlock) {
+            return ProposalState.Active;
+        } else if (proposal.forVotes <= proposal.againstVotes || proposal.forVotes < quorumVotes()) {
+            return ProposalState.Defeated;
+        } else if (proposal.eta == 0) {
+            return ProposalState.Succeeded;
+        } else if (proposal.executed) {
+            return ProposalState.Executed;
+        } else if (block.timestamp >= add256(proposal.eta, timelock.GRACE_PERIOD())) {
+            return ProposalState.Expired;
+        } else {
+            return ProposalState.Queued;
+        }
+    }
+
+    function castVote(uint proposalId, bool support) public {
+        return _castVote(msg.sender, proposalId, support);
+    }
+
+    function castVoteBySig(uint proposalId, bool support, uint8 v, bytes32 r, bytes32 s) public {
+        bytes32 domainSeparator = keccak256(abi.encode(DOMAIN_TYPEHASH, keccak256(bytes(name)), getChainId(), address(this)));
+        bytes32 structHash = keccak256(abi.encode(BALLOT_TYPEHASH, proposalId, support));
+        bytes32 digest = keccak256(abi.encodePacked("\x19\x01", domainSeparator, structHash));
+        address signatory = ecrecover(digest, v, r, s);
+        require(signatory != address(0), "GovernorAlpha::castVoteBySig: invalid signature");
+        return _castVote(signatory, proposalId, support);
+    }
+
+    function _castVote(address voter, uint proposalId, bool support) internal {
+        require(state(proposalId) == ProposalState.Active, "GovernorAlpha::_castVote: voting is closed");
+        Proposal storage proposal = proposals[proposalId];
+        Receipt storage receipt = proposal.receipts[voter];
+        require(receipt.hasVoted == false, "GovernorAlpha::_castVote: voter already voted");
+        uint96 votes = btnt.getPriorVotes(voter, proposal.startBlock);
+
+        if (support) {
+            proposal.forVotes = add256(proposal.forVotes, votes);
+        } else {
+            proposal.againstVotes = add256(proposal.againstVotes, votes);
+        }
+
+        receipt.hasVoted = true;
+        receipt.support = support;
+        receipt.votes = votes;
+
+        emit VoteCast(voter, proposalId, support, votes);
+    }
+
+    function __acceptAdmin() public {
+        require(msg.sender == guardian, "GovernorAlpha::__acceptAdmin: sender must be gov guardian");
+        timelock.acceptAdmin();
+    }
+
+    function __abdicate() public {
+        require(msg.sender == guardian, "GovernorAlpha::__abdicate: sender must be gov guardian");
+        guardian = address(0);
+    }
+
+    function __queueSetTimelockPendingAdmin(address newPendingAdmin, uint eta) public {
+        require(msg.sender == guardian, "GovernorAlpha::__queueSetTimelockPendingAdmin: sender must be gov guardian");
+        timelock.queueTransaction(address(timelock), 0, "setPendingAdmin(address)", abi.encode(newPendingAdmin), eta);
+    }
+
+    function __executeSetTimelockPendingAdmin(address newPendingAdmin, uint eta) public {
+        require(msg.sender == guardian, "GovernorAlpha::__executeSetTimelockPendingAdmin: sender must be gov guardian");
+        timelock.executeTransaction(address(timelock), 0, "setPendingAdmin(address)", abi.encode(newPendingAdmin), eta);
+    }
+
+    function add256(uint256 a, uint256 b) internal pure returns (uint) {
+        uint c = a + b;
+        require(c >= a, "addition overflow");
+        return c;
+    }
+
+    function sub256(uint256 a, uint256 b) internal pure returns (uint) {
+        require(b <= a, "subtraction underflow");
+        return a - b;
+    }
+
+    function getChainId() internal pure returns (uint) {
+        uint chainId;
+        assembly { chainId := chainid() }
+        return chainId;
+    }
 }
 
-contract BAIControllerStorageG2 is BAIControllerStorageG1 {
-    /// @notice Treasury Guardian address
-    address public treasuryGuardian;
-
-    /// @notice Treasury address
-    address public treasuryAddress;
-
-    /// @notice Fee percent of accrued interest with decimal 18
-    uint256 public treasuryPercent;
-
-    /// @notice Guard variable for re-entrancy checks
-    bool internal _notEntered;
+interface TimelockInterface {
+    function delay() external view returns (uint);
+    function GRACE_PERIOD() external view returns (uint);
+    function acceptAdmin() external;
+    function queuedTransactions(bytes32 hash) external view returns (bool);
+    function queueTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external returns (bytes32);
+    function cancelTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external;
+    function executeTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external payable returns (bytes memory);
 }
 
-// File: contracts/BAIUnitroller.sol
+interface BTNTInterface {
+    function getPriorVotes(address account, uint blockNumber) external view returns (uint96);
+}
+
+// File: contracts/BTNT.sol
 
 pragma solidity ^0.5.16;
 
+contract Owned {
 
+    address public owner;
 
-contract BAIUnitroller is BAIUnitrollerAdminStorage, BAIControllerErrorReporter {
-
-    /**
-      * @notice Emitted when pendingBAIControllerImplementation is changed
-      */
-    event NewPendingImplementation(address oldPendingImplementation, address newPendingImplementation);
-
-    /**
-      * @notice Emitted when pendingBAIControllerImplementation is accepted, which means comptroller implementation is updated
-      */
-    event NewImplementation(address oldImplementation, address newImplementation);
-
-    /**
-      * @notice Emitted when pendingAdmin is changed
-      */
-    event NewPendingAdmin(address oldPendingAdmin, address newPendingAdmin);
-
-    /**
-      * @notice Emitted when pendingAdmin is accepted, which means admin is updated
-      */
-    event NewAdmin(address oldAdmin, address newAdmin);
+    event OwnershipTransferred(address indexed _from, address indexed _to);
 
     constructor() public {
-        // Set admin to caller
-        admin = msg.sender;
+        owner = msg.sender;
     }
 
-    /*** Admin Functions ***/
-    function _setPendingImplementation(address newPendingImplementation) public returns (uint) {
-
-        if (msg.sender != admin) {
-            return fail(Error.UNAUTHORIZED, FailureInfo.SET_PENDING_IMPLEMENTATION_OWNER_CHECK);
-        }
-
-        address oldPendingImplementation = pendingBAIControllerImplementation;
-
-        pendingBAIControllerImplementation = newPendingImplementation;
-
-        emit NewPendingImplementation(oldPendingImplementation, pendingBAIControllerImplementation);
-
-        return uint(Error.NO_ERROR);
+    modifier onlyOwner {
+        require(msg.sender == owner, "Should be owner");
+        _;
     }
+
+    function transferOwnership(address newOwner) public onlyOwner {
+        owner = newOwner;
+        emit OwnershipTransferred(owner, newOwner);
+    }
+}
+
+contract Tokenlock is Owned {
+    /// @notice Indicates if token is locked
+    uint8 isLocked = 0;
+
+    event Freezed();
+    event UnFreezed();
+
+    modifier validLock {
+        require(isLocked == 0, "Token is locked");
+        _;
+    }
+
+    function freeze() public onlyOwner {
+        isLocked = 1;
+
+        emit Freezed();
+    }
+
+    function unfreeze() public onlyOwner {
+        isLocked = 0;
+
+        emit UnFreezed();
+    }
+}
+
+contract BTNT is Tokenlock {
+    /// @notice BEP-20 token name for this token
+    string public constant name = "Btntex";
+
+    /// @notice BEP-20 token symbol for this token
+    string public constant symbol = "BTNT";
+
+    /// @notice BEP-20 token decimals for this token
+    uint8 public constant decimals = 18;
+
+    /// @notice Total number of tokens in circulation
+    uint public constant totalSupply = 30000000e18; // 30 million BTNT
+
+    /// @notice Allowance amounts on behalf of others
+    mapping (address => mapping (address => uint96)) internal allowances;
+
+    /// @notice Official record of token balances for each account
+    mapping (address => uint96) internal balances;
+
+    /// @notice A record of each accounts delegate
+    mapping (address => address) public delegates;
+
+    /// @notice A checkpoint for marking number of votes from a given block
+    struct Checkpoint {
+        uint32 fromBlock;
+        uint96 votes;
+    }
+
+    /// @notice A record of votes checkpoints for each account, by index
+    mapping (address => mapping (uint32 => Checkpoint)) public checkpoints;
+
+    /// @notice The number of checkpoints for each account
+    mapping (address => uint32) public numCheckpoints;
+
+    /// @notice The EIP-712 typehash for the contract's domain
+    bytes32 public constant DOMAIN_TYPEHASH = keccak256("EIP712Domain(string name,uint256 chainId,address verifyingContract)");
+
+    /// @notice The EIP-712 typehash for the delegation struct used by the contract
+    bytes32 public constant DELEGATION_TYPEHASH = keccak256("Delegation(address delegatee,uint256 nonce,uint256 expiry)");
+
+    /// @notice A record of states for signing / validating signatures
+    mapping (address => uint) public nonces;
+
+    /// @notice An event thats emitted when an account changes its delegate
+    event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate);
+
+    /// @notice An event thats emitted when a delegate account's vote balance changes
+    event DelegateVotesChanged(address indexed delegate, uint previousBalance, uint newBalance);
+
+    /// @notice The standard BEP-20 transfer event
+    event Transfer(address indexed from, address indexed to, uint256 amount);
+
+    /// @notice The standard BEP-20 approval event
+    event Approval(address indexed owner, address indexed spender, uint256 amount);
 
     /**
-    * @notice Accepts new implementation of comptroller. msg.sender must be pendingImplementation
-    * @dev Admin function for new implementation to accept it's role as implementation
-    * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
-    */
-    function _acceptImplementation() public returns (uint) {
-        // Check caller is pendingImplementation
-        if (msg.sender != pendingBAIControllerImplementation) {
-            return fail(Error.UNAUTHORIZED, FailureInfo.ACCEPT_PENDING_IMPLEMENTATION_ADDRESS_CHECK);
-        }
-
-        // Save current values for inclusion in log
-        address oldImplementation = baiControllerImplementation;
-        address oldPendingImplementation = pendingBAIControllerImplementation;
-
-        baiControllerImplementation = pendingBAIControllerImplementation;
-
-        pendingBAIControllerImplementation = address(0);
-
-        emit NewImplementation(oldImplementation, baiControllerImplementation);
-        emit NewPendingImplementation(oldPendingImplementation, pendingBAIControllerImplementation);
-
-        return uint(Error.NO_ERROR);
-    }
-
-
-    /**
-      * @notice Begins transfer of admin rights. The newPendingAdmin must call `_acceptAdmin` to finalize the transfer.
-      * @dev Admin function to begin change of admin. The newPendingAdmin must call `_acceptAdmin` to finalize the transfer.
-      * @param newPendingAdmin New pending admin.
-      * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
-      */
-    function _setPendingAdmin(address newPendingAdmin) public returns (uint) {
-        // Check caller = admin
-        if (msg.sender != admin) {
-            return fail(Error.UNAUTHORIZED, FailureInfo.SET_PENDING_ADMIN_OWNER_CHECK);
-        }
-
-        // Save current value, if any, for inclusion in log
-        address oldPendingAdmin = pendingAdmin;
-
-        // Store pendingAdmin with value newPendingAdmin
-        pendingAdmin = newPendingAdmin;
-
-        // Emit NewPendingAdmin(oldPendingAdmin, newPendingAdmin)
-        emit NewPendingAdmin(oldPendingAdmin, newPendingAdmin);
-
-        return uint(Error.NO_ERROR);
-    }
-
-    /**
-      * @notice Accepts transfer of admin rights. msg.sender must be pendingAdmin
-      * @dev Admin function for pending admin to accept role and update admin
-      * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
-      */
-    function _acceptAdmin() public returns (uint) {
-        // Check caller is pendingAdmin
-        if (msg.sender != pendingAdmin) {
-            return fail(Error.UNAUTHORIZED, FailureInfo.ACCEPT_ADMIN_PENDING_ADMIN_CHECK);
-        }
-
-        // Save current values for inclusion in log
-        address oldAdmin = admin;
-        address oldPendingAdmin = pendingAdmin;
-
-        // Store admin with value pendingAdmin
-        admin = pendingAdmin;
-
-        // Clear the pending value
-        pendingAdmin = address(0);
-
-        emit NewAdmin(oldAdmin, admin);
-        emit NewPendingAdmin(oldPendingAdmin, pendingAdmin);
-
-        return uint(Error.NO_ERROR);
-    }
-
-    /**
-     * @dev Delegates execution to an implementation contract.
-     * It returns to the external caller whatever the implementation returns
-     * or forwards reverts.
+     * @notice Construct a new BTNT token
+     * @param account The initial account to grant all the tokens
      */
-    function () external payable {
-        // delegate all other functions to current implementation
-        (bool success, ) = baiControllerImplementation.delegatecall(msg.data);
+    constructor(address account) public {
+        balances[account] = uint96(totalSupply);
+        emit Transfer(address(0), account, totalSupply);
+    }
 
-        assembly {
-              let free_mem_ptr := mload(0x40)
-              returndatacopy(free_mem_ptr, 0, returndatasize)
+    /**
+     * @notice Get the number of tokens `spender` is approved to spend on behalf of `account`
+     * @param account The address of the account holding the funds
+     * @param spender The address of the account spending the funds
+     * @return The number of tokens approved
+     */
+    function allowance(address account, address spender) external view returns (uint) {
+        return allowances[account][spender];
+    }
 
-              switch success
-              case 0 { revert(free_mem_ptr, returndatasize) }
-              default { return(free_mem_ptr, returndatasize) }
+    /**
+     * @notice Approve `spender` to transfer up to `amount` from `src`
+     * @dev This will overwrite the approval amount for `spender`
+     * @param spender The address of the account which may transfer tokens
+     * @param rawAmount The number of tokens that are approved (2^256-1 means infinite)
+     * @return Whether or not the approval succeeded
+     */
+    function approve(address spender, uint rawAmount) external validLock returns (bool) {
+        uint96 amount;
+        if (rawAmount == uint(-1)) {
+            amount = uint96(-1);
+        } else {
+            amount = safe96(rawAmount, "BTNT::approve: amount exceeds 96 bits");
         }
-    }
-}
 
-// File: contracts/lib.sol
+        allowances[msg.sender][spender] = amount;
 
-// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-pragma solidity >=0.5.16;
-
-contract LibNote {
-    event LogNote(
-        bytes4   indexed  sig,
-        address  indexed  usr,
-        bytes32  indexed  arg1,
-        bytes32  indexed  arg2,
-        bytes             data
-    ) anonymous;
-
-    modifier note {
-        _;
-        assembly {
-            // log an 'anonymous' event with a constant 6 words of calldata
-            // and four indexed topics: selector, caller, arg1 and arg2
-            let mark := msize()                       // end of memory ensures zero
-            mstore(0x40, add(mark, 288))              // update free memory pointer
-            mstore(mark, 0x20)                        // bytes type data offset
-            mstore(add(mark, 0x20), 224)              // bytes size (padded)
-            calldatacopy(add(mark, 0x40), 0, 224)     // bytes payload
-            log4(mark, 288,                           // calldata
-                 shl(224, shr(224, calldataload(0))), // msg.sig
-                 caller(),                            // msg.sender
-                 calldataload(4),                     // arg1
-                 calldataload(36)                     // arg2
-                )
-        }
-    }
-}
-
-// File: contracts/BAI.sol
-
-// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Copyright (C) 2017, 2018, 2019 dbrock, rain, mrchico
-
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Affero General Public License for more details.
-//
-// You should have received a copy of the GNU Affero General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-pragma solidity >=0.5.16;
-
-
-contract BAI is LibNote {
-    // --- Auth ---
-    mapping (address => uint) public wards;
-    function rely(address guy) external note auth { wards[guy] = 1; }
-    function deny(address guy) external note auth { wards[guy] = 0; }
-    modifier auth {
-        require(wards[msg.sender] == 1, "BAI/not-authorized");
-        _;
-    }
-
-    // --- BEP20 Data ---
-    string  public constant name     = "BAI Stablecoin";
-    string  public constant symbol   = "BAI";
-    string  public constant version  = "1";
-    uint8   public constant decimals = 18;
-    uint256 public totalSupply;
-
-    mapping (address => uint)                      public balanceOf;
-    mapping (address => mapping (address => uint)) public allowance;
-    mapping (address => uint)                      public nonces;
-
-    event Approval(address indexed src, address indexed guy, uint wad);
-    event Transfer(address indexed src, address indexed dst, uint wad);
-
-    // --- Math ---
-    function add(uint x, uint y) internal pure returns (uint z) {
-        require((z = x + y) >= x, "BAI math error");
-    }
-    function sub(uint x, uint y) internal pure returns (uint z) {
-        require((z = x - y) <= x, "BAI math error");
-    }
-
-    // --- EIP712 niceties ---
-    bytes32 public DOMAIN_SEPARATOR;
-    // bytes32 public constant PERMIT_TYPEHASH = keccak256("Permit(address holder,address spender,uint256 nonce,uint256 expiry,bool allowed)");
-    bytes32 public constant PERMIT_TYPEHASH = 0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb;
-
-    constructor(uint256 chainId_) public {
-        wards[msg.sender] = 1;
-        DOMAIN_SEPARATOR = keccak256(abi.encode(
-            keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
-            keccak256(bytes(name)),
-            keccak256(bytes(version)),
-            chainId_,
-            address(this)
-        ));
-    }
-
-    // --- Token ---
-    function transfer(address dst, uint wad) external returns (bool) {
-        return transferFrom(msg.sender, dst, wad);
-    }
-    function transferFrom(address src, address dst, uint wad)
-        public returns (bool)
-    {
-        require(balanceOf[src] >= wad, "BAI/insufficient-balance");
-        if (src != msg.sender && allowance[src][msg.sender] != uint(-1)) {
-            require(allowance[src][msg.sender] >= wad, "BAI/insufficient-allowance");
-            allowance[src][msg.sender] = sub(allowance[src][msg.sender], wad);
-        }
-        balanceOf[src] = sub(balanceOf[src], wad);
-        balanceOf[dst] = add(balanceOf[dst], wad);
-        emit Transfer(src, dst, wad);
-        return true;
-    }
-    function mint(address usr, uint wad) external auth {
-        balanceOf[usr] = add(balanceOf[usr], wad);
-        totalSupply = add(totalSupply, wad);
-        emit Transfer(address(0), usr, wad);
-    }
-    function burn(address usr, uint wad) external {
-        require(balanceOf[usr] >= wad, "BAI/insufficient-balance");
-        if (usr != msg.sender && allowance[usr][msg.sender] != uint(-1)) {
-            require(allowance[usr][msg.sender] >= wad, "BAI/insufficient-allowance");
-            allowance[usr][msg.sender] = sub(allowance[usr][msg.sender], wad);
-        }
-        balanceOf[usr] = sub(balanceOf[usr], wad);
-        totalSupply = sub(totalSupply, wad);
-        emit Transfer(usr, address(0), wad);
-    }
-    function approve(address usr, uint wad) external returns (bool) {
-        allowance[msg.sender][usr] = wad;
-        emit Approval(msg.sender, usr, wad);
+        emit Approval(msg.sender, spender, amount);
         return true;
     }
 
-    // --- Alias ---
-    function push(address usr, uint wad) external {
-        transferFrom(msg.sender, usr, wad);
-    }
-    function pull(address usr, uint wad) external {
-        transferFrom(usr, msg.sender, wad);
-    }
-    function move(address src, address dst, uint wad) external {
-        transferFrom(src, dst, wad);
+    /**
+     * @notice Get the number of tokens held by the `account`
+     * @param account The address of the account to get the balance of
+     * @return The number of tokens held
+     */
+    function balanceOf(address account) external view returns (uint) {
+        return balances[account];
     }
 
-    // --- Approve by signature ---
-    function permit(address holder, address spender, uint256 nonce, uint256 expiry,
-                    bool allowed, uint8 v, bytes32 r, bytes32 s) external
-    {
-        bytes32 digest = keccak256(abi.encodePacked(
-                "\x19\x01",
-                DOMAIN_SEPARATOR,
-                keccak256(abi.encode(PERMIT_TYPEHASH,
-                                     holder,
-                                     spender,
-                                     nonce,
-                                     expiry,
-                                     allowed))
-        ));
+    /**
+     * @notice Transfer `amount` tokens from `msg.sender` to `dst`
+     * @param dst The address of the destination account
+     * @param rawAmount The number of tokens to transfer
+     * @return Whether or not the transfer succeeded
+     */
+    function transfer(address dst, uint rawAmount) external validLock returns (bool) {
+        uint96 amount = safe96(rawAmount, "BTNT::transfer: amount exceeds 96 bits");
+        _transferTokens(msg.sender, dst, amount);
+        return true;
+    }
 
-        require(holder != address(0), "BAI/invalid-address-0");
-        require(holder == ecrecover(digest, v, r, s), "BAI/invalid-permit");
-        require(expiry == 0 || now <= expiry, "BAI/permit-expired");
-        require(nonce == nonces[holder]++, "BAI/invalid-nonce");
-        uint wad = allowed ? uint(-1) : 0;
-        allowance[holder][spender] = wad;
-        emit Approval(holder, spender, wad);
+    /**
+     * @notice Transfer `amount` tokens from `src` to `dst`
+     * @param src The address of the source account
+     * @param dst The address of the destination account
+     * @param rawAmount The number of tokens to transfer
+     * @return Whether or not the transfer succeeded
+     */
+    function transferFrom(address src, address dst, uint rawAmount) external validLock returns (bool) {
+        address spender = msg.sender;
+        uint96 spenderAllowance = allowances[src][spender];
+        uint96 amount = safe96(rawAmount, "BTNT::approve: amount exceeds 96 bits");
+
+        if (spender != src && spenderAllowance != uint96(-1)) {
+            uint96 newAllowance = sub96(spenderAllowance, amount, "BTNT::transferFrom: transfer amount exceeds spender allowance");
+            allowances[src][spender] = newAllowance;
+
+            emit Approval(src, spender, newAllowance);
+        }
+
+        _transferTokens(src, dst, amount);
+        return true;
+    }
+
+    /**
+     * @notice Delegate votes from `msg.sender` to `delegatee`
+     * @param delegatee The address to delegate votes to
+     */
+    function delegate(address delegatee) public validLock {
+        return _delegate(msg.sender, delegatee);
+    }
+
+    /**
+     * @notice Delegates votes from signatory to `delegatee`
+     * @param delegatee The address to delegate votes to
+     * @param nonce The contract state required to match the signature
+     * @param expiry The time at which to expire the signature
+     * @param v The recovery byte of the signature
+     * @param r Half of the ECDSA signature pair
+     * @param s Half of the ECDSA signature pair
+     */
+    function delegateBySig(address delegatee, uint nonce, uint expiry, uint8 v, bytes32 r, bytes32 s) public validLock {
+        bytes32 domainSeparator = keccak256(abi.encode(DOMAIN_TYPEHASH, keccak256(bytes(name)), getChainId(), address(this)));
+        bytes32 structHash = keccak256(abi.encode(DELEGATION_TYPEHASH, delegatee, nonce, expiry));
+        bytes32 digest = keccak256(abi.encodePacked("\x19\x01", domainSeparator, structHash));
+        address signatory = ecrecover(digest, v, r, s);
+        require(signatory != address(0), "BTNT::delegateBySig: invalid signature");
+        require(nonce == nonces[signatory]++, "BTNT::delegateBySig: invalid nonce");
+        require(now <= expiry, "BTNT::delegateBySig: signature expired");
+        return _delegate(signatory, delegatee);
+    }
+
+    /**
+     * @notice Gets the current votes balance for `account`
+     * @param account The address to get votes balance
+     * @return The number of current votes for `account`
+     */
+    function getCurrentVotes(address account) external view returns (uint96) {
+        uint32 nCheckpoints = numCheckpoints[account];
+        return nCheckpoints > 0 ? checkpoints[account][nCheckpoints - 1].votes : 0;
+    }
+
+    /**
+     * @notice Determine the prior number of votes for an account as of a block number
+     * @dev Block number must be a finalized block or else this function will revert to prevent misinformation.
+     * @param account The address of the account to check
+     * @param blockNumber The block number to get the vote balance at
+     * @return The number of votes the account had as of the given block
+     */
+    function getPriorVotes(address account, uint blockNumber) public view returns (uint96) {
+        require(blockNumber < block.number, "BTNT::getPriorVotes: not yet determined");
+
+        uint32 nCheckpoints = numCheckpoints[account];
+        if (nCheckpoints == 0) {
+            return 0;
+        }
+
+        // First check most recent balance
+        if (checkpoints[account][nCheckpoints - 1].fromBlock <= blockNumber) {
+            return checkpoints[account][nCheckpoints - 1].votes;
+        }
+
+        // Next check implicit zero balance
+        if (checkpoints[account][0].fromBlock > blockNumber) {
+            return 0;
+        }
+
+        uint32 lower = 0;
+        uint32 upper = nCheckpoints - 1;
+        while (upper > lower) {
+            uint32 center = upper - (upper - lower) / 2; // ceil, avoiding overflow
+            Checkpoint memory cp = checkpoints[account][center];
+            if (cp.fromBlock == blockNumber) {
+                return cp.votes;
+            } else if (cp.fromBlock < blockNumber) {
+                lower = center;
+            } else {
+                upper = center - 1;
+            }
+        }
+        return checkpoints[account][lower].votes;
+    }
+
+    function _delegate(address delegator, address delegatee) internal {
+        address currentDelegate = delegates[delegator];
+        uint96 delegatorBalance = balances[delegator];
+        delegates[delegator] = delegatee;
+
+        emit DelegateChanged(delegator, currentDelegate, delegatee);
+
+        _moveDelegates(currentDelegate, delegatee, delegatorBalance);
+    }
+
+    function _transferTokens(address src, address dst, uint96 amount) internal {
+        require(src != address(0), "BTNT::_transferTokens: cbtntot transfer from the zero address");
+        require(dst != address(0), "BTNT::_transferTokens: cbtntot transfer to the zero address");
+
+        balances[src] = sub96(balances[src], amount, "BTNT::_transferTokens: transfer amount exceeds balance");
+        balances[dst] = add96(balances[dst], amount, "BTNT::_transferTokens: transfer amount overflows");
+        emit Transfer(src, dst, amount);
+
+        _moveDelegates(delegates[src], delegates[dst], amount);
+    }
+
+    function _moveDelegates(address srcRep, address dstRep, uint96 amount) internal {
+        if (srcRep != dstRep && amount > 0) {
+            if (srcRep != address(0)) {
+                uint32 srcRepNum = numCheckpoints[srcRep];
+                uint96 srcRepOld = srcRepNum > 0 ? checkpoints[srcRep][srcRepNum - 1].votes : 0;
+                uint96 srcRepNew = sub96(srcRepOld, amount, "BTNT::_moveVotes: vote amount underflows");
+                _writeCheckpoint(srcRep, srcRepNum, srcRepOld, srcRepNew);
+            }
+
+            if (dstRep != address(0)) {
+                uint32 dstRepNum = numCheckpoints[dstRep];
+                uint96 dstRepOld = dstRepNum > 0 ? checkpoints[dstRep][dstRepNum - 1].votes : 0;
+                uint96 dstRepNew = add96(dstRepOld, amount, "BTNT::_moveVotes: vote amount overflows");
+                _writeCheckpoint(dstRep, dstRepNum, dstRepOld, dstRepNew);
+            }
+        }
+    }
+
+    function _writeCheckpoint(address delegatee, uint32 nCheckpoints, uint96 oldVotes, uint96 newVotes) internal {
+      uint32 blockNumber = safe32(block.number, "BTNT::_writeCheckpoint: block number exceeds 32 bits");
+
+      if (nCheckpoints > 0 && checkpoints[delegatee][nCheckpoints - 1].fromBlock == blockNumber) {
+          checkpoints[delegatee][nCheckpoints - 1].votes = newVotes;
+      } else {
+          checkpoints[delegatee][nCheckpoints] = Checkpoint(blockNumber, newVotes);
+          numCheckpoints[delegatee] = nCheckpoints + 1;
+      }
+
+      emit DelegateVotesChanged(delegatee, oldVotes, newVotes);
+    }
+
+    function safe32(uint n, string memory errorMessage) internal pure returns (uint32) {
+        require(n < 2**32, errorMessage);
+        return uint32(n);
+    }
+
+    function safe96(uint n, string memory errorMessage) internal pure returns (uint96) {
+        require(n < 2**96, errorMessage);
+        return uint96(n);
+    }
+
+    function add96(uint96 a, uint96 b, string memory errorMessage) internal pure returns (uint96) {
+        uint96 c = a + b;
+        require(c >= a, errorMessage);
+        return c;
+    }
+
+    function sub96(uint96 a, uint96 b, string memory errorMessage) internal pure returns (uint96) {
+        require(b <= a, errorMessage);
+        return a - b;
+    }
+
+    function getChainId() internal pure returns (uint) {
+        uint256 chainId;
+        assembly { chainId := chainid() }
+        return chainId;
     }
 }
 
-// File: contracts/BAIController.sol
+// File: contracts/BtntLens.sol
 
 pragma solidity ^0.5.16;
+pragma experimental ABIEncoderV2;
 
 
 
@@ -3209,525 +3692,318 @@ pragma solidity ^0.5.16;
 
 
 
-
-interface ComptrollerImplInterface {
-    function protocolPaused() external view returns (bool);
-    function mintedBAIs(address account) external view returns (uint);
-    function baiMintRate() external view returns (uint);
-    function btntexBAIRate() external view returns (uint);
-    function btntexAccrued(address account) external view returns(uint);
-    function getAssetsIn(address account) external view returns (BToken[] memory);
+interface ComptrollerLensInterface {
+    function markets(address) external view returns (bool, uint);
     function oracle() external view returns (PriceOracle);
-
-    function distributeBAIMinterBtntex(address baiMinter) external;
+    function getAccountLiquidity(address) external view returns (uint, uint, uint);
+    function getAssetsIn(address) external view returns (BToken[] memory);
+    function claimBtntex(address) external;
+    function btntexAccrued(address) external view returns (uint);
 }
 
-/**
- * @title Btntex's BAI Comptroller Contract
- * @author Btntex
- */
-contract BAIController is BAIControllerStorageG2, BAIControllerErrorReporter, Exponential {
-
-    /// @notice Emitted when Comptroller is changed
-    event NewComptroller(ComptrollerInterface oldComptroller, ComptrollerInterface newComptroller);
-
-    /**
-     * @notice Event emitted when BAI is minted
-     */
-    event MintBAI(address minter, uint mintBAIAmount);
-
-    /**
-     * @notice Event emitted when BAI is repaid
-     */
-    event RepayBAI(address payer, address borrower, uint repayBAIAmount);
-
-    /// @notice The initial Btntex index for a market
-    uint224 public constant btntexInitialIndex = 1e36;
-
-    /**
-     * @notice Event emitted when a borrow is liquidated
-     */
-    event LiquidateBAI(address liquidator, address borrower, uint repayAmount, address bTokenCollateral, uint seizeTokens);
-
-    /**
-     * @notice Emitted when treasury guardian is changed
-     */
-    event NewTreasuryGuardian(address oldTreasuryGuardian, address newTreasuryGuardian);
-
-    /**
-     * @notice Emitted when treasury address is changed
-     */
-    event NewTreasuryAddress(address oldTreasuryAddress, address newTreasuryAddress);
-
-    /**
-     * @notice Emitted when treasury percent is changed
-     */
-    event NewTreasuryPercent(uint oldTreasuryPercent, uint newTreasuryPercent);
-
-    /**
-     * @notice Event emitted when BAIs are minted and fee are transferred
-     */
-    event MintFee(address minter, uint feeAmount);
-
-    /*** Main Actions ***/
-    struct MintLocalVars {
-        Error err;
-        MathError mathErr;
-        uint mintAmount;
+contract BtntexLens {
+    struct BTokenMetadata {
+        address bToken;
+        uint exchangeRateCurrent;
+        uint supplyRatePerBlock;
+        uint borrowRatePerBlock;
+        uint reserveFactorMantissa;
+        uint totalBorrows;
+        uint totalReserves;
+        uint totalSupply;
+        uint totalCash;
+        bool isListed;
+        uint collateralFactorMantissa;
+        address underlyingAssetAddress;
+        uint bTokenDecimals;
+        uint underlyingDecimals;
     }
 
-    function mintBAI(uint mintBAIAmount) external nonReentrant returns (uint) {
-        if(address(comptroller) != address(0)) {
-            require(mintBAIAmount > 0, "mintBAIAmount cbtntt be zero");
+    function bTokenMetadata(BToken bToken) public returns (BTokenMetadata memory) {
+        uint exchangeRateCurrent = bToken.exchangeRateCurrent();
+        ComptrollerLensInterface comptroller = ComptrollerLensInterface(address(bToken.comptroller()));
+        (bool isListed, uint collateralFactorMantissa) = comptroller.markets(address(bToken));
+        address underlyingAssetAddress;
+        uint underlyingDecimals;
 
-            require(!ComptrollerImplInterface(address(comptroller)).protocolPaused(), "protocol is paused");
-
-            MintLocalVars memory vars;
-
-            address minter = msg.sender;
-
-            // Keep the flywheel moving
-            updateBtntexBAIMintIndex();
-            ComptrollerImplInterface(address(comptroller)).distributeBAIMinterBtntex(minter);
-
-            uint oErr;
-            MathError mErr;
-            uint accountMintBAINew;
-            uint accountMintableBAI;
-
-            (oErr, accountMintableBAI) = getMintableBAI(minter);
-            if (oErr != uint(Error.NO_ERROR)) {
-                return uint(Error.REJECTION);
-            }
-
-            // check that user have sufficient mintableBAI balance
-            if (mintBAIAmount > accountMintableBAI) {
-                return fail(Error.REJECTION, FailureInfo.BAI_MINT_REJECTION);
-            }
-
-            (mErr, accountMintBAINew) = addUInt(ComptrollerImplInterface(address(comptroller)).mintedBAIs(minter), mintBAIAmount);
-            require(mErr == MathError.NO_ERROR, "BAI_MINT_AMOUNT_CALCULATION_FAILED");
-            uint error = comptroller.setMintedBAIOf(minter, accountMintBAINew);
-            if (error != 0 ) {
-                return error;
-            }
-
-            uint feeAmount;
-            uint remainedAmount;
-            vars.mintAmount = mintBAIAmount;
-            if (treasuryPercent != 0) {
-                (vars.mathErr, feeAmount) = mulUInt(vars.mintAmount, treasuryPercent);
-                if (vars.mathErr != MathError.NO_ERROR) {
-                    return failOpaque(Error.MATH_ERROR, FailureInfo.MINT_FEE_CALCULATION_FAILED, uint(vars.mathErr));
-                }
-
-                (vars.mathErr, feeAmount) = divUInt(feeAmount, 1e18);
-                if (vars.mathErr != MathError.NO_ERROR) {
-                    return failOpaque(Error.MATH_ERROR, FailureInfo.MINT_FEE_CALCULATION_FAILED, uint(vars.mathErr));
-                }
-
-                (vars.mathErr, remainedAmount) = subUInt(vars.mintAmount, feeAmount);
-                if (vars.mathErr != MathError.NO_ERROR) {
-                    return failOpaque(Error.MATH_ERROR, FailureInfo.MINT_FEE_CALCULATION_FAILED, uint(vars.mathErr));
-                }
-
-                BAI(getBAIAddress()).mint(treasuryAddress, feeAmount);
-
-                emit MintFee(minter, feeAmount);
-            } else {
-                remainedAmount = vars.mintAmount;
-            }
-
-            BAI(getBAIAddress()).mint(minter, remainedAmount);
-
-            emit MintBAI(minter, remainedAmount);
-
-            return uint(Error.NO_ERROR);
-        }
-    }
-
-    /**
-     * @notice Repay BAI
-     */
-    function repayBAI(uint repayBAIAmount) external nonReentrant returns (uint, uint) {
-        if(address(comptroller) != address(0)) {
-            require(repayBAIAmount > 0, "repayBAIAmount cbtntt be zero");
-
-            require(!ComptrollerImplInterface(address(comptroller)).protocolPaused(), "protocol is paused");
-
-            address payer = msg.sender;
-
-            updateBtntexBAIMintIndex();
-            ComptrollerImplInterface(address(comptroller)).distributeBAIMinterBtntex(payer);
-
-            return repayBAIFresh(msg.sender, msg.sender, repayBAIAmount);
-        }
-    }
-
-    /**
-     * @notice Repay BAI Internal
-     * @notice Borrowed BAIs are repaid by another user (possibly the borrower).
-     * @param payer the account paying off the BAI
-     * @param borrower the account with the debt being payed off
-     * @param repayAmount the amount of BAI being returned
-     * @return (uint, uint) An error code (0=success, otherwise a failure, see ErrorReporter.sol), and the actual repayment amount.
-     */
-    function repayBAIFresh(address payer, address borrower, uint repayAmount) internal returns (uint, uint) {
-        uint actualBurnAmount;
-
-        uint baiBalanceBorrower = ComptrollerImplInterface(address(comptroller)).mintedBAIs(borrower);
-
-        if(baiBalanceBorrower > repayAmount) {
-            actualBurnAmount = repayAmount;
+        if (compareStrings(bToken.symbol(), "aBNB")) {
+            underlyingAssetAddress = address(0);
+            underlyingDecimals = 18;
         } else {
-            actualBurnAmount = baiBalanceBorrower;
+            BBep20 bBep20 = BBep20(address(bToken));
+            underlyingAssetAddress = bBep20.underlying();
+            underlyingDecimals = EIP20Interface(bBep20.underlying()).decimals();
         }
 
-        MathError mErr;
-        uint accountBAINew;
-
-        BAI(getBAIAddress()).burn(payer, actualBurnAmount);
-
-        (mErr, accountBAINew) = subUInt(baiBalanceBorrower, actualBurnAmount);
-        require(mErr == MathError.NO_ERROR, "BAI_BURN_AMOUNT_CALCULATION_FAILED");
-
-        uint error = comptroller.setMintedBAIOf(borrower, accountBAINew);
-        if (error != 0) {
-            return (error, 0);
-        }
-        emit RepayBAI(payer, borrower, actualBurnAmount);
-
-        return (uint(Error.NO_ERROR), actualBurnAmount);
+        return BTokenMetadata({
+            bToken: address(bToken),
+            exchangeRateCurrent: exchangeRateCurrent,
+            supplyRatePerBlock: bToken.supplyRatePerBlock(),
+            borrowRatePerBlock: bToken.borrowRatePerBlock(),
+            reserveFactorMantissa: bToken.reserveFactorMantissa(),
+            totalBorrows: bToken.totalBorrows(),
+            totalReserves: bToken.totalReserves(),
+            totalSupply: bToken.totalSupply(),
+            totalCash: bToken.getCash(),
+            isListed: isListed,
+            collateralFactorMantissa: collateralFactorMantissa,
+            underlyingAssetAddress: underlyingAssetAddress,
+            bTokenDecimals: bToken.decimals(),
+            underlyingDecimals: underlyingDecimals
+        });
     }
 
-    /**
-     * @notice The sender liquidates the bai minters collateral.
-     *  The collateral seized is transferred to the liquidator.
-     * @param borrower The borrower of bai to be liquidated
-     * @param bTokenCollateral The market in which to seize collateral from the borrower
-     * @param repayAmount The amount of the underlying borrowed asset to repay
-     * @return (uint, uint) An error code (0=success, otherwise a failure, see ErrorReporter.sol), and the actual repayment amount.
-     */
-    function liquidateBAI(address borrower, uint repayAmount, BTokenInterface bTokenCollateral) external nonReentrant returns (uint, uint) {
-        require(!ComptrollerImplInterface(address(comptroller)).protocolPaused(), "protocol is paused");
-
-        uint error = bTokenCollateral.accrueInterest();
-        if (error != uint(Error.NO_ERROR)) {
-            // accrueInterest emits logs on errors, but we still want to log the fact that an attempted liquidation failed
-            return (fail(Error(error), FailureInfo.BAI_LIQUIDATE_ACCRUE_COLLATERAL_INTEREST_FAILED), 0);
+    function bTokenMetadataAll(BToken[] calldata bTokens) external returns (BTokenMetadata[] memory) {
+        uint bTokenCount = bTokens.length;
+        BTokenMetadata[] memory res = new BTokenMetadata[](bTokenCount);
+        for (uint i = 0; i < bTokenCount; i++) {
+            res[i] = bTokenMetadata(bTokens[i]);
         }
-
-        // liquidateBAIFresh emits borrow-specific logs on errors, so we don't need to
-        return liquidateBAIFresh(msg.sender, borrower, repayAmount, bTokenCollateral);
+        return res;
     }
 
-    /**
-     * @notice The liquidator liquidates the borrowers collateral by repay borrowers BAI.
-     *  The collateral seized is transferred to the liquidator.
-     * @param liquidator The address repaying the BAI and seizing collateral
-     * @param borrower The borrower of this BAI to be liquidated
-     * @param bTokenCollateral The market in which to seize collateral from the borrower
-     * @param repayAmount The amount of the BAI to repay
-     * @return (uint, uint) An error code (0=success, otherwise a failure, see ErrorReporter.sol), and the actual repayment BAI.
-     */
-    function liquidateBAIFresh(address liquidator, address borrower, uint repayAmount, BTokenInterface bTokenCollateral) internal returns (uint, uint) {
-        if(address(comptroller) != address(0)) {
-            /* Fail if liquidate not allowed */
-            uint allowed = comptroller.liquidateBorrowAllowed(address(this), address(bTokenCollateral), liquidator, borrower, repayAmount);
-            if (allowed != 0) {
-                return (failOpaque(Error.REJECTION, FailureInfo.BAI_LIQUIDATE_COMPTROLLER_REJECTION, allowed), 0);
-            }
-
-            /* Verify bTokenCollateral market's block number equals current block number */
-            //if (bTokenCollateral.accrualBlockNumber() != accrualBlockNumber) {
-            if (bTokenCollateral.accrualBlockNumber() != getBlockNumber()) {
-                return (fail(Error.REJECTION, FailureInfo.BAI_LIQUIDATE_COLLATERAL_FRESHNESS_CHECK), 0);
-            }
-
-            /* Fail if borrower = liquidator */
-            if (borrower == liquidator) {
-                return (fail(Error.REJECTION, FailureInfo.BAI_LIQUIDATE_LIQUIDATOR_IS_BORROWER), 0);
-            }
-
-            /* Fail if repayAmount = 0 */
-            if (repayAmount == 0) {
-                return (fail(Error.REJECTION, FailureInfo.BAI_LIQUIDATE_CLOSE_AMOUNT_IS_ZERO), 0);
-            }
-
-            /* Fail if repayAmount = -1 */
-            if (repayAmount == uint(-1)) {
-                return (fail(Error.REJECTION, FailureInfo.BAI_LIQUIDATE_CLOSE_AMOUNT_IS_UINT_MAX), 0);
-            }
-
-
-            /* Fail if repayBAI fails */
-            (uint repayBorrowError, uint actualRepayAmount) = repayBAIFresh(liquidator, borrower, repayAmount);
-            if (repayBorrowError != uint(Error.NO_ERROR)) {
-                return (fail(Error(repayBorrowError), FailureInfo.BAI_LIQUIDATE_REPAY_BORROW_FRESH_FAILED), 0);
-            }
-
-            /////////////////////////
-            // EFFECTS & INTERACTIONS
-            // (No safe failures beyond this point)
-
-            /* We calculate the number of collateral tokens that will be seized */
-            (uint amountSeizeError, uint seizeTokens) = comptroller.liquidateBAICalculateSeizeTokens(address(bTokenCollateral), actualRepayAmount);
-            require(amountSeizeError == uint(Error.NO_ERROR), "BAI_LIQUIDATE_COMPTROLLER_CALCULATE_AMOUNT_SEIZE_FAILED");
-
-            /* Revert if borrower collateral token balance < seizeTokens */
-            require(bTokenCollateral.balanceOf(borrower) >= seizeTokens, "BAI_LIQUIDATE_SEIZE_TOO_MUCH");
-
-            uint seizeError;
-            seizeError = bTokenCollateral.seize(liquidator, borrower, seizeTokens);
-
-            /* Revert if seize tokens fails (since we cbtntot be sure of side effects) */
-            require(seizeError == uint(Error.NO_ERROR), "token seizure failed");
-
-            /* We emit a LiquidateBorrow event */
-            emit LiquidateBAI(liquidator, borrower, actualRepayAmount, address(bTokenCollateral), seizeTokens);
-
-            /* We call the defense hook */
-            comptroller.liquidateBorrowVerify(address(this), address(bTokenCollateral), liquidator, borrower, actualRepayAmount, seizeTokens);
-
-            return (uint(Error.NO_ERROR), actualRepayAmount);
-        }
+    struct BTokenBalances {
+        address bToken;
+        uint balanceOf;
+        uint borrowBalanceCurrent;
+        uint balanceOfUnderlying;
+        uint tokenBalance;
+        uint tokenAllowance;
     }
 
-    /**
-     * @notice Initialize the BtntexBAIState
-     */
-    function _initializeBtntexBAIState(uint blockNumber) external returns (uint) {
-        // Check caller is admin
-        if (msg.sender != admin) {
-            return fail(Error.UNAUTHORIZED, FailureInfo.SET_COMPTROLLER_OWNER_CHECK);
+    function bTokenBalances(BToken bToken, address payable account) public returns (BTokenBalances memory) {
+        uint balanceOf = bToken.balanceOf(account);
+        uint borrowBalanceCurrent = bToken.borrowBalanceCurrent(account);
+        uint balanceOfUnderlying = bToken.balanceOfUnderlying(account);
+        uint tokenBalance;
+        uint tokenAllowance;
+
+        if (compareStrings(bToken.symbol(), "aBNB")) {
+            tokenBalance = account.balance;
+            tokenAllowance = account.balance;
+        } else {
+            BBep20 bBep20 = BBep20(address(bToken));
+            EIP20Interface underlying = EIP20Interface(bBep20.underlying());
+            tokenBalance = underlying.balanceOf(account);
+            tokenAllowance = underlying.allowance(account, address(bToken));
         }
 
-        if (isBtntexBAIInitialized == false) {
-            isBtntexBAIInitialized = true;
-            uint baiBlockNumber = blockNumber == 0 ? getBlockNumber() : blockNumber;
-            btntexBAIState = BtntexBAIState({
-                index: btntexInitialIndex,
-                block: safe32(baiBlockNumber, "block number overflows")
+        return BTokenBalances({
+            bToken: address(bToken),
+            balanceOf: balanceOf,
+            borrowBalanceCurrent: borrowBalanceCurrent,
+            balanceOfUnderlying: balanceOfUnderlying,
+            tokenBalance: tokenBalance,
+            tokenAllowance: tokenAllowance
+        });
+    }
+
+    function bTokenBalancesAll(BToken[] calldata bTokens, address payable account) external returns (BTokenBalances[] memory) {
+        uint bTokenCount = bTokens.length;
+        BTokenBalances[] memory res = new BTokenBalances[](bTokenCount);
+        for (uint i = 0; i < bTokenCount; i++) {
+            res[i] = bTokenBalances(bTokens[i], account);
+        }
+        return res;
+    }
+
+    struct BTokenUnderlyingPrice {
+        address bToken;
+        uint underlyingPrice;
+    }
+
+    function bTokenUnderlyingPrice(BToken bToken) public view returns (BTokenUnderlyingPrice memory) {
+        ComptrollerLensInterface comptroller = ComptrollerLensInterface(address(bToken.comptroller()));
+        PriceOracle priceOracle = comptroller.oracle();
+
+        return BTokenUnderlyingPrice({
+            bToken: address(bToken),
+            underlyingPrice: priceOracle.getUnderlyingPrice(bToken)
+        });
+    }
+
+    function bTokenUnderlyingPriceAll(BToken[] calldata bTokens) external view returns (BTokenUnderlyingPrice[] memory) {
+        uint bTokenCount = bTokens.length;
+        BTokenUnderlyingPrice[] memory res = new BTokenUnderlyingPrice[](bTokenCount);
+        for (uint i = 0; i < bTokenCount; i++) {
+            res[i] = bTokenUnderlyingPrice(bTokens[i]);
+        }
+        return res;
+    }
+
+    struct AccountLimits {
+        BToken[] markets;
+        uint liquidity;
+        uint shortfall;
+    }
+
+    function getAccountLimits(ComptrollerLensInterface comptroller, address account) public view returns (AccountLimits memory) {
+        (uint errorCode, uint liquidity, uint shortfall) = comptroller.getAccountLiquidity(account);
+        require(errorCode == 0, "account liquidity error");
+
+        return AccountLimits({
+            markets: comptroller.getAssetsIn(account),
+            liquidity: liquidity,
+            shortfall: shortfall
+        });
+    }
+
+    struct GovReceipt {
+        uint proposalId;
+        bool hasVoted;
+        bool support;
+        uint96 votes;
+    }
+
+    function getGovReceipts(GovernorAlpha governor, address voter, uint[] memory proposalIds) public view returns (GovReceipt[] memory) {
+        uint proposalCount = proposalIds.length;
+        GovReceipt[] memory res = new GovReceipt[](proposalCount);
+        for (uint i = 0; i < proposalCount; i++) {
+            GovernorAlpha.Receipt memory receipt = governor.getReceipt(proposalIds[i], voter);
+            res[i] = GovReceipt({
+                proposalId: proposalIds[i],
+                hasVoted: receipt.hasVoted,
+                support: receipt.support,
+                votes: receipt.votes
             });
         }
-
-        return uint(Error.NO_ERROR);
+        return res;
     }
 
-    /**
-     * @notice Accrue BTNT to by updating the BAI minter index
-     */
-    function updateBtntexBAIMintIndex() public returns (uint) {
-        uint baiMinterSpeed = ComptrollerImplInterface(address(comptroller)).btntexBAIRate();
-        uint blockNumber = getBlockNumber();
-        uint deltaBlocks = sub_(blockNumber, uint(btntexBAIState.block));
-        if (deltaBlocks > 0 && baiMinterSpeed > 0) {
-            uint baiAmount = BAI(getBAIAddress()).totalSupply();
-            uint btntexAccrued = mul_(deltaBlocks, baiMinterSpeed);
-            Double memory ratio = baiAmount > 0 ? fraction(btntexAccrued, baiAmount) : Double({mantissa: 0});
-            Double memory index = add_(Double({mantissa: btntexBAIState.index}), ratio);
-            btntexBAIState = BtntexBAIState({
-                index: safe224(index.mantissa, "new index overflows"),
-                block: safe32(blockNumber, "block number overflows")
+    struct GovProposal {
+        uint proposalId;
+        address proposer;
+        uint eta;
+        address[] targets;
+        uint[] values;
+        string[] signatures;
+        bytes[] calldatas;
+        uint startBlock;
+        uint endBlock;
+        uint forVotes;
+        uint againstVotes;
+        bool canceled;
+        bool executed;
+    }
+
+    function setProposal(GovProposal memory res, GovernorAlpha governor, uint proposalId) internal view {
+        (
+            ,
+            address proposer,
+            uint eta,
+            uint startBlock,
+            uint endBlock,
+            uint forVotes,
+            uint againstVotes,
+            bool canceled,
+            bool executed
+        ) = governor.proposals(proposalId);
+        res.proposalId = proposalId;
+        res.proposer = proposer;
+        res.eta = eta;
+        res.startBlock = startBlock;
+        res.endBlock = endBlock;
+        res.forVotes = forVotes;
+        res.againstVotes = againstVotes;
+        res.canceled = canceled;
+        res.executed = executed;
+    }
+
+    function getGovProposals(GovernorAlpha governor, uint[] calldata proposalIds) external view returns (GovProposal[] memory) {
+        GovProposal[] memory res = new GovProposal[](proposalIds.length);
+        for (uint i = 0; i < proposalIds.length; i++) {
+            (
+                address[] memory targets,
+                uint[] memory values,
+                string[] memory signatures,
+                bytes[] memory calldatas
+            ) = governor.getActions(proposalIds[i]);
+            res[i] = GovProposal({
+                proposalId: 0,
+                proposer: address(0),
+                eta: 0,
+                targets: targets,
+                values: values,
+                signatures: signatures,
+                calldatas: calldatas,
+                startBlock: 0,
+                endBlock: 0,
+                forVotes: 0,
+                againstVotes: 0,
+                canceled: false,
+                executed: false
             });
-        } else if (deltaBlocks > 0) {
-            btntexBAIState.block = safe32(blockNumber, "block number overflows");
+            setProposal(res[i], governor, proposalIds[i]);
         }
-
-        return uint(Error.NO_ERROR);
+        return res;
     }
 
-    /**
-     * @notice Calculate BTNT accrued by a BAI minter
-     * @param baiMinter The address of the BAI minter to distribute BTNT to
-     */
-    function calcDistributeBAIMinterBtntex(address baiMinter) public returns(uint, uint, uint, uint) {
-        // Check caller is comptroller
-        if (msg.sender != address(comptroller)) {
-            return (fail(Error.UNAUTHORIZED, FailureInfo.SET_COMPTROLLER_OWNER_CHECK), 0, 0, 0);
+    struct BTNTBalanceMetadata {
+        uint balance;
+        uint votes;
+        address delegate;
+    }
+
+    function getBTNTBalanceMetadata(BTNT btnt, address account) external view returns (BTNTBalanceMetadata memory) {
+        return BTNTBalanceMetadata({
+            balance: btnt.balanceOf(account),
+            votes: uint256(btnt.getCurrentVotes(account)),
+            delegate: btnt.delegates(account)
+        });
+    }
+
+    struct BTNTBalanceMetadataExt {
+        uint balance;
+        uint votes;
+        address delegate;
+        uint allocated;
+    }
+
+    function getBTNTBalanceMetadataExt(BTNT btnt, ComptrollerLensInterface comptroller, address account) external returns (BTNTBalanceMetadataExt memory) {
+        uint balance = btnt.balanceOf(account);
+        comptroller.claimBtntex(account);
+        uint newBalance = btnt.balanceOf(account);
+        uint accrued = comptroller.btntexAccrued(account);
+        uint total = add(accrued, newBalance, "sum btnt total");
+        uint allocated = sub(total, balance, "sub allocated");
+
+        return BTNTBalanceMetadataExt({
+            balance: balance,
+            votes: uint256(btnt.getCurrentVotes(account)),
+            delegate: btnt.delegates(account),
+            allocated: allocated
+        });
+    }
+
+    struct BtntexVotes {
+        uint blockNumber;
+        uint votes;
+    }
+
+    function getBtntexVotes(BTNT btnt, address account, uint32[] calldata blockNumbers) external view returns (BtntexVotes[] memory) {
+        BtntexVotes[] memory res = new BtntexVotes[](blockNumbers.length);
+        for (uint i = 0; i < blockNumbers.length; i++) {
+            res[i] = BtntexVotes({
+                blockNumber: uint256(blockNumbers[i]),
+                votes: uint256(btnt.getPriorVotes(account, blockNumbers[i]))
+            });
         }
-
-        Double memory baiMintIndex = Double({mantissa: btntexBAIState.index});
-        Double memory baiMinterIndex = Double({mantissa: btntexBAIMinterIndex[baiMinter]});
-        btntexBAIMinterIndex[baiMinter] = baiMintIndex.mantissa;
-
-        if (baiMinterIndex.mantissa == 0 && baiMintIndex.mantissa > 0) {
-            baiMinterIndex.mantissa = btntexInitialIndex;
-        }
-
-        Double memory deltaIndex = sub_(baiMintIndex, baiMinterIndex);
-        uint baiMinterAmount = ComptrollerImplInterface(address(comptroller)).mintedBAIs(baiMinter);
-        uint baiMinterDelta = mul_(baiMinterAmount, deltaIndex);
-        uint baiMinterAccrued = add_(ComptrollerImplInterface(address(comptroller)).btntexAccrued(baiMinter), baiMinterDelta);
-        return (uint(Error.NO_ERROR), baiMinterAccrued, baiMinterDelta, baiMintIndex.mantissa);
+        return res;
     }
 
-    /*** Admin Functions ***/
-
-    /**
-      * @notice Sets a new comptroller
-      * @dev Admin function to set a new comptroller
-      * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
-      */
-    function _setComptroller(ComptrollerInterface comptroller_) external returns (uint) {
-        // Check caller is admin
-        if (msg.sender != admin) {
-            return fail(Error.UNAUTHORIZED, FailureInfo.SET_COMPTROLLER_OWNER_CHECK);
-        }
-
-        ComptrollerInterface oldComptroller = comptroller;
-        comptroller = comptroller_;
-        emit NewComptroller(oldComptroller, comptroller_);
-
-        return uint(Error.NO_ERROR);
+    function compareStrings(string memory a, string memory b) internal pure returns (bool) {
+        return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
     }
 
-    function _become(BAIUnitroller unitroller) external {
-        require(msg.sender == unitroller.admin(), "only unitroller admin can change brains");
-        require(unitroller._acceptImplementation() == 0, "change not authorized");
+    function add(uint a, uint b, string memory errorMessage) internal pure returns (uint) {
+        uint c = a + b;
+        require(c >= a, errorMessage);
+        return c;
     }
 
-    /**
-     * @dev Local vars for avoiding stack-depth limits in calculating account total supply balance.
-     *  Note that `bTokenBalance` is the number of bTokens the account owns in the market,
-     *  whereas `borrowBalance` is the amount of underlying that the account has borrowed.
-     */
-    struct AccountAmountLocalVars {
-        uint totalSupplyAmount;
-        uint sumSupply;
-        uint sumBorrowPlusEffects;
-        uint bTokenBalance;
-        uint borrowBalance;
-        uint exchangeRateMantissa;
-        uint oraclePriceMantissa;
-        Exp collateralFactor;
-        Exp exchangeRate;
-        Exp oraclePrice;
-        Exp tokensToDenom;
-    }
-
-    function getMintableBAI(address minter) public view returns (uint, uint) {
-        PriceOracle oracle = ComptrollerImplInterface(address(comptroller)).oracle();
-        BToken[] memory enteredMarkets = ComptrollerImplInterface(address(comptroller)).getAssetsIn(minter);
-
-        AccountAmountLocalVars memory vars; // Holds all our calculation results
-
-        uint oErr;
-        MathError mErr;
-
-        uint accountMintableBAI;
-        uint i;
-
-        /**
-         * We use this formula to calculate mintable BAI amount.
-         * totalSupplyAmount * BAIMintRate - (totalBorrowAmount + mintedBAIOf)
-         */
-        for (i = 0; i < enteredMarkets.length; i++) {
-            (oErr, vars.bTokenBalance, vars.borrowBalance, vars.exchangeRateMantissa) = enteredMarkets[i].getAccountSnapshot(minter);
-            if (oErr != 0) { // semi-opaque error code, we assume NO_ERROR == 0 is invariant between upgrades
-                return (uint(Error.SNAPSHOT_ERROR), 0);
-            }
-            vars.exchangeRate = Exp({mantissa: vars.exchangeRateMantissa});
-
-            // Get the normalized price of the asset
-            vars.oraclePriceMantissa = oracle.getUnderlyingPrice(enteredMarkets[i]);
-            if (vars.oraclePriceMantissa == 0) {
-                return (uint(Error.PRICE_ERROR), 0);
-            }
-            vars.oraclePrice = Exp({mantissa: vars.oraclePriceMantissa});
-
-            (mErr, vars.tokensToDenom) = mulExp(vars.exchangeRate, vars.oraclePrice);
-            if (mErr != MathError.NO_ERROR) {
-                return (uint(Error.MATH_ERROR), 0);
-            }
-
-            // sumSupply += tokensToDenom * bTokenBalance
-            (mErr, vars.sumSupply) = mulScalarTruncateAddUInt(vars.tokensToDenom, vars.bTokenBalance, vars.sumSupply);
-            if (mErr != MathError.NO_ERROR) {
-                return (uint(Error.MATH_ERROR), 0);
-            }
-
-            // sumBorrowPlusEffects += oraclePrice * borrowBalance
-            (mErr, vars.sumBorrowPlusEffects) = mulScalarTruncateAddUInt(vars.oraclePrice, vars.borrowBalance, vars.sumBorrowPlusEffects);
-            if (mErr != MathError.NO_ERROR) {
-                return (uint(Error.MATH_ERROR), 0);
-            }
-        }
-
-        (mErr, vars.sumBorrowPlusEffects) = addUInt(vars.sumBorrowPlusEffects, ComptrollerImplInterface(address(comptroller)).mintedBAIs(minter));
-        if (mErr != MathError.NO_ERROR) {
-            return (uint(Error.MATH_ERROR), 0);
-        }
-
-        (mErr, accountMintableBAI) = mulUInt(vars.sumSupply, ComptrollerImplInterface(address(comptroller)).baiMintRate());
-        require(mErr == MathError.NO_ERROR, "BAI_MINT_AMOUNT_CALCULATION_FAILED");
-
-        (mErr, accountMintableBAI) = divUInt(accountMintableBAI, 10000);
-        require(mErr == MathError.NO_ERROR, "BAI_MINT_AMOUNT_CALCULATION_FAILED");
-
-
-        (mErr, accountMintableBAI) = subUInt(accountMintableBAI, vars.sumBorrowPlusEffects);
-        if (mErr != MathError.NO_ERROR) {
-            return (uint(Error.REJECTION), 0);
-        }
-
-        return (uint(Error.NO_ERROR), accountMintableBAI);
-    }
-
-    function _setTreasuryData(address newTreasuryGuardian, address newTreasuryAddress, uint newTreasuryPercent) external returns (uint) {
-        // Check caller is admin
-        if (!(msg.sender == admin || msg.sender == treasuryGuardian)) {
-            return fail(Error.UNAUTHORIZED, FailureInfo.SET_TREASURY_OWNER_CHECK);
-        }
-
-        require(newTreasuryPercent < 1e18, "treasury percent cap overflow");
-
-        address oldTreasuryGuardian = treasuryGuardian;
-        address oldTreasuryAddress = treasuryAddress;
-        uint oldTreasuryPercent = treasuryPercent;
-
-        treasuryGuardian = newTreasuryGuardian;
-        treasuryAddress = newTreasuryAddress;
-        treasuryPercent = newTreasuryPercent;
-
-        emit NewTreasuryGuardian(oldTreasuryGuardian, newTreasuryGuardian);
-        emit NewTreasuryAddress(oldTreasuryAddress, newTreasuryAddress);
-        emit NewTreasuryPercent(oldTreasuryPercent, newTreasuryPercent);
-
-        return uint(Error.NO_ERROR);
-    }
-
-    function getBlockNumber() public view returns (uint) {
-        return block.number;
-    }
-
-    /**
-     * @notice Return the address of the BAI token
-     * @return The address of BAI
-     */
-    function getBAIAddress() public view returns (address) {
-        return 0x4BD17003473389A42DAF6a0a729f6Fdb328BbBd7;
-    }
-
-    function initialize() onlyAdmin public {
-        // The counter starts true to prevent changing it from zero to non-zero (i.e. smaller cost/refund)
-        _notEntered = true;
-    }
-
-    modifier onlyAdmin() {
-        require(msg.sender == admin, "only admin can");
-        _;
-    }
-
-    /*** Reentrancy Guard ***/
-
-    /**
-     * @dev Prevents a contract from calling itself, directly or indirectly.
-     */
-    modifier nonReentrant() {
-        require(_notEntered, "re-entered");
-        _notEntered = false;
-        _;
-        _notEntered = true; // get a gas-refund post-Istanbul
+    function sub(uint a, uint b, string memory errorMessage) internal pure returns (uint) {
+        require(b <= a, errorMessage);
+        uint c = a - b;
+        return c;
     }
 }

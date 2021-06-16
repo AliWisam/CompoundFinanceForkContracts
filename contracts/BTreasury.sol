@@ -7,7 +7,7 @@ import "./Ownable.sol";
 /**
  * @dev Contract for treasury all tokens as fee and transfer to governance
  */
-contract ATreasury is Ownable {
+contract BTreasury is Ownable {
     using SafeMath for uint256;
 
     // WithdrawTreasuryBEP20 Event
