@@ -1,0 +1,1262 @@
+{
+  "contractName": "BAIControllerStorageG1",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "admin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "baiControllerImplementation",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "btntexBAIMinterIndex",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "btntexBAIState",
+      "outputs": [
+        {
+          "internalType": "uint224",
+          "name": "index",
+          "type": "uint224"
+        },
+        {
+          "internalType": "uint32",
+          "name": "block",
+          "type": "uint32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "comptroller",
+      "outputs": [
+        {
+          "internalType": "contract ComptrollerInterface",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "isBtntexBAIInitialized",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "pendingAdmin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "pendingBAIControllerImplementation",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.17+commit.d19bba13\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"admin\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"baiControllerImplementation\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"btntexBAIMinterIndex\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"btntexBAIState\",\"outputs\":[{\"internalType\":\"uint224\",\"name\":\"index\",\"type\":\"uint224\"},{\"internalType\":\"uint32\",\"name\":\"block\",\"type\":\"uint32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"comptroller\",\"outputs\":[{\"internalType\":\"contract ComptrollerInterface\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isBtntexBAIInitialized\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"pendingAdmin\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"pendingBAIControllerImplementation\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIControllerStorage.sol\":\"BAIControllerStorageG1\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIControllerStorage.sol\":{\"keccak256\":\"0xe1961b8fc5774de69fa0d483faed77dcc51116d35a1bbe7e610cfe745c5aea2a\",\"urls\":[\"bzz-raw://91809a7a19618f1eb3f32bcb52e1ca7f1d06088dda364b2d993fa9cf32671340\",\"dweb:/ipfs/QmXwJ8J4soWu3Vmwf8Yt5AzTxWWKwgAtf3ov51mExZAPbY\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ComptrollerInterface.sol\":{\"keccak256\":\"0xeeab236ea1a3757fbd66ce0755b95171e7121f186cf23a0339e58821fadfbc7d\",\"urls\":[\"bzz-raw://fa3f6856fd52743b1874f3f6409e62a3730c3a2217822a8daf5e3f75b18f7ac7\",\"dweb:/ipfs/QmemY5h611yo2Kc1fbFxVW41uR5AAPY46TyeH1uwUN3ifr\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5061044d806100206000396000f3fe608060405234801561001057600080fd5b50600436106100885760003560e01c80635fe3b5671161005b5780635fe3b567146101e65780639a43817e14610230578063ee2dccd914610252578063f851a4401461029c57610088565b806316c8af971461008d57806325e07375146100e557806326782247146101525780635769247d1461019c575b600080fd5b6100cf600480360360208110156100a357600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506102e6565b6040518082815260200191505060405180910390f35b6100ed6102fe565b60405180837bffffffffffffffffffffffffffffffffffffffffffffffffffffffff167bffffffffffffffffffffffffffffffffffffffffffffffffffffffff1681526020018263ffffffff1663ffffffff1681526020019250505060405180910390f35b61015a610348565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6101a461036e565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6101ee610394565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6102386103ba565b604051808215151515815260200191505060405180910390f35b61025a6103cd565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6102a46103f3565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60076020528060005260406000206000915090505481565b60058060000160009054906101000a90047bffffffffffffffffffffffffffffffffffffffffffffffffffffffff169080600001601c9054906101000a900463ffffffff16905082565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600460009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600660009054906101000a900460ff1681565b600360009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea265627a7a723158207f6be5f930f963fbdeb3c40e2c09e0467074cb3c5e2406c64dd19dd8256a960964736f6c63430005110032",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100885760003560e01c80635fe3b5671161005b5780635fe3b567146101e65780639a43817e14610230578063ee2dccd914610252578063f851a4401461029c57610088565b806316c8af971461008d57806325e07375146100e557806326782247146101525780635769247d1461019c575b600080fd5b6100cf600480360360208110156100a357600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506102e6565b6040518082815260200191505060405180910390f35b6100ed6102fe565b60405180837bffffffffffffffffffffffffffffffffffffffffffffffffffffffff167bffffffffffffffffffffffffffffffffffffffffffffffffffffffff1681526020018263ffffffff1663ffffffff1681526020019250505060405180910390f35b61015a610348565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6101a461036e565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6101ee610394565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6102386103ba565b604051808215151515815260200191505060405180910390f35b61025a6103cd565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6102a46103f3565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60076020528060005260406000206000915090505481565b60058060000160009054906101000a90047bffffffffffffffffffffffffffffffffffffffffffffffffffffffff169080600001601c9054906101000a900463ffffffff16905082565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600460009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600660009054906101000a900460ff1681565b600360009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea265627a7a723158207f6be5f930f963fbdeb3c40e2c09e0467074cb3c5e2406c64dd19dd8256a960964736f6c63430005110032",
+  "sourceMap": "514:624:5:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;514:624:5;;;;;;;",
+  "deployedSourceMap": "514:624:5:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;514:624:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1083:52;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;1083:52:5;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;868:36;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;262:27;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;353:42;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;581:39;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;960:34;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;460:49;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;166:20;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;1083:52;;;;;;;;;;;;;;;;;:::o;868:36::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;262:27::-;;;;;;;;;;;;;:::o;353:42::-;;;;;;;;;;;;;:::o;581:39::-;;;;;;;;;;;;;:::o;960:34::-;;;;;;;;;;;;;:::o;460:49::-;;;;;;;;;;;;;:::o;166:20::-;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.5.16;\n\nimport \"./ComptrollerInterface.sol\";\n\ncontract BAIUnitrollerAdminStorage {\n    /**\n    * @notice Administrator for this contract\n    */\n    address public admin;\n\n    /**\n    * @notice Pending administrator for this contract\n    */\n    address public pendingAdmin;\n\n    /**\n    * @notice Active brains of Unitroller\n    */\n    address public baiControllerImplementation;\n\n    /**\n    * @notice Pending brains of Unitroller\n    */\n    address public pendingBAIControllerImplementation;\n}\n\ncontract BAIControllerStorageG1 is BAIUnitrollerAdminStorage {\n    ComptrollerInterface public comptroller;\n\n    struct BtntexBAIState {\n        /// @notice The last updated btntexBAIMintIndex\n        uint224 index;\n\n        /// @notice The block number the index was last updated at\n        uint32 block;\n    }\n\n    /// @notice The Btntex BAI state\n    BtntexBAIState public btntexBAIState;\n\n    /// @notice The Btntex BAI state initialized\n    bool public isBtntexBAIInitialized;\n\n    /// @notice The Btntex BAI minter index as of the last time they accrued BTNT\n    mapping(address => uint) public btntexBAIMinterIndex;\n}\n\ncontract BAIControllerStorageG2 is BAIControllerStorageG1 {\n    /// @notice Treasury Guardian address\n    address public treasuryGuardian;\n\n    /// @notice Treasury address\n    address public treasuryAddress;\n\n    /// @notice Fee percent of accrued interest with decimal 18\n    uint256 public treasuryPercent;\n\n    /// @notice Guard variable for re-entrancy checks\n    bool internal _notEntered;\n}\n",
+  "sourcePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIControllerStorage.sol",
+  "ast": {
+    "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIControllerStorage.sol",
+    "exportedSymbols": {
+      "BAIControllerStorageG1": [
+        3520
+      ],
+      "BAIControllerStorageG2": [
+        3531
+      ],
+      "BAIUnitrollerAdminStorage": [
+        3502
+      ]
+    },
+    "id": 3532,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3492,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".16"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:5"
+      },
+      {
+        "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ComptrollerInterface.sol",
+        "file": "./ComptrollerInterface.sol",
+        "id": 3493,
+        "nodeType": "ImportDirective",
+        "scope": 3532,
+        "sourceUnit": 30351,
+        "src": "26:36:5",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 3502,
+        "linearizedBaseContracts": [
+          3502
+        ],
+        "name": "BAIUnitrollerAdminStorage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 3495,
+            "name": "admin",
+            "nodeType": "VariableDeclaration",
+            "scope": 3502,
+            "src": "166:20:5",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 3494,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "166:7:5",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 3497,
+            "name": "pendingAdmin",
+            "nodeType": "VariableDeclaration",
+            "scope": 3502,
+            "src": "262:27:5",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 3496,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "262:7:5",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 3499,
+            "name": "baiControllerImplementation",
+            "nodeType": "VariableDeclaration",
+            "scope": 3502,
+            "src": "353:42:5",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 3498,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "353:7:5",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 3501,
+            "name": "pendingBAIControllerImplementation",
+            "nodeType": "VariableDeclaration",
+            "scope": 3502,
+            "src": "460:49:5",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 3500,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "460:7:5",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3532,
+        "src": "64:448:5"
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 3503,
+              "name": "BAIUnitrollerAdminStorage",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3502,
+              "src": "549:25:5",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_BAIUnitrollerAdminStorage_$3502",
+                "typeString": "contract BAIUnitrollerAdminStorage"
+              }
+            },
+            "id": 3504,
+            "nodeType": "InheritanceSpecifier",
+            "src": "549:25:5"
+          }
+        ],
+        "contractDependencies": [
+          3502
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 3520,
+        "linearizedBaseContracts": [
+          3520,
+          3502
+        ],
+        "name": "BAIControllerStorageG1",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 3506,
+            "name": "comptroller",
+            "nodeType": "VariableDeclaration",
+            "scope": 3520,
+            "src": "581:39:5",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_ComptrollerInterface_$30335",
+              "typeString": "contract ComptrollerInterface"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 3505,
+              "name": "ComptrollerInterface",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 30335,
+              "src": "581:20:5",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_ComptrollerInterface_$30335",
+                "typeString": "contract ComptrollerInterface"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "BAIControllerStorageG1.BtntexBAIState",
+            "id": 3511,
+            "members": [
+              {
+                "constant": false,
+                "id": 3508,
+                "name": "index",
+                "nodeType": "VariableDeclaration",
+                "scope": 3511,
+                "src": "715:13:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint224",
+                  "typeString": "uint224"
+                },
+                "typeName": {
+                  "id": 3507,
+                  "name": "uint224",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "715:7:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint224",
+                    "typeString": "uint224"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3510,
+                "name": "block",
+                "nodeType": "VariableDeclaration",
+                "scope": 3511,
+                "src": "806:12:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint32",
+                  "typeString": "uint32"
+                },
+                "typeName": {
+                  "id": 3509,
+                  "name": "uint32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "806:6:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint32",
+                    "typeString": "uint32"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "BtntexBAIState",
+            "nodeType": "StructDefinition",
+            "scope": 3520,
+            "src": "627:198:5",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 3513,
+            "name": "btntexBAIState",
+            "nodeType": "VariableDeclaration",
+            "scope": 3520,
+            "src": "868:36:5",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_BtntexBAIState_$3511_storage",
+              "typeString": "struct BAIControllerStorageG1.BtntexBAIState"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 3512,
+              "name": "BtntexBAIState",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3511,
+              "src": "868:14:5",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_BtntexBAIState_$3511_storage_ptr",
+                "typeString": "struct BAIControllerStorageG1.BtntexBAIState"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 3515,
+            "name": "isBtntexBAIInitialized",
+            "nodeType": "VariableDeclaration",
+            "scope": 3520,
+            "src": "960:34:5",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 3514,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "960:4:5",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 3519,
+            "name": "btntexBAIMinterIndex",
+            "nodeType": "VariableDeclaration",
+            "scope": 3520,
+            "src": "1083:52:5",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+              "typeString": "mapping(address => uint256)"
+            },
+            "typeName": {
+              "id": 3518,
+              "keyType": {
+                "id": 3516,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "1091:7:5",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "1083:24:5",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                "typeString": "mapping(address => uint256)"
+              },
+              "valueType": {
+                "id": 3517,
+                "name": "uint",
+                "nodeType": "ElementaryTypeName",
+                "src": "1102:4:5",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3532,
+        "src": "514:624:5"
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 3521,
+              "name": "BAIControllerStorageG1",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3520,
+              "src": "1175:22:5",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_BAIControllerStorageG1_$3520",
+                "typeString": "contract BAIControllerStorageG1"
+              }
+            },
+            "id": 3522,
+            "nodeType": "InheritanceSpecifier",
+            "src": "1175:22:5"
+          }
+        ],
+        "contractDependencies": [
+          3502,
+          3520
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 3531,
+        "linearizedBaseContracts": [
+          3531,
+          3520,
+          3502
+        ],
+        "name": "BAIControllerStorageG2",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 3524,
+            "name": "treasuryGuardian",
+            "nodeType": "VariableDeclaration",
+            "scope": 3531,
+            "src": "1246:31:5",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 3523,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "1246:7:5",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 3526,
+            "name": "treasuryAddress",
+            "nodeType": "VariableDeclaration",
+            "scope": 3531,
+            "src": "1317:30:5",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 3525,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "1317:7:5",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 3528,
+            "name": "treasuryPercent",
+            "nodeType": "VariableDeclaration",
+            "scope": 3531,
+            "src": "1418:30:5",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 3527,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "1418:7:5",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 3530,
+            "name": "_notEntered",
+            "nodeType": "VariableDeclaration",
+            "scope": 3531,
+            "src": "1509:25:5",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 3529,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "1509:4:5",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 3532,
+        "src": "1140:397:5"
+      }
+    ],
+    "src": "0:1538:5"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIControllerStorage.sol",
+      "exportedSymbols": {
+        "BAIControllerStorageG1": [
+          3520
+        ],
+        "BAIControllerStorageG2": [
+          3531
+        ],
+        "BAIUnitrollerAdminStorage": [
+          3502
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.5",
+            ".16"
+          ]
+        },
+        "id": 3492,
+        "name": "PragmaDirective",
+        "src": "0:24:5"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 30351,
+          "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ComptrollerInterface.sol",
+          "file": "./ComptrollerInterface.sol",
+          "scope": 3532,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 3493,
+        "name": "ImportDirective",
+        "src": "26:36:5"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            3502
+          ],
+          "name": "BAIUnitrollerAdminStorage",
+          "scope": 3532
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "admin",
+              "scope": 3502,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 3494,
+                "name": "ElementaryTypeName",
+                "src": "166:7:5"
+              }
+            ],
+            "id": 3495,
+            "name": "VariableDeclaration",
+            "src": "166:20:5"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "pendingAdmin",
+              "scope": 3502,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 3496,
+                "name": "ElementaryTypeName",
+                "src": "262:7:5"
+              }
+            ],
+            "id": 3497,
+            "name": "VariableDeclaration",
+            "src": "262:27:5"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "baiControllerImplementation",
+              "scope": 3502,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 3498,
+                "name": "ElementaryTypeName",
+                "src": "353:7:5"
+              }
+            ],
+            "id": 3499,
+            "name": "VariableDeclaration",
+            "src": "353:42:5"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "pendingBAIControllerImplementation",
+              "scope": 3502,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 3500,
+                "name": "ElementaryTypeName",
+                "src": "460:7:5"
+              }
+            ],
+            "id": 3501,
+            "name": "VariableDeclaration",
+            "src": "460:49:5"
+          }
+        ],
+        "id": 3502,
+        "name": "ContractDefinition",
+        "src": "64:448:5"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            3502
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            3520,
+            3502
+          ],
+          "name": "BAIControllerStorageG1",
+          "scope": 3532
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": null
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "BAIUnitrollerAdminStorage",
+                  "referencedDeclaration": 3502,
+                  "type": "contract BAIUnitrollerAdminStorage"
+                },
+                "id": 3503,
+                "name": "UserDefinedTypeName",
+                "src": "549:25:5"
+              }
+            ],
+            "id": 3504,
+            "name": "InheritanceSpecifier",
+            "src": "549:25:5"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "comptroller",
+              "scope": 3520,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract ComptrollerInterface",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "ComptrollerInterface",
+                  "referencedDeclaration": 30335,
+                  "type": "contract ComptrollerInterface"
+                },
+                "id": 3505,
+                "name": "UserDefinedTypeName",
+                "src": "581:20:5"
+              }
+            ],
+            "id": 3506,
+            "name": "VariableDeclaration",
+            "src": "581:39:5"
+          },
+          {
+            "attributes": {
+              "canonicalName": "BAIControllerStorageG1.BtntexBAIState",
+              "name": "BtntexBAIState",
+              "scope": 3520,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "index",
+                  "scope": 3511,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint224",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint224",
+                      "type": "uint224"
+                    },
+                    "id": 3507,
+                    "name": "ElementaryTypeName",
+                    "src": "715:7:5"
+                  }
+                ],
+                "id": 3508,
+                "name": "VariableDeclaration",
+                "src": "715:13:5"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "block",
+                  "scope": 3511,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint32",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint32",
+                      "type": "uint32"
+                    },
+                    "id": 3509,
+                    "name": "ElementaryTypeName",
+                    "src": "806:6:5"
+                  }
+                ],
+                "id": 3510,
+                "name": "VariableDeclaration",
+                "src": "806:12:5"
+              }
+            ],
+            "id": 3511,
+            "name": "StructDefinition",
+            "src": "627:198:5"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "btntexBAIState",
+              "scope": 3520,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "struct BAIControllerStorageG1.BtntexBAIState",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "BtntexBAIState",
+                  "referencedDeclaration": 3511,
+                  "type": "struct BAIControllerStorageG1.BtntexBAIState"
+                },
+                "id": 3512,
+                "name": "UserDefinedTypeName",
+                "src": "868:14:5"
+              }
+            ],
+            "id": 3513,
+            "name": "VariableDeclaration",
+            "src": "868:36:5"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "isBtntexBAIInitialized",
+              "scope": 3520,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "bool",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "bool",
+                  "type": "bool"
+                },
+                "id": 3514,
+                "name": "ElementaryTypeName",
+                "src": "960:4:5"
+              }
+            ],
+            "id": 3515,
+            "name": "VariableDeclaration",
+            "src": "960:34:5"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "btntexBAIMinterIndex",
+              "scope": 3520,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => uint256)",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => uint256)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 3516,
+                    "name": "ElementaryTypeName",
+                    "src": "1091:7:5"
+                  },
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 3517,
+                    "name": "ElementaryTypeName",
+                    "src": "1102:4:5"
+                  }
+                ],
+                "id": 3518,
+                "name": "Mapping",
+                "src": "1083:24:5"
+              }
+            ],
+            "id": 3519,
+            "name": "VariableDeclaration",
+            "src": "1083:52:5"
+          }
+        ],
+        "id": 3520,
+        "name": "ContractDefinition",
+        "src": "514:624:5"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            3502,
+            3520
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            3531,
+            3520,
+            3502
+          ],
+          "name": "BAIControllerStorageG2",
+          "scope": 3532
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": null
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "BAIControllerStorageG1",
+                  "referencedDeclaration": 3520,
+                  "type": "contract BAIControllerStorageG1"
+                },
+                "id": 3521,
+                "name": "UserDefinedTypeName",
+                "src": "1175:22:5"
+              }
+            ],
+            "id": 3522,
+            "name": "InheritanceSpecifier",
+            "src": "1175:22:5"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "treasuryGuardian",
+              "scope": 3531,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 3523,
+                "name": "ElementaryTypeName",
+                "src": "1246:7:5"
+              }
+            ],
+            "id": 3524,
+            "name": "VariableDeclaration",
+            "src": "1246:31:5"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "treasuryAddress",
+              "scope": 3531,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 3525,
+                "name": "ElementaryTypeName",
+                "src": "1317:7:5"
+              }
+            ],
+            "id": 3526,
+            "name": "VariableDeclaration",
+            "src": "1317:30:5"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "treasuryPercent",
+              "scope": 3531,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 3527,
+                "name": "ElementaryTypeName",
+                "src": "1418:7:5"
+              }
+            ],
+            "id": 3528,
+            "name": "VariableDeclaration",
+            "src": "1418:30:5"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "_notEntered",
+              "scope": 3531,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "bool",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "bool",
+                  "type": "bool"
+                },
+                "id": 3529,
+                "name": "ElementaryTypeName",
+                "src": "1509:4:5"
+              }
+            ],
+            "id": 3530,
+            "name": "VariableDeclaration",
+            "src": "1509:25:5"
+          }
+        ],
+        "id": 3531,
+        "name": "ContractDefinition",
+        "src": "1140:397:5"
+      }
+    ],
+    "id": 3532,
+    "name": "SourceUnit",
+    "src": "0:1538:5"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.17+commit.d19bba13.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.0",
+  "updatedAt": "2021-06-16T15:51:17.637Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

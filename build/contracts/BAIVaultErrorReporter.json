@@ -1,0 +1,1920 @@
+{
+  "contractName": "BAIVaultErrorReporter",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "error",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "info",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "detail",
+          "type": "uint256"
+        }
+      ],
+      "name": "Failure",
+      "type": "event"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.17+commit.d19bba13\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"error\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"info\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"detail\",\"type\":\"uint256\"}],\"name\":\"Failure\",\"type\":\"event\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIVaultErrorReporter.sol\":\"BAIVaultErrorReporter\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIVaultErrorReporter.sol\":{\"keccak256\":\"0x0778ffef7b45b7aecf7fe24908f4697644c54c98e822b8dce47c9a0355b6fd36\",\"urls\":[\"bzz-raw://6f176c1caa78bcaa0620617a9cc14b32fb9337888c2b8047558483cd7f30556b\",\"dweb:/ipfs/QmUyqoVd812BaSL3F6uNq2XU9DKXQ5Xs4GvYuzHmRdayXy\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603e80601d6000396000f3fe6080604052600080fdfea265627a7a72315820d6ff38f1b0db80a3b2345507778e73e34615e95e15eb6f0344843f37bdaaad7664736f6c63430005110032",
+  "deployedBytecode": "0x6080604052600080fdfea265627a7a72315820d6ff38f1b0db80a3b2345507778e73e34615e95e15eb6f0344843f37bdaaad7664736f6c63430005110032",
+  "sourceMap": "26:1182:8:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;26:1182:8;;;;;;;",
+  "deployedSourceMap": "26:1182:8:-;;;;;",
+  "source": "pragma solidity ^0.5.16;\n\ncontract BAIVaultErrorReporter {\n    enum Error {\n        NO_ERROR,\n        UNAUTHORIZED\n    }\n\n    enum FailureInfo {\n        ACCEPT_ADMIN_PENDING_ADMIN_CHECK,\n        ACCEPT_PENDING_IMPLEMENTATION_ADDRESS_CHECK,\n        SET_PENDING_ADMIN_OWNER_CHECK,\n        SET_PENDING_IMPLEMENTATION_OWNER_CHECK\n    }\n\n    /**\n      * @dev `error` corresponds to enum Error; `info` corresponds to enum FailureInfo, and `detail` is an arbitrary\n      * contract-specific code that enables us to report opaque error codes from upgradeable contracts.\n      **/\n    event Failure(uint error, uint info, uint detail);\n\n    /**\n      * @dev use this when reporting a known error from the money market or a non-upgradeable collaborator\n      */\n    function fail(Error err, FailureInfo info) internal returns (uint) {\n        emit Failure(uint(err), uint(info), 0);\n\n        return uint(err);\n    }\n\n    /**\n      * @dev use this when reporting an opaque error from an upgradeable collaborator contract\n      */\n    function failOpaque(Error err, FailureInfo info, uint opaqueError) internal returns (uint) {\n        emit Failure(uint(err), uint(info), opaqueError);\n\n        return uint(err);\n    }\n}\n",
+  "sourcePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIVaultErrorReporter.sol",
+  "ast": {
+    "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIVaultErrorReporter.sol",
+    "exportedSymbols": {
+      "BAIVaultErrorReporter": [
+        4357
+      ]
+    },
+    "id": 4358,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 4290,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".16"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:8"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 4357,
+        "linearizedBaseContracts": [
+          4357
+        ],
+        "name": "BAIVaultErrorReporter",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "BAIVaultErrorReporter.Error",
+            "id": 4293,
+            "members": [
+              {
+                "id": 4291,
+                "name": "NO_ERROR",
+                "nodeType": "EnumValue",
+                "src": "84:8:8"
+              },
+              {
+                "id": 4292,
+                "name": "UNAUTHORIZED",
+                "nodeType": "EnumValue",
+                "src": "102:12:8"
+              }
+            ],
+            "name": "Error",
+            "nodeType": "EnumDefinition",
+            "src": "63:57:8"
+          },
+          {
+            "canonicalName": "BAIVaultErrorReporter.FailureInfo",
+            "id": 4298,
+            "members": [
+              {
+                "id": 4294,
+                "name": "ACCEPT_ADMIN_PENDING_ADMIN_CHECK",
+                "nodeType": "EnumValue",
+                "src": "153:32:8"
+              },
+              {
+                "id": 4295,
+                "name": "ACCEPT_PENDING_IMPLEMENTATION_ADDRESS_CHECK",
+                "nodeType": "EnumValue",
+                "src": "195:43:8"
+              },
+              {
+                "id": 4296,
+                "name": "SET_PENDING_ADMIN_OWNER_CHECK",
+                "nodeType": "EnumValue",
+                "src": "248:29:8"
+              },
+              {
+                "id": 4297,
+                "name": "SET_PENDING_IMPLEMENTATION_OWNER_CHECK",
+                "nodeType": "EnumValue",
+                "src": "287:38:8"
+              }
+            ],
+            "name": "FailureInfo",
+            "nodeType": "EnumDefinition",
+            "src": "126:205:8"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev `error` corresponds to enum Error; `info` corresponds to enum FailureInfo, and `detail` is an arbitrary\ncontract-specific code that enables us to report opaque error codes from upgradeable contracts.*",
+            "id": 4306,
+            "name": "Failure",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 4305,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4300,
+                  "indexed": false,
+                  "name": "error",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4306,
+                  "src": "590:10:8",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4299,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "590:4:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4302,
+                  "indexed": false,
+                  "name": "info",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4306,
+                  "src": "602:9:8",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4301,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "602:4:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4304,
+                  "indexed": false,
+                  "name": "detail",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4306,
+                  "src": "613:11:8",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4303,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "613:4:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "589:36:8"
+            },
+            "src": "576:50:8"
+          },
+          {
+            "body": {
+              "id": 4329,
+              "nodeType": "Block",
+              "src": "823:82:8",
+              "statements": [
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 4317,
+                            "name": "err",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 4308,
+                            "src": "851:3:8",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_enum$_Error_$4293",
+                              "typeString": "enum BAIVaultErrorReporter.Error"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_enum$_Error_$4293",
+                              "typeString": "enum BAIVaultErrorReporter.Error"
+                            }
+                          ],
+                          "id": 4316,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "nodeType": "ElementaryTypeNameExpression",
+                          "src": "846:4:8",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_uint256_$",
+                            "typeString": "type(uint256)"
+                          },
+                          "typeName": "uint"
+                        },
+                        "id": 4318,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "typeConversion",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "846:9:8",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 4320,
+                            "name": "info",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 4310,
+                            "src": "862:4:8",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_enum$_FailureInfo_$4298",
+                              "typeString": "enum BAIVaultErrorReporter.FailureInfo"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_enum$_FailureInfo_$4298",
+                              "typeString": "enum BAIVaultErrorReporter.FailureInfo"
+                            }
+                          ],
+                          "id": 4319,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "nodeType": "ElementaryTypeNameExpression",
+                          "src": "857:4:8",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_uint256_$",
+                            "typeString": "type(uint256)"
+                          },
+                          "typeName": "uint"
+                        },
+                        "id": 4321,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "typeConversion",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "857:10:8",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "30",
+                        "id": 4322,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "number",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "869:1:8",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_rational_0_by_1",
+                          "typeString": "int_const 0"
+                        },
+                        "value": "0"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_rational_0_by_1",
+                          "typeString": "int_const 0"
+                        }
+                      ],
+                      "id": 4315,
+                      "name": "Failure",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 4306,
+                      "src": "838:7:8",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$_t_uint256_$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256,uint256,uint256)"
+                      }
+                    },
+                    "id": 4323,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "838:33:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 4324,
+                  "nodeType": "EmitStatement",
+                  "src": "833:38:8"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 4326,
+                        "name": "err",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 4308,
+                        "src": "894:3:8",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_enum$_Error_$4293",
+                          "typeString": "enum BAIVaultErrorReporter.Error"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_enum$_Error_$4293",
+                          "typeString": "enum BAIVaultErrorReporter.Error"
+                        }
+                      ],
+                      "id": 4325,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "889:4:8",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_uint256_$",
+                        "typeString": "type(uint256)"
+                      },
+                      "typeName": "uint"
+                    },
+                    "id": 4327,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "889:9:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 4314,
+                  "id": 4328,
+                  "nodeType": "Return",
+                  "src": "882:16:8"
+                }
+              ]
+            },
+            "documentation": "@dev use this when reporting a known error from the money market or a non-upgradeable collaborator",
+            "id": 4330,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "fail",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4311,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4308,
+                  "name": "err",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4330,
+                  "src": "770:9:8",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Error_$4293",
+                    "typeString": "enum BAIVaultErrorReporter.Error"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 4307,
+                    "name": "Error",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 4293,
+                    "src": "770:5:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_Error_$4293",
+                      "typeString": "enum BAIVaultErrorReporter.Error"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4310,
+                  "name": "info",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4330,
+                  "src": "781:16:8",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_FailureInfo_$4298",
+                    "typeString": "enum BAIVaultErrorReporter.FailureInfo"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 4309,
+                    "name": "FailureInfo",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 4298,
+                    "src": "781:11:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_FailureInfo_$4298",
+                      "typeString": "enum BAIVaultErrorReporter.FailureInfo"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "769:29:8"
+            },
+            "returnParameters": {
+              "id": 4314,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4313,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4330,
+                  "src": "817:4:8",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4312,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "817:4:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "816:6:8"
+            },
+            "scope": 4357,
+            "src": "756:149:8",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 4355,
+              "nodeType": "Block",
+              "src": "1114:92:8",
+              "statements": [
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 4343,
+                            "name": "err",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 4332,
+                            "src": "1142:3:8",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_enum$_Error_$4293",
+                              "typeString": "enum BAIVaultErrorReporter.Error"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_enum$_Error_$4293",
+                              "typeString": "enum BAIVaultErrorReporter.Error"
+                            }
+                          ],
+                          "id": 4342,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "nodeType": "ElementaryTypeNameExpression",
+                          "src": "1137:4:8",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_uint256_$",
+                            "typeString": "type(uint256)"
+                          },
+                          "typeName": "uint"
+                        },
+                        "id": 4344,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "typeConversion",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "1137:9:8",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 4346,
+                            "name": "info",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 4334,
+                            "src": "1153:4:8",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_enum$_FailureInfo_$4298",
+                              "typeString": "enum BAIVaultErrorReporter.FailureInfo"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_enum$_FailureInfo_$4298",
+                              "typeString": "enum BAIVaultErrorReporter.FailureInfo"
+                            }
+                          ],
+                          "id": 4345,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "nodeType": "ElementaryTypeNameExpression",
+                          "src": "1148:4:8",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_uint256_$",
+                            "typeString": "type(uint256)"
+                          },
+                          "typeName": "uint"
+                        },
+                        "id": 4347,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "typeConversion",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "1148:10:8",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 4348,
+                        "name": "opaqueError",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 4336,
+                        "src": "1160:11:8",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 4341,
+                      "name": "Failure",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 4306,
+                      "src": "1129:7:8",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$_t_uint256_$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256,uint256,uint256)"
+                      }
+                    },
+                    "id": 4349,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1129:43:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 4350,
+                  "nodeType": "EmitStatement",
+                  "src": "1124:48:8"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 4352,
+                        "name": "err",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 4332,
+                        "src": "1195:3:8",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_enum$_Error_$4293",
+                          "typeString": "enum BAIVaultErrorReporter.Error"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_enum$_Error_$4293",
+                          "typeString": "enum BAIVaultErrorReporter.Error"
+                        }
+                      ],
+                      "id": 4351,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1190:4:8",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_uint256_$",
+                        "typeString": "type(uint256)"
+                      },
+                      "typeName": "uint"
+                    },
+                    "id": 4353,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1190:9:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 4340,
+                  "id": 4354,
+                  "nodeType": "Return",
+                  "src": "1183:16:8"
+                }
+              ]
+            },
+            "documentation": "@dev use this when reporting an opaque error from an upgradeable collaborator contract",
+            "id": 4356,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "failOpaque",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4337,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4332,
+                  "name": "err",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4356,
+                  "src": "1043:9:8",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Error_$4293",
+                    "typeString": "enum BAIVaultErrorReporter.Error"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 4331,
+                    "name": "Error",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 4293,
+                    "src": "1043:5:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_Error_$4293",
+                      "typeString": "enum BAIVaultErrorReporter.Error"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4334,
+                  "name": "info",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4356,
+                  "src": "1054:16:8",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_FailureInfo_$4298",
+                    "typeString": "enum BAIVaultErrorReporter.FailureInfo"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 4333,
+                    "name": "FailureInfo",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 4298,
+                    "src": "1054:11:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_FailureInfo_$4298",
+                      "typeString": "enum BAIVaultErrorReporter.FailureInfo"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4336,
+                  "name": "opaqueError",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4356,
+                  "src": "1072:16:8",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4335,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1072:4:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1042:47:8"
+            },
+            "returnParameters": {
+              "id": 4340,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4339,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4356,
+                  "src": "1108:4:8",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4338,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1108:4:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1107:6:8"
+            },
+            "scope": 4357,
+            "src": "1023:183:8",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 4358,
+        "src": "26:1182:8"
+      }
+    ],
+    "src": "0:1209:8"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIVaultErrorReporter.sol",
+      "exportedSymbols": {
+        "BAIVaultErrorReporter": [
+          4357
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.5",
+            ".16"
+          ]
+        },
+        "id": 4290,
+        "name": "PragmaDirective",
+        "src": "0:24:8"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            4357
+          ],
+          "name": "BAIVaultErrorReporter",
+          "scope": 4358
+        },
+        "children": [
+          {
+            "attributes": {
+              "canonicalName": "BAIVaultErrorReporter.Error",
+              "name": "Error"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "NO_ERROR"
+                },
+                "id": 4291,
+                "name": "EnumValue",
+                "src": "84:8:8"
+              },
+              {
+                "attributes": {
+                  "name": "UNAUTHORIZED"
+                },
+                "id": 4292,
+                "name": "EnumValue",
+                "src": "102:12:8"
+              }
+            ],
+            "id": 4293,
+            "name": "EnumDefinition",
+            "src": "63:57:8"
+          },
+          {
+            "attributes": {
+              "canonicalName": "BAIVaultErrorReporter.FailureInfo",
+              "name": "FailureInfo"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "ACCEPT_ADMIN_PENDING_ADMIN_CHECK"
+                },
+                "id": 4294,
+                "name": "EnumValue",
+                "src": "153:32:8"
+              },
+              {
+                "attributes": {
+                  "name": "ACCEPT_PENDING_IMPLEMENTATION_ADDRESS_CHECK"
+                },
+                "id": 4295,
+                "name": "EnumValue",
+                "src": "195:43:8"
+              },
+              {
+                "attributes": {
+                  "name": "SET_PENDING_ADMIN_OWNER_CHECK"
+                },
+                "id": 4296,
+                "name": "EnumValue",
+                "src": "248:29:8"
+              },
+              {
+                "attributes": {
+                  "name": "SET_PENDING_IMPLEMENTATION_OWNER_CHECK"
+                },
+                "id": 4297,
+                "name": "EnumValue",
+                "src": "287:38:8"
+              }
+            ],
+            "id": 4298,
+            "name": "EnumDefinition",
+            "src": "126:205:8"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "documentation": "@dev `error` corresponds to enum Error; `info` corresponds to enum FailureInfo, and `detail` is an arbitrary\ncontract-specific code that enables us to report opaque error codes from upgradeable contracts.*",
+              "name": "Failure"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "error",
+                      "scope": 4306,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 4299,
+                        "name": "ElementaryTypeName",
+                        "src": "590:4:8"
+                      }
+                    ],
+                    "id": 4300,
+                    "name": "VariableDeclaration",
+                    "src": "590:10:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "info",
+                      "scope": 4306,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 4301,
+                        "name": "ElementaryTypeName",
+                        "src": "602:4:8"
+                      }
+                    ],
+                    "id": 4302,
+                    "name": "VariableDeclaration",
+                    "src": "602:9:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "detail",
+                      "scope": 4306,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 4303,
+                        "name": "ElementaryTypeName",
+                        "src": "613:4:8"
+                      }
+                    ],
+                    "id": 4304,
+                    "name": "VariableDeclaration",
+                    "src": "613:11:8"
+                  }
+                ],
+                "id": 4305,
+                "name": "ParameterList",
+                "src": "589:36:8"
+              }
+            ],
+            "id": 4306,
+            "name": "EventDefinition",
+            "src": "576:50:8"
+          },
+          {
+            "attributes": {
+              "documentation": "@dev use this when reporting a known error from the money market or a non-upgradeable collaborator",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "fail",
+              "scope": 4357,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "err",
+                      "scope": 4330,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "enum BAIVaultErrorReporter.Error",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "Error",
+                          "referencedDeclaration": 4293,
+                          "type": "enum BAIVaultErrorReporter.Error"
+                        },
+                        "id": 4307,
+                        "name": "UserDefinedTypeName",
+                        "src": "770:5:8"
+                      }
+                    ],
+                    "id": 4308,
+                    "name": "VariableDeclaration",
+                    "src": "770:9:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "info",
+                      "scope": 4330,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "enum BAIVaultErrorReporter.FailureInfo",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "FailureInfo",
+                          "referencedDeclaration": 4298,
+                          "type": "enum BAIVaultErrorReporter.FailureInfo"
+                        },
+                        "id": 4309,
+                        "name": "UserDefinedTypeName",
+                        "src": "781:11:8"
+                      }
+                    ],
+                    "id": 4310,
+                    "name": "VariableDeclaration",
+                    "src": "781:16:8"
+                  }
+                ],
+                "id": 4311,
+                "name": "ParameterList",
+                "src": "769:29:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 4330,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 4312,
+                        "name": "ElementaryTypeName",
+                        "src": "817:4:8"
+                      }
+                    ],
+                    "id": 4313,
+                    "name": "VariableDeclaration",
+                    "src": "817:4:8"
+                  }
+                ],
+                "id": 4314,
+                "name": "ParameterList",
+                "src": "816:6:8"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                },
+                                {
+                                  "typeIdentifier": "t_rational_0_by_1",
+                                  "typeString": "int_const 0"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 4306,
+                              "type": "function (uint256,uint256,uint256)",
+                              "value": "Failure"
+                            },
+                            "id": 4315,
+                            "name": "Identifier",
+                            "src": "838:7:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "uint256",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_enum$_Error_$4293",
+                                      "typeString": "enum BAIVaultErrorReporter.Error"
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "type": "type(uint256)",
+                                  "value": "uint"
+                                },
+                                "id": 4316,
+                                "name": "ElementaryTypeNameExpression",
+                                "src": "846:4:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 4308,
+                                  "type": "enum BAIVaultErrorReporter.Error",
+                                  "value": "err"
+                                },
+                                "id": 4317,
+                                "name": "Identifier",
+                                "src": "851:3:8"
+                              }
+                            ],
+                            "id": 4318,
+                            "name": "FunctionCall",
+                            "src": "846:9:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "uint256",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_enum$_FailureInfo_$4298",
+                                      "typeString": "enum BAIVaultErrorReporter.FailureInfo"
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "type": "type(uint256)",
+                                  "value": "uint"
+                                },
+                                "id": 4319,
+                                "name": "ElementaryTypeNameExpression",
+                                "src": "857:4:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 4310,
+                                  "type": "enum BAIVaultErrorReporter.FailureInfo",
+                                  "value": "info"
+                                },
+                                "id": 4320,
+                                "name": "Identifier",
+                                "src": "862:4:8"
+                              }
+                            ],
+                            "id": 4321,
+                            "name": "FunctionCall",
+                            "src": "857:10:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "30",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "int_const 0",
+                              "value": "0"
+                            },
+                            "id": 4322,
+                            "name": "Literal",
+                            "src": "869:1:8"
+                          }
+                        ],
+                        "id": 4323,
+                        "name": "FunctionCall",
+                        "src": "838:33:8"
+                      }
+                    ],
+                    "id": 4324,
+                    "name": "EmitStatement",
+                    "src": "833:38:8"
+                  },
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 4314
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "uint256",
+                          "type_conversion": true
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_enum$_Error_$4293",
+                                  "typeString": "enum BAIVaultErrorReporter.Error"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "type": "type(uint256)",
+                              "value": "uint"
+                            },
+                            "id": 4325,
+                            "name": "ElementaryTypeNameExpression",
+                            "src": "889:4:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 4308,
+                              "type": "enum BAIVaultErrorReporter.Error",
+                              "value": "err"
+                            },
+                            "id": 4326,
+                            "name": "Identifier",
+                            "src": "894:3:8"
+                          }
+                        ],
+                        "id": 4327,
+                        "name": "FunctionCall",
+                        "src": "889:9:8"
+                      }
+                    ],
+                    "id": 4328,
+                    "name": "Return",
+                    "src": "882:16:8"
+                  }
+                ],
+                "id": 4329,
+                "name": "Block",
+                "src": "823:82:8"
+              }
+            ],
+            "id": 4330,
+            "name": "FunctionDefinition",
+            "src": "756:149:8"
+          },
+          {
+            "attributes": {
+              "documentation": "@dev use this when reporting an opaque error from an upgradeable collaborator contract",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "failOpaque",
+              "scope": 4357,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "err",
+                      "scope": 4356,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "enum BAIVaultErrorReporter.Error",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "Error",
+                          "referencedDeclaration": 4293,
+                          "type": "enum BAIVaultErrorReporter.Error"
+                        },
+                        "id": 4331,
+                        "name": "UserDefinedTypeName",
+                        "src": "1043:5:8"
+                      }
+                    ],
+                    "id": 4332,
+                    "name": "VariableDeclaration",
+                    "src": "1043:9:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "info",
+                      "scope": 4356,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "enum BAIVaultErrorReporter.FailureInfo",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "FailureInfo",
+                          "referencedDeclaration": 4298,
+                          "type": "enum BAIVaultErrorReporter.FailureInfo"
+                        },
+                        "id": 4333,
+                        "name": "UserDefinedTypeName",
+                        "src": "1054:11:8"
+                      }
+                    ],
+                    "id": 4334,
+                    "name": "VariableDeclaration",
+                    "src": "1054:16:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "opaqueError",
+                      "scope": 4356,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 4335,
+                        "name": "ElementaryTypeName",
+                        "src": "1072:4:8"
+                      }
+                    ],
+                    "id": 4336,
+                    "name": "VariableDeclaration",
+                    "src": "1072:16:8"
+                  }
+                ],
+                "id": 4337,
+                "name": "ParameterList",
+                "src": "1042:47:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 4356,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 4338,
+                        "name": "ElementaryTypeName",
+                        "src": "1108:4:8"
+                      }
+                    ],
+                    "id": 4339,
+                    "name": "VariableDeclaration",
+                    "src": "1108:4:8"
+                  }
+                ],
+                "id": 4340,
+                "name": "ParameterList",
+                "src": "1107:6:8"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 4306,
+                              "type": "function (uint256,uint256,uint256)",
+                              "value": "Failure"
+                            },
+                            "id": 4341,
+                            "name": "Identifier",
+                            "src": "1129:7:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "uint256",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_enum$_Error_$4293",
+                                      "typeString": "enum BAIVaultErrorReporter.Error"
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "type": "type(uint256)",
+                                  "value": "uint"
+                                },
+                                "id": 4342,
+                                "name": "ElementaryTypeNameExpression",
+                                "src": "1137:4:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 4332,
+                                  "type": "enum BAIVaultErrorReporter.Error",
+                                  "value": "err"
+                                },
+                                "id": 4343,
+                                "name": "Identifier",
+                                "src": "1142:3:8"
+                              }
+                            ],
+                            "id": 4344,
+                            "name": "FunctionCall",
+                            "src": "1137:9:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "uint256",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_enum$_FailureInfo_$4298",
+                                      "typeString": "enum BAIVaultErrorReporter.FailureInfo"
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "type": "type(uint256)",
+                                  "value": "uint"
+                                },
+                                "id": 4345,
+                                "name": "ElementaryTypeNameExpression",
+                                "src": "1148:4:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 4334,
+                                  "type": "enum BAIVaultErrorReporter.FailureInfo",
+                                  "value": "info"
+                                },
+                                "id": 4346,
+                                "name": "Identifier",
+                                "src": "1153:4:8"
+                              }
+                            ],
+                            "id": 4347,
+                            "name": "FunctionCall",
+                            "src": "1148:10:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 4336,
+                              "type": "uint256",
+                              "value": "opaqueError"
+                            },
+                            "id": 4348,
+                            "name": "Identifier",
+                            "src": "1160:11:8"
+                          }
+                        ],
+                        "id": 4349,
+                        "name": "FunctionCall",
+                        "src": "1129:43:8"
+                      }
+                    ],
+                    "id": 4350,
+                    "name": "EmitStatement",
+                    "src": "1124:48:8"
+                  },
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 4340
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "uint256",
+                          "type_conversion": true
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_enum$_Error_$4293",
+                                  "typeString": "enum BAIVaultErrorReporter.Error"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "type": "type(uint256)",
+                              "value": "uint"
+                            },
+                            "id": 4351,
+                            "name": "ElementaryTypeNameExpression",
+                            "src": "1190:4:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 4332,
+                              "type": "enum BAIVaultErrorReporter.Error",
+                              "value": "err"
+                            },
+                            "id": 4352,
+                            "name": "Identifier",
+                            "src": "1195:3:8"
+                          }
+                        ],
+                        "id": 4353,
+                        "name": "FunctionCall",
+                        "src": "1190:9:8"
+                      }
+                    ],
+                    "id": 4354,
+                    "name": "Return",
+                    "src": "1183:16:8"
+                  }
+                ],
+                "id": 4355,
+                "name": "Block",
+                "src": "1114:92:8"
+              }
+            ],
+            "id": 4356,
+            "name": "FunctionDefinition",
+            "src": "1023:183:8"
+          }
+        ],
+        "id": 4357,
+        "name": "ContractDefinition",
+        "src": "26:1182:8"
+      }
+    ],
+    "id": 4358,
+    "name": "SourceUnit",
+    "src": "0:1209:8"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.17+commit.d19bba13.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.0",
+  "updatedAt": "2021-06-16T15:51:17.647Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

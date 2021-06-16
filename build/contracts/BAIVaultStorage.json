@@ -1,0 +1,1175 @@
+{
+  "contractName": "BAIVaultStorage",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "accBTNTPerShare",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "admin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "bai",
+      "outputs": [
+        {
+          "internalType": "contract IBEP20",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "baiVaultImplementation",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "btnt",
+      "outputs": [
+        {
+          "internalType": "contract IBEP20",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "btntBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "pendingAdmin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "pendingBAIVaultImplementation",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "pendingRewards",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "userInfo",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rewardDebt",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.17+commit.d19bba13\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"accBTNTPerShare\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"admin\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"bai\",\"outputs\":[{\"internalType\":\"contract IBEP20\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"baiVaultImplementation\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"btnt\",\"outputs\":[{\"internalType\":\"contract IBEP20\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"btntBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"pendingAdmin\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"pendingBAIVaultImplementation\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"pendingRewards\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"userInfo\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"rewardDebt\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIVaultStorage.sol\":\"BAIVaultStorage\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIVaultStorage.sol\":{\"keccak256\":\"0x9baf74e25f97420a5a5c3189dd111cc9c09e97e42e14ddc68f2bbc8f913289f4\",\"urls\":[\"bzz-raw://50dc1515cf50e3a0a50317e1730ba4d7bb13fa7957b4862fb7d921f4e81f5a2e\",\"dweb:/ipfs/QmXXUKL3oh6Nid2Fkaf2zbRqGT5YbPszxVW78MPhGruMqm\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/IBEP20.sol\":{\"keccak256\":\"0x839b08895eb1ad83502d3631e8e9e3a856d2a8c63c46f070d604af7b26c62c07\",\"urls\":[\"bzz-raw://5908d7afba215ef2350294a7b6220394b25ea51e3e878de8d16be93a5b815153\",\"dweb:/ipfs/QmeDMMMHDZ5jBDUYgTQXpktwjvMv5pvfAYTVjtgrNCEMmj\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/SafeMath.sol\":{\"keccak256\":\"0x9efb5a1368ab1ef541177cd8dd8beb4520c8c66fed23c96c2384ec86dee74397\",\"urls\":[\"bzz-raw://3f0c54cc056ba34c0cd318f2af928e3161e087d484d7ce22b1e11467407be56d\",\"dweb:/ipfs/QmdCNeDc58dtbk42oBDugtU2yQuCJEZvmugoS2bK6cGyBo\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610466806100206000396000f3fe608060405234801561001057600080fd5b506004361061009e5760003560e01c806373e8444d1161006657806373e8444d146101d25780638e5c38da1461021c578063a9d7cf3714610266578063eded3fda146102b0578063f851a440146102ce5761009e565b80631959a002146100a35780632678224714610102578063283df7ca1461014c578063300deada1461016a5780634a86198b14610188575b600080fd5b6100e5600480360360208110156100b957600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610318565b604051808381526020018281526020019250505060405180910390f35b61010a61033c565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b610154610362565b6040518082815260200191505060405180910390f35b610172610368565b6040518082815260200191505060405180910390f35b61019061036e565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6101da610394565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6102246103ba565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b61026e6103e0565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6102b8610406565b6040518082815260200191505060405180910390f35b6102d661040c565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60096020528060005260406000206000915090508060000154908060010154905082565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60075481565b60065481565b600560009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600360009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600460009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60085481565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea265627a7a72315820a55da2682e5e509eed99981a3041724324e259831e5daeb082946cdf2911c66464736f6c63430005110032",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061009e5760003560e01c806373e8444d1161006657806373e8444d146101d25780638e5c38da1461021c578063a9d7cf3714610266578063eded3fda146102b0578063f851a440146102ce5761009e565b80631959a002146100a35780632678224714610102578063283df7ca1461014c578063300deada1461016a5780634a86198b14610188575b600080fd5b6100e5600480360360208110156100b957600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610318565b604051808381526020018281526020019250505060405180910390f35b61010a61033c565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b610154610362565b6040518082815260200191505060405180910390f35b610172610368565b6040518082815260200191505060405180910390f35b61019061036e565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6101da610394565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6102246103ba565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b61026e6103e0565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6102b8610406565b6040518082815260200191505060405180910390f35b6102d661040c565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60096020528060005260406000206000915090508060000154908060010154905082565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60075481565b60065481565b600560009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600360009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600460009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60085481565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea265627a7a72315820a55da2682e5e509eed99981a3041724324e259831e5daeb082946cdf2911c66464736f6c63430005110032",
+  "sourceMap": "507:699:10:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;507:699:10;;;;;;;",
+  "deployedSourceMap": "507:699:10:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;507:699:10;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1159:44;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;1159:44:10;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;267:27;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;874:30;;;:::i;:::-;;;;;;;;;;;;;;;;;;;798:26;;;:::i;:::-;;;;;;;;;;;;;;;;;;;650:17;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;458:44;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;594:18;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;357:37;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;962:29;;;:::i;:::-;;;;;;;;;;;;;;;;;;;171:20;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;1159:44;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;267:27::-;;;;;;;;;;;;;:::o;874:30::-;;;;:::o;798:26::-;;;;:::o;650:17::-;;;;;;;;;;;;;:::o;458:44::-;;;;;;;;;;;;;:::o;594:18::-;;;;;;;;;;;;;:::o;357:37::-;;;;;;;;;;;;;:::o;962:29::-;;;;:::o;171:20::-;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.5.16;\nimport \"./SafeMath.sol\";\nimport \"./IBEP20.sol\";\n\ncontract BAIVaultAdminStorage {\n    /**\n    * @notice Administrator for this contract\n    */\n    address public admin;\n\n    /**\n    * @notice Pending administrator for this contract\n    */\n    address public pendingAdmin;\n\n    /**\n    * @notice Active brains of BAI Vault\n    */\n    address public baiVaultImplementation;\n\n    /**\n    * @notice Pending brains of BAI Vault\n    */\n    address public pendingBAIVaultImplementation;\n}\n\ncontract BAIVaultStorage is BAIVaultAdminStorage {\n    /// @notice The BTNT TOKEN!\n    IBEP20 public btnt;\n\n    /// @notice The BAI TOKEN!\n    IBEP20 public bai;\n\n    /// @notice Guard variable for re-entrancy checks\n    bool internal _notEntered;\n\n    /// @notice BTNT balance of vault\n    uint256 public btntBalance;\n\n    /// @notice Accumulated BTNT per share\n    uint256 public accBTNTPerShare;\n\n    //// pending rewards awaiting anyone to update\n    uint256 public pendingRewards;\n\n    /// @notice Info of each user.\n    struct UserInfo {\n        uint256 amount;\n        uint256 rewardDebt;\n    }\n\n    // Info of each user that stakes tokens.\n    mapping(address => UserInfo) public userInfo;\n}\n",
+  "sourcePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIVaultStorage.sol",
+  "ast": {
+    "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIVaultStorage.sol",
+    "exportedSymbols": {
+      "BAIVaultAdminStorage": [
+        4607
+      ],
+      "BAIVaultStorage": [
+        4631
+      ]
+    },
+    "id": 4632,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 4596,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".16"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:10"
+      },
+      {
+        "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/SafeMath.sol",
+        "file": "./SafeMath.sol",
+        "id": 4597,
+        "nodeType": "ImportDirective",
+        "scope": 4632,
+        "sourceUnit": 35176,
+        "src": "25:24:10",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/IBEP20.sol",
+        "file": "./IBEP20.sol",
+        "id": 4598,
+        "nodeType": "ImportDirective",
+        "scope": 4632,
+        "sourceUnit": 33839,
+        "src": "50:22:10",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 4607,
+        "linearizedBaseContracts": [
+          4607
+        ],
+        "name": "BAIVaultAdminStorage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 4600,
+            "name": "admin",
+            "nodeType": "VariableDeclaration",
+            "scope": 4607,
+            "src": "171:20:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 4599,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "171:7:10",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 4602,
+            "name": "pendingAdmin",
+            "nodeType": "VariableDeclaration",
+            "scope": 4607,
+            "src": "267:27:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 4601,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "267:7:10",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 4604,
+            "name": "baiVaultImplementation",
+            "nodeType": "VariableDeclaration",
+            "scope": 4607,
+            "src": "357:37:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 4603,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "357:7:10",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 4606,
+            "name": "pendingBAIVaultImplementation",
+            "nodeType": "VariableDeclaration",
+            "scope": 4607,
+            "src": "458:44:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 4605,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "458:7:10",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 4632,
+        "src": "74:431:10"
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 4608,
+              "name": "BAIVaultAdminStorage",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 4607,
+              "src": "535:20:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_BAIVaultAdminStorage_$4607",
+                "typeString": "contract BAIVaultAdminStorage"
+              }
+            },
+            "id": 4609,
+            "nodeType": "InheritanceSpecifier",
+            "src": "535:20:10"
+          }
+        ],
+        "contractDependencies": [
+          4607
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 4631,
+        "linearizedBaseContracts": [
+          4631,
+          4607
+        ],
+        "name": "BAIVaultStorage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 4611,
+            "name": "btnt",
+            "nodeType": "VariableDeclaration",
+            "scope": 4631,
+            "src": "594:18:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_IBEP20_$33838",
+              "typeString": "contract IBEP20"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 4610,
+              "name": "IBEP20",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 33838,
+              "src": "594:6:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_IBEP20_$33838",
+                "typeString": "contract IBEP20"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 4613,
+            "name": "bai",
+            "nodeType": "VariableDeclaration",
+            "scope": 4631,
+            "src": "650:17:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_IBEP20_$33838",
+              "typeString": "contract IBEP20"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 4612,
+              "name": "IBEP20",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 33838,
+              "src": "650:6:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_IBEP20_$33838",
+                "typeString": "contract IBEP20"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 4615,
+            "name": "_notEntered",
+            "nodeType": "VariableDeclaration",
+            "scope": 4631,
+            "src": "728:25:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 4614,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "728:4:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 4617,
+            "name": "btntBalance",
+            "nodeType": "VariableDeclaration",
+            "scope": 4631,
+            "src": "798:26:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 4616,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "798:7:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 4619,
+            "name": "accBTNTPerShare",
+            "nodeType": "VariableDeclaration",
+            "scope": 4631,
+            "src": "874:30:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 4618,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "874:7:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 4621,
+            "name": "pendingRewards",
+            "nodeType": "VariableDeclaration",
+            "scope": 4631,
+            "src": "962:29:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 4620,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "962:7:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "BAIVaultStorage.UserInfo",
+            "id": 4626,
+            "members": [
+              {
+                "constant": false,
+                "id": 4623,
+                "name": "amount",
+                "nodeType": "VariableDeclaration",
+                "scope": 4626,
+                "src": "1059:14:10",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 4622,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1059:7:10",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 4625,
+                "name": "rewardDebt",
+                "nodeType": "VariableDeclaration",
+                "scope": 4626,
+                "src": "1083:18:10",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 4624,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1083:7:10",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "UserInfo",
+            "nodeType": "StructDefinition",
+            "scope": 4631,
+            "src": "1033:75:10",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 4630,
+            "name": "userInfo",
+            "nodeType": "VariableDeclaration",
+            "scope": 4631,
+            "src": "1159:44:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_UserInfo_$4626_storage_$",
+              "typeString": "mapping(address => struct BAIVaultStorage.UserInfo)"
+            },
+            "typeName": {
+              "id": 4629,
+              "keyType": {
+                "id": 4627,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "1167:7:10",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "1159:28:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_UserInfo_$4626_storage_$",
+                "typeString": "mapping(address => struct BAIVaultStorage.UserInfo)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 4628,
+                "name": "UserInfo",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 4626,
+                "src": "1178:8:10",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_UserInfo_$4626_storage_ptr",
+                  "typeString": "struct BAIVaultStorage.UserInfo"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 4632,
+        "src": "507:699:10"
+      }
+    ],
+    "src": "0:1207:10"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIVaultStorage.sol",
+      "exportedSymbols": {
+        "BAIVaultAdminStorage": [
+          4607
+        ],
+        "BAIVaultStorage": [
+          4631
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.5",
+            ".16"
+          ]
+        },
+        "id": 4596,
+        "name": "PragmaDirective",
+        "src": "0:24:10"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 35176,
+          "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/SafeMath.sol",
+          "file": "./SafeMath.sol",
+          "scope": 4632,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 4597,
+        "name": "ImportDirective",
+        "src": "25:24:10"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 33839,
+          "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/IBEP20.sol",
+          "file": "./IBEP20.sol",
+          "scope": 4632,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 4598,
+        "name": "ImportDirective",
+        "src": "50:22:10"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            4607
+          ],
+          "name": "BAIVaultAdminStorage",
+          "scope": 4632
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "admin",
+              "scope": 4607,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 4599,
+                "name": "ElementaryTypeName",
+                "src": "171:7:10"
+              }
+            ],
+            "id": 4600,
+            "name": "VariableDeclaration",
+            "src": "171:20:10"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "pendingAdmin",
+              "scope": 4607,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 4601,
+                "name": "ElementaryTypeName",
+                "src": "267:7:10"
+              }
+            ],
+            "id": 4602,
+            "name": "VariableDeclaration",
+            "src": "267:27:10"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "baiVaultImplementation",
+              "scope": 4607,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 4603,
+                "name": "ElementaryTypeName",
+                "src": "357:7:10"
+              }
+            ],
+            "id": 4604,
+            "name": "VariableDeclaration",
+            "src": "357:37:10"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "pendingBAIVaultImplementation",
+              "scope": 4607,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 4605,
+                "name": "ElementaryTypeName",
+                "src": "458:7:10"
+              }
+            ],
+            "id": 4606,
+            "name": "VariableDeclaration",
+            "src": "458:44:10"
+          }
+        ],
+        "id": 4607,
+        "name": "ContractDefinition",
+        "src": "74:431:10"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            4607
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            4631,
+            4607
+          ],
+          "name": "BAIVaultStorage",
+          "scope": 4632
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": null
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "BAIVaultAdminStorage",
+                  "referencedDeclaration": 4607,
+                  "type": "contract BAIVaultAdminStorage"
+                },
+                "id": 4608,
+                "name": "UserDefinedTypeName",
+                "src": "535:20:10"
+              }
+            ],
+            "id": 4609,
+            "name": "InheritanceSpecifier",
+            "src": "535:20:10"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "btnt",
+              "scope": 4631,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract IBEP20",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "IBEP20",
+                  "referencedDeclaration": 33838,
+                  "type": "contract IBEP20"
+                },
+                "id": 4610,
+                "name": "UserDefinedTypeName",
+                "src": "594:6:10"
+              }
+            ],
+            "id": 4611,
+            "name": "VariableDeclaration",
+            "src": "594:18:10"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "bai",
+              "scope": 4631,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract IBEP20",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "IBEP20",
+                  "referencedDeclaration": 33838,
+                  "type": "contract IBEP20"
+                },
+                "id": 4612,
+                "name": "UserDefinedTypeName",
+                "src": "650:6:10"
+              }
+            ],
+            "id": 4613,
+            "name": "VariableDeclaration",
+            "src": "650:17:10"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "_notEntered",
+              "scope": 4631,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "bool",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "bool",
+                  "type": "bool"
+                },
+                "id": 4614,
+                "name": "ElementaryTypeName",
+                "src": "728:4:10"
+              }
+            ],
+            "id": 4615,
+            "name": "VariableDeclaration",
+            "src": "728:25:10"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "btntBalance",
+              "scope": 4631,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 4616,
+                "name": "ElementaryTypeName",
+                "src": "798:7:10"
+              }
+            ],
+            "id": 4617,
+            "name": "VariableDeclaration",
+            "src": "798:26:10"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "accBTNTPerShare",
+              "scope": 4631,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 4618,
+                "name": "ElementaryTypeName",
+                "src": "874:7:10"
+              }
+            ],
+            "id": 4619,
+            "name": "VariableDeclaration",
+            "src": "874:30:10"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "pendingRewards",
+              "scope": 4631,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 4620,
+                "name": "ElementaryTypeName",
+                "src": "962:7:10"
+              }
+            ],
+            "id": 4621,
+            "name": "VariableDeclaration",
+            "src": "962:29:10"
+          },
+          {
+            "attributes": {
+              "canonicalName": "BAIVaultStorage.UserInfo",
+              "name": "UserInfo",
+              "scope": 4631,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "amount",
+                  "scope": 4626,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 4622,
+                    "name": "ElementaryTypeName",
+                    "src": "1059:7:10"
+                  }
+                ],
+                "id": 4623,
+                "name": "VariableDeclaration",
+                "src": "1059:14:10"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "rewardDebt",
+                  "scope": 4626,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 4624,
+                    "name": "ElementaryTypeName",
+                    "src": "1083:7:10"
+                  }
+                ],
+                "id": 4625,
+                "name": "VariableDeclaration",
+                "src": "1083:18:10"
+              }
+            ],
+            "id": 4626,
+            "name": "StructDefinition",
+            "src": "1033:75:10"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "userInfo",
+              "scope": 4631,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => struct BAIVaultStorage.UserInfo)",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => struct BAIVaultStorage.UserInfo)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 4627,
+                    "name": "ElementaryTypeName",
+                    "src": "1167:7:10"
+                  },
+                  {
+                    "attributes": {
+                      "contractScope": null,
+                      "name": "UserInfo",
+                      "referencedDeclaration": 4626,
+                      "type": "struct BAIVaultStorage.UserInfo"
+                    },
+                    "id": 4628,
+                    "name": "UserDefinedTypeName",
+                    "src": "1178:8:10"
+                  }
+                ],
+                "id": 4629,
+                "name": "Mapping",
+                "src": "1159:28:10"
+              }
+            ],
+            "id": 4630,
+            "name": "VariableDeclaration",
+            "src": "1159:44:10"
+          }
+        ],
+        "id": 4631,
+        "name": "ContractDefinition",
+        "src": "507:699:10"
+      }
+    ],
+    "id": 4632,
+    "name": "SourceUnit",
+    "src": "0:1207:10"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.17+commit.d19bba13.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.0",
+  "updatedAt": "2021-06-16T15:51:17.651Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

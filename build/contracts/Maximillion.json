@@ -1,0 +1,2223 @@
+{
+  "contractName": "Maximillion",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "contract BBNB",
+          "name": "bBnb_",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "bBnb",
+      "outputs": [
+        {
+          "internalType": "contract BBNB",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "borrower",
+          "type": "address"
+        }
+      ],
+      "name": "repayBehalf",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "borrower",
+          "type": "address"
+        },
+        {
+          "internalType": "contract BBNB",
+          "name": "bBnb_",
+          "type": "address"
+        }
+      ],
+      "name": "repayBehalfExplicit",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.17+commit.d19bba13\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"contract BBNB\",\"name\":\"bBnb_\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"constant\":true,\"inputs\":[],\"name\":\"bBnb\",\"outputs\":[{\"internalType\":\"contract BBNB\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"borrower\",\"type\":\"address\"}],\"name\":\"repayBehalf\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"borrower\",\"type\":\"address\"},{\"internalType\":\"contract BBNB\",\"name\":\"bBnb_\",\"type\":\"address\"}],\"name\":\"repayBehalfExplicit\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"Btntex\",\"methods\":{\"repayBehalf(address)\":{\"details\":\"The provided BNB is applied towards the borrow balance, any excess is refunded\",\"params\":{\"borrower\":\"The address of the borrower account to repay on behalf of\"}},\"repayBehalfExplicit(address,address)\":{\"details\":\"The provided BNB is applied towards the borrow balance, any excess is refunded\",\"params\":{\"bBnb_\":\"The address of the bBnb contract to repay in\",\"borrower\":\"The address of the borrower account to repay on behalf of\"}}},\"title\":\"Btntex's Maximillion Contract\"},\"userdoc\":{\"methods\":{\"constructor\":\"Construct a Maximillion to repay max in a BBNB market\",\"repayBehalf(address)\":{\"notice\":\"msg.sender sends BNB to repay an account's borrow in the bBnb market\"},\"repayBehalfExplicit(address,address)\":{\"notice\":\"msg.sender sends BNB to repay an account's borrow in a bBnb market\"}}}},\"settings\":{\"compilationTarget\":{\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/Maximillion.sol\":\"Maximillion\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BBNB.sol\":{\"keccak256\":\"0x671747fec182dfc9f85d4d47bf82382ca79f82f907bcdd72d94b8b6fc4d9a566\",\"urls\":[\"bzz-raw://00442e9ea4487a5722349a404cbd7200cdffe81db472ca3c7dbee9c1b38378a2\",\"dweb:/ipfs/QmUhBLadMvJumWym3ZRkiq6iK76LsfFGAR8yC1m5mySSw6\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BToken.sol\":{\"keccak256\":\"0xbb8bb683a051910269371a661504f8ba4d21e3a4d5069d15c3f0e39116fdf72b\",\"urls\":[\"bzz-raw://bbb20df8fb5f842d0e280525f998164da60d4a1ea82a463da19e4d4ce05f6e9c\",\"dweb:/ipfs/QmVbKLoe7uYHFeCZLobe2D4a2qv6jx9XLVogHoTQPqsNM8\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BTokenInterfaces.sol\":{\"keccak256\":\"0xd37b82a9f779237033cc69faf520e5803cf22a67b7829200bd7b17a36376ccb2\",\"urls\":[\"bzz-raw://2b5a2b7cd3ea1ae3f643c69692ce15db8e4207214ceb2b1c7c1deb9825d0e4a4\",\"dweb:/ipfs/QmcN7kbpBoin5JVi5kfVdNXExAuGMtBnmaVWQ3aDz64T5o\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/CarefulMath.sol\":{\"keccak256\":\"0x74b0db2b084c2993b6a23048e19b90efce5a0d8962974c1757d8daa19fb61995\",\"urls\":[\"bzz-raw://3aee6946317e316848ff3278f59edeb6d7fd903057485ef002e3d3b2673e27e7\",\"dweb:/ipfs/QmTABihsvAFEuiCke2rcERPCnbLq4BW12yygCy42At9K5e\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ComptrollerInterface.sol\":{\"keccak256\":\"0xeeab236ea1a3757fbd66ce0755b95171e7121f186cf23a0339e58821fadfbc7d\",\"urls\":[\"bzz-raw://fa3f6856fd52743b1874f3f6409e62a3730c3a2217822a8daf5e3f75b18f7ac7\",\"dweb:/ipfs/QmemY5h611yo2Kc1fbFxVW41uR5AAPY46TyeH1uwUN3ifr\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/EIP20Interface.sol\":{\"keccak256\":\"0x827242c7a667a0b4c9cd7a089fa84cc91c525d5a26addf891bac98a099255bc0\",\"urls\":[\"bzz-raw://aaee4eff9fb1078c28626377a94ed3b0abe1b91d75cd2527035f0f03399f7f69\",\"dweb:/ipfs/QmX7U5vKVsuadNZekWigzJUDprbjaMPpmiKpNXq5FUYmPm\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/EIP20NonStandardInterface.sol\":{\"keccak256\":\"0xa5d46f66b580f6399832820c18932470fe873f80706f95b1783cd9099ddbaf5e\",\"urls\":[\"bzz-raw://82ccbc050f8289068aca58cd04cc1255b304a374ba09c764dcfa5a6a70935019\",\"dweb:/ipfs/QmZx33aDg51QqFeHQnzMFvuPkvKrwimYU9VZFyHfQHsTms\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ErrorReporter.sol\":{\"keccak256\":\"0xf92b01359db7644043c8327f1baf9de393e6b82689ca6032ea2db711dba4f2f4\",\"urls\":[\"bzz-raw://343120afad633483c86820413623ff8eee05533de706c037baf5b83be371de88\",\"dweb:/ipfs/QmYrNt2FeLVLSJo6G8NtotWnR9mLenGauAvDQGkSvZtJe4\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/Exponential.sol\":{\"keccak256\":\"0x593e9333576977f23e5a20ca6bdcd6f14104533cfdb311ed866b4f3d00354c65\",\"urls\":[\"bzz-raw://ba7a9eaeab7c3e0654e239932dc47598480ef9b66f45c3801806d547cd043821\",\"dweb:/ipfs/QmWPQB1QK4r3pZtpRyfCVE5QJtRTry8Qmy3JAmac5WfnjV\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ExponentialNoError.sol\":{\"keccak256\":\"0x2a9c420261302a01ae49218f9f951ed29dd28840ca76d8500d16beac172c5522\",\"urls\":[\"bzz-raw://01aaa69315f27f0b93784565416411c0bfccad8a33600e5f9233323a4ae4f5d0\",\"dweb:/ipfs/QmQ7RKntAeWCTA21K3YbtVZ1sSRLYCXStuuoM6AEyWTGTt\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/InterestRateModel.sol\":{\"keccak256\":\"0x73140e38dba59bad70b17f9977a102d61ad5a89087adfd379c52d4e63b103692\",\"urls\":[\"bzz-raw://e2a504fcb04bcd84a904fc9631db7b79cbf28d0b65e85ff097ecb5e2ea4ff520\",\"dweb:/ipfs/QmQVo7iQRBeeHfxjYaFLTPY8iWL7coCnxgNsLPYGD3z56x\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/Maximillion.sol\":{\"keccak256\":\"0x0e9516afaef1e647f1f43b0036765ae333b14f6a4d7dc032c9bbb47cdecb3355\",\"urls\":[\"bzz-raw://fc3c76a726dbfff1c69bb452b2fc73aa87a1ff64da2c6fa667a6171ba5b40e69\",\"dweb:/ipfs/QmZ21GNREujEXLcXnJYf1VmDEY9eP84eJDFH3HhLGWmL8L\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b506040516104a43803806104a48339818101604052602081101561003357600080fd5b8101908080519060200190929190505050806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050610410806100946000396000f3fe6080604052600436106100345760003560e01c806306abb37e14610039578063367b7f05146100905780639f35c3d5146100f4575b600080fd5b34801561004557600080fd5b5061004e610138565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6100f2600480360360408110156100a657600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061015d565b005b6101366004803603602081101561010a57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506103ad565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600034905060008273ffffffffffffffffffffffffffffffffffffffff166317bfdfbc856040518263ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001915050602060405180830381600087803b1580156101e357600080fd5b505af11580156101f7573d6000803e3d6000fd5b505050506040513d602081101561020d57600080fd5b810190808051906020019092919050505090508082111561030e578273ffffffffffffffffffffffffffffffffffffffff1663e597461982866040518363ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019150506000604051808303818588803b1580156102a757600080fd5b505af11580156102bb573d6000803e3d6000fd5b50505050503373ffffffffffffffffffffffffffffffffffffffff166108fc8284039081150290604051600060405180830381858888f19350505050158015610308573d6000803e3d6000fd5b506103a7565b8273ffffffffffffffffffffffffffffffffffffffff1663e597461983866040518363ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019150506000604051808303818588803b15801561038d57600080fd5b505af11580156103a1573d6000803e3d6000fd5b50505050505b50505050565b6103d8816000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1661015d565b5056fea265627a7a723158202cd131a6c3c57f026f6bf83fa49abd0a7f887dae2259bea6044bf8083005845464736f6c63430005110032",
+  "deployedBytecode": "0x6080604052600436106100345760003560e01c806306abb37e14610039578063367b7f05146100905780639f35c3d5146100f4575b600080fd5b34801561004557600080fd5b5061004e610138565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6100f2600480360360408110156100a657600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061015d565b005b6101366004803603602081101561010a57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506103ad565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600034905060008273ffffffffffffffffffffffffffffffffffffffff166317bfdfbc856040518263ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001915050602060405180830381600087803b1580156101e357600080fd5b505af11580156101f7573d6000803e3d6000fd5b505050506040513d602081101561020d57600080fd5b810190808051906020019092919050505090508082111561030e578273ffffffffffffffffffffffffffffffffffffffff1663e597461982866040518363ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019150506000604051808303818588803b1580156102a757600080fd5b505af11580156102bb573d6000803e3d6000fd5b50505050503373ffffffffffffffffffffffffffffffffffffffff166108fc8284039081150290604051600060405180830381858888f19350505050158015610308573d6000803e3d6000fd5b506103a7565b8273ffffffffffffffffffffffffffffffffffffffff1663e597461983866040518363ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019150506000604051808303818588803b15801561038d57600080fd5b505af11580156103a1573d6000803e3d6000fd5b50505050505b50505050565b6103d8816000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1661015d565b5056fea265627a7a723158202cd131a6c3c57f026f6bf83fa49abd0a7f887dae2259bea6044bf8083005845464736f6c63430005110032",
+  "sourceMap": "114:1405:43:-;;;316:60;8:9:-1;5:2;;;30:1;27;20:12;5:2;316:60:43;;;;;;;;;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;316:60:43;;;;;;;;;;;;;;;;364:5;357:4;;:12;;;;;;;;;;;;;;;;;;316:60;114:1405;;;;;;",
+  "deployedSourceMap": "114:1405:43:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;208:16;;8:9:-1;5:2;;;30:1;27;20:12;5:2;208:16:43;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;1101:416;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;1101:416:43;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;654:106;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;654:106:43;;;;;;;;;;;;;;;;;;;:::i;:::-;;208:16;;;;;;;;;;;;;:::o;1101:416::-;1185:13;1201:9;1185:25;;1220:12;1235:5;:26;;;1262:8;1235:36;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1235:36:43;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;1235:36:43;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;1235:36:43;;;;;;;;;;;;;;;;1220:51;;1296:7;1285:8;:18;1281:230;;;1319:5;:23;;;1349:7;1358:8;1319:48;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1319:48:43;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;1319:48:43;;;;;1381:10;:19;;:39;1412:7;1401:8;:18;1381:39;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;1381:39:43;1281:230;;;1451:5;:23;;;1481:8;1491;1451:49;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1451:49:43;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;1451:49:43;;;;;1281:230;1101:416;;;;:::o;654:106::-;718:35;738:8;748:4;;;;;;;;;;;718:19;:35::i;:::-;654:106;:::o",
+  "source": "pragma solidity ^0.5.16;\n\nimport \"./BBNB.sol\";\n\n/**\n * @title Btntex's Maximillion Contract\n * @author Btntex\n */\ncontract Maximillion {\n    /**\n     * @notice The default bBnb market to repay in\n     */\n    BBNB public bBnb;\n\n    /**\n     * @notice Construct a Maximillion to repay max in a BBNB market\n     */\n    constructor(BBNB bBnb_) public {\n        bBnb = bBnb_;\n    }\n\n    /**\n     * @notice msg.sender sends BNB to repay an account's borrow in the bBnb market\n     * @dev The provided BNB is applied towards the borrow balance, any excess is refunded\n     * @param borrower The address of the borrower account to repay on behalf of\n     */\n    function repayBehalf(address borrower) public payable {\n        repayBehalfExplicit(borrower, bBnb);\n    }\n\n    /**\n     * @notice msg.sender sends BNB to repay an account's borrow in a bBnb market\n     * @dev The provided BNB is applied towards the borrow balance, any excess is refunded\n     * @param borrower The address of the borrower account to repay on behalf of\n     * @param bBnb_ The address of the bBnb contract to repay in\n     */\n    function repayBehalfExplicit(address borrower, BBNB bBnb_) public payable {\n        uint received = msg.value;\n        uint borrows = bBnb_.borrowBalanceCurrent(borrower);\n        if (received > borrows) {\n            bBnb_.repayBorrowBehalf.value(borrows)(borrower);\n            msg.sender.transfer(received - borrows);\n        } else {\n            bBnb_.repayBorrowBehalf.value(received)(borrower);\n        }\n    }\n}\n",
+  "sourcePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/Maximillion.sol",
+  "ast": {
+    "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/Maximillion.sol",
+    "exportedSymbols": {
+      "Maximillion": [
+        34188
+      ]
+    },
+    "id": 34189,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 34107,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".16"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:43"
+      },
+      {
+        "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BBNB.sol",
+        "file": "./BBNB.sol",
+        "id": 34108,
+        "nodeType": "ImportDirective",
+        "scope": 34189,
+        "sourceUnit": 5009,
+        "src": "26:20:43",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title Btntex's Maximillion Contract\n@author Btntex",
+        "fullyImplemented": true,
+        "id": 34188,
+        "linearizedBaseContracts": [
+          34188
+        ],
+        "name": "Maximillion",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 34110,
+            "name": "bBnb",
+            "nodeType": "VariableDeclaration",
+            "scope": 34188,
+            "src": "208:16:43",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_BBNB_$5008",
+              "typeString": "contract BBNB"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 34109,
+              "name": "BBNB",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 5008,
+              "src": "208:4:43",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_BBNB_$5008",
+                "typeString": "contract BBNB"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 34119,
+              "nodeType": "Block",
+              "src": "347:29:43",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 34117,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 34115,
+                      "name": "bBnb",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 34110,
+                      "src": "357:4:43",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_BBNB_$5008",
+                        "typeString": "contract BBNB"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 34116,
+                      "name": "bBnb_",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 34112,
+                      "src": "364:5:43",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_BBNB_$5008",
+                        "typeString": "contract BBNB"
+                      }
+                    },
+                    "src": "357:12:43",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BBNB_$5008",
+                      "typeString": "contract BBNB"
+                    }
+                  },
+                  "id": 34118,
+                  "nodeType": "ExpressionStatement",
+                  "src": "357:12:43"
+                }
+              ]
+            },
+            "documentation": "@notice Construct a Maximillion to repay max in a BBNB market",
+            "id": 34120,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 34113,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 34112,
+                  "name": "bBnb_",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34120,
+                  "src": "328:10:43",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_BBNB_$5008",
+                    "typeString": "contract BBNB"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 34111,
+                    "name": "BBNB",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5008,
+                    "src": "328:4:43",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BBNB_$5008",
+                      "typeString": "contract BBNB"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "327:12:43"
+            },
+            "returnParameters": {
+              "id": 34114,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "347:0:43"
+            },
+            "scope": 34188,
+            "src": "316:60:43",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 34130,
+              "nodeType": "Block",
+              "src": "708:52:43",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 34126,
+                        "name": "borrower",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 34122,
+                        "src": "738:8:43",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 34127,
+                        "name": "bBnb",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 34110,
+                        "src": "748:4:43",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_BBNB_$5008",
+                          "typeString": "contract BBNB"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_BBNB_$5008",
+                          "typeString": "contract BBNB"
+                        }
+                      ],
+                      "id": 34125,
+                      "name": "repayBehalfExplicit",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 34187,
+                      "src": "718:19:43",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_contract$_BBNB_$5008_$returns$__$",
+                        "typeString": "function (address,contract BBNB)"
+                      }
+                    },
+                    "id": 34128,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "718:35:43",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 34129,
+                  "nodeType": "ExpressionStatement",
+                  "src": "718:35:43"
+                }
+              ]
+            },
+            "documentation": "@notice msg.sender sends BNB to repay an account's borrow in the bBnb market\n@dev The provided BNB is applied towards the borrow balance, any excess is refunded\n@param borrower The address of the borrower account to repay on behalf of",
+            "id": 34131,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "repayBehalf",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 34123,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 34122,
+                  "name": "borrower",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34131,
+                  "src": "675:16:43",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 34121,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "675:7:43",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "674:18:43"
+            },
+            "returnParameters": {
+              "id": 34124,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "708:0:43"
+            },
+            "scope": 34188,
+            "src": "654:106:43",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 34186,
+              "nodeType": "Block",
+              "src": "1175:342:43",
+              "statements": [
+                {
+                  "assignments": [
+                    34139
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 34139,
+                      "name": "received",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 34186,
+                      "src": "1185:13:43",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 34138,
+                        "name": "uint",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1185:4:43",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 34142,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "expression": {
+                      "argumentTypes": null,
+                      "id": 34140,
+                      "name": "msg",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 36238,
+                      "src": "1201:3:43",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_magic_message",
+                        "typeString": "msg"
+                      }
+                    },
+                    "id": 34141,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "value",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": null,
+                    "src": "1201:9:43",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1185:25:43"
+                },
+                {
+                  "assignments": [
+                    34144
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 34144,
+                      "name": "borrows",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 34186,
+                      "src": "1220:12:43",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 34143,
+                        "name": "uint",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1220:4:43",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 34149,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 34147,
+                        "name": "borrower",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 34133,
+                        "src": "1262:8:43",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 34145,
+                        "name": "bBnb_",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 34135,
+                        "src": "1235:5:43",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_BBNB_$5008",
+                          "typeString": "contract BBNB"
+                        }
+                      },
+                      "id": 34146,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "borrowBalanceCurrent",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 8751,
+                      "src": "1235:26:43",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_external_nonpayable$_t_address_$returns$_t_uint256_$",
+                        "typeString": "function (address) external returns (uint256)"
+                      }
+                    },
+                    "id": 34148,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1235:36:43",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1220:51:43"
+                },
+                {
+                  "condition": {
+                    "argumentTypes": null,
+                    "commonType": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "id": 34152,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "argumentTypes": null,
+                      "id": 34150,
+                      "name": "received",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 34139,
+                      "src": "1285:8:43",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": ">",
+                    "rightExpression": {
+                      "argumentTypes": null,
+                      "id": 34151,
+                      "name": "borrows",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 34144,
+                      "src": "1296:7:43",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "1285:18:43",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "falseBody": {
+                    "id": 34184,
+                    "nodeType": "Block",
+                    "src": "1437:74:43",
+                    "statements": [
+                      {
+                        "expression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "id": 34181,
+                              "name": "borrower",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 34133,
+                              "src": "1491:8:43",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            ],
+                            "arguments": [
+                              {
+                                "argumentTypes": null,
+                                "id": 34179,
+                                "name": "received",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 34139,
+                                "src": "1481:8:43",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "expression": {
+                                "argumentTypes": null,
+                                "expression": {
+                                  "argumentTypes": null,
+                                  "id": 34174,
+                                  "name": "bBnb_",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 34135,
+                                  "src": "1451:5:43",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_contract$_BBNB_$5008",
+                                    "typeString": "contract BBNB"
+                                  }
+                                },
+                                "id": 34177,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberName": "repayBorrowBehalf",
+                                "nodeType": "MemberAccess",
+                                "referencedDeclaration": 4759,
+                                "src": "1451:23:43",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_function_external_payable$_t_address_$returns$__$",
+                                  "typeString": "function (address) payable external"
+                                }
+                              },
+                              "id": 34178,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberName": "value",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": null,
+                              "src": "1451:29:43",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_setvalue_pure$_t_uint256_$returns$_t_function_external_payable$_t_address_$returns$__$value_$",
+                                "typeString": "function (uint256) pure returns (function (address) payable external)"
+                              }
+                            },
+                            "id": 34180,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "1451:39:43",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_external_payable$_t_address_$returns$__$value",
+                              "typeString": "function (address) payable external"
+                            }
+                          },
+                          "id": 34182,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1451:49:43",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_tuple$__$",
+                            "typeString": "tuple()"
+                          }
+                        },
+                        "id": 34183,
+                        "nodeType": "ExpressionStatement",
+                        "src": "1451:49:43"
+                      }
+                    ]
+                  },
+                  "id": 34185,
+                  "nodeType": "IfStatement",
+                  "src": "1281:230:43",
+                  "trueBody": {
+                    "id": 34173,
+                    "nodeType": "Block",
+                    "src": "1305:126:43",
+                    "statements": [
+                      {
+                        "expression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "id": 34160,
+                              "name": "borrower",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 34133,
+                              "src": "1358:8:43",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            ],
+                            "arguments": [
+                              {
+                                "argumentTypes": null,
+                                "id": 34158,
+                                "name": "borrows",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 34144,
+                                "src": "1349:7:43",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "expression": {
+                                "argumentTypes": null,
+                                "expression": {
+                                  "argumentTypes": null,
+                                  "id": 34153,
+                                  "name": "bBnb_",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 34135,
+                                  "src": "1319:5:43",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_contract$_BBNB_$5008",
+                                    "typeString": "contract BBNB"
+                                  }
+                                },
+                                "id": 34156,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberName": "repayBorrowBehalf",
+                                "nodeType": "MemberAccess",
+                                "referencedDeclaration": 4759,
+                                "src": "1319:23:43",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_function_external_payable$_t_address_$returns$__$",
+                                  "typeString": "function (address) payable external"
+                                }
+                              },
+                              "id": 34157,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberName": "value",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": null,
+                              "src": "1319:29:43",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_setvalue_pure$_t_uint256_$returns$_t_function_external_payable$_t_address_$returns$__$value_$",
+                                "typeString": "function (uint256) pure returns (function (address) payable external)"
+                              }
+                            },
+                            "id": 34159,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "1319:38:43",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_external_payable$_t_address_$returns$__$value",
+                              "typeString": "function (address) payable external"
+                            }
+                          },
+                          "id": 34161,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1319:48:43",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_tuple$__$",
+                            "typeString": "tuple()"
+                          }
+                        },
+                        "id": 34162,
+                        "nodeType": "ExpressionStatement",
+                        "src": "1319:48:43"
+                      },
+                      {
+                        "expression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              },
+                              "id": 34170,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "leftExpression": {
+                                "argumentTypes": null,
+                                "id": 34168,
+                                "name": "received",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 34139,
+                                "src": "1401:8:43",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "nodeType": "BinaryOperation",
+                              "operator": "-",
+                              "rightExpression": {
+                                "argumentTypes": null,
+                                "id": 34169,
+                                "name": "borrows",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 34144,
+                                "src": "1412:7:43",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "src": "1401:18:43",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": null,
+                              "expression": {
+                                "argumentTypes": null,
+                                "id": 34163,
+                                "name": "msg",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 36238,
+                                "src": "1381:3:43",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_magic_message",
+                                  "typeString": "msg"
+                                }
+                              },
+                              "id": 34166,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberName": "sender",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": null,
+                              "src": "1381:10:43",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address_payable",
+                                "typeString": "address payable"
+                              }
+                            },
+                            "id": 34167,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "transfer",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": null,
+                            "src": "1381:19:43",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_transfer_nonpayable$_t_uint256_$returns$__$",
+                              "typeString": "function (uint256)"
+                            }
+                          },
+                          "id": 34171,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1381:39:43",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_tuple$__$",
+                            "typeString": "tuple()"
+                          }
+                        },
+                        "id": 34172,
+                        "nodeType": "ExpressionStatement",
+                        "src": "1381:39:43"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "documentation": "@notice msg.sender sends BNB to repay an account's borrow in a bBnb market\n@dev The provided BNB is applied towards the borrow balance, any excess is refunded\n@param borrower The address of the borrower account to repay on behalf of\n@param bBnb_ The address of the bBnb contract to repay in",
+            "id": 34187,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "repayBehalfExplicit",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 34136,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 34133,
+                  "name": "borrower",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34187,
+                  "src": "1130:16:43",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 34132,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1130:7:43",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 34135,
+                  "name": "bBnb_",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34187,
+                  "src": "1148:10:43",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_BBNB_$5008",
+                    "typeString": "contract BBNB"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 34134,
+                    "name": "BBNB",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5008,
+                    "src": "1148:4:43",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BBNB_$5008",
+                      "typeString": "contract BBNB"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1129:30:43"
+            },
+            "returnParameters": {
+              "id": 34137,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1175:0:43"
+            },
+            "scope": 34188,
+            "src": "1101:416:43",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 34189,
+        "src": "114:1405:43"
+      }
+    ],
+    "src": "0:1520:43"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/Maximillion.sol",
+      "exportedSymbols": {
+        "Maximillion": [
+          34188
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.5",
+            ".16"
+          ]
+        },
+        "id": 34107,
+        "name": "PragmaDirective",
+        "src": "0:24:43"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 5009,
+          "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BBNB.sol",
+          "file": "./BBNB.sol",
+          "scope": 34189,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 34108,
+        "name": "ImportDirective",
+        "src": "26:20:43"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": "@title Btntex's Maximillion Contract\n@author Btntex",
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            34188
+          ],
+          "name": "Maximillion",
+          "scope": 34189
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "bBnb",
+              "scope": 34188,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract BBNB",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "BBNB",
+                  "referencedDeclaration": 5008,
+                  "type": "contract BBNB"
+                },
+                "id": 34109,
+                "name": "UserDefinedTypeName",
+                "src": "208:4:43"
+              }
+            ],
+            "id": 34110,
+            "name": "VariableDeclaration",
+            "src": "208:16:43"
+          },
+          {
+            "attributes": {
+              "documentation": "@notice Construct a Maximillion to repay max in a BBNB market",
+              "implemented": true,
+              "isConstructor": true,
+              "kind": "constructor",
+              "modifiers": [
+                null
+              ],
+              "name": "",
+              "scope": 34188,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "bBnb_",
+                      "scope": 34120,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract BBNB",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "BBNB",
+                          "referencedDeclaration": 5008,
+                          "type": "contract BBNB"
+                        },
+                        "id": 34111,
+                        "name": "UserDefinedTypeName",
+                        "src": "328:4:43"
+                      }
+                    ],
+                    "id": 34112,
+                    "name": "VariableDeclaration",
+                    "src": "328:10:43"
+                  }
+                ],
+                "id": 34113,
+                "name": "ParameterList",
+                "src": "327:12:43"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 34114,
+                "name": "ParameterList",
+                "src": "347:0:43"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "contract BBNB"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 34110,
+                              "type": "contract BBNB",
+                              "value": "bBnb"
+                            },
+                            "id": 34115,
+                            "name": "Identifier",
+                            "src": "357:4:43"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 34112,
+                              "type": "contract BBNB",
+                              "value": "bBnb_"
+                            },
+                            "id": 34116,
+                            "name": "Identifier",
+                            "src": "364:5:43"
+                          }
+                        ],
+                        "id": 34117,
+                        "name": "Assignment",
+                        "src": "357:12:43"
+                      }
+                    ],
+                    "id": 34118,
+                    "name": "ExpressionStatement",
+                    "src": "357:12:43"
+                  }
+                ],
+                "id": 34119,
+                "name": "Block",
+                "src": "347:29:43"
+              }
+            ],
+            "id": 34120,
+            "name": "FunctionDefinition",
+            "src": "316:60:43"
+          },
+          {
+            "attributes": {
+              "documentation": "@notice msg.sender sends BNB to repay an account's borrow in the bBnb market\n@dev The provided BNB is applied towards the borrow balance, any excess is refunded\n@param borrower The address of the borrower account to repay on behalf of",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "repayBehalf",
+              "scope": 34188,
+              "stateMutability": "payable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "borrower",
+                      "scope": 34131,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 34121,
+                        "name": "ElementaryTypeName",
+                        "src": "675:7:43"
+                      }
+                    ],
+                    "id": 34122,
+                    "name": "VariableDeclaration",
+                    "src": "675:16:43"
+                  }
+                ],
+                "id": 34123,
+                "name": "ParameterList",
+                "src": "674:18:43"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 34124,
+                "name": "ParameterList",
+                "src": "708:0:43"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                },
+                                {
+                                  "typeIdentifier": "t_contract$_BBNB_$5008",
+                                  "typeString": "contract BBNB"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 34187,
+                              "type": "function (address,contract BBNB)",
+                              "value": "repayBehalfExplicit"
+                            },
+                            "id": 34125,
+                            "name": "Identifier",
+                            "src": "718:19:43"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 34122,
+                              "type": "address",
+                              "value": "borrower"
+                            },
+                            "id": 34126,
+                            "name": "Identifier",
+                            "src": "738:8:43"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 34110,
+                              "type": "contract BBNB",
+                              "value": "bBnb"
+                            },
+                            "id": 34127,
+                            "name": "Identifier",
+                            "src": "748:4:43"
+                          }
+                        ],
+                        "id": 34128,
+                        "name": "FunctionCall",
+                        "src": "718:35:43"
+                      }
+                    ],
+                    "id": 34129,
+                    "name": "ExpressionStatement",
+                    "src": "718:35:43"
+                  }
+                ],
+                "id": 34130,
+                "name": "Block",
+                "src": "708:52:43"
+              }
+            ],
+            "id": 34131,
+            "name": "FunctionDefinition",
+            "src": "654:106:43"
+          },
+          {
+            "attributes": {
+              "documentation": "@notice msg.sender sends BNB to repay an account's borrow in a bBnb market\n@dev The provided BNB is applied towards the borrow balance, any excess is refunded\n@param borrower The address of the borrower account to repay on behalf of\n@param bBnb_ The address of the bBnb contract to repay in",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "repayBehalfExplicit",
+              "scope": 34188,
+              "stateMutability": "payable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "borrower",
+                      "scope": 34187,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 34132,
+                        "name": "ElementaryTypeName",
+                        "src": "1130:7:43"
+                      }
+                    ],
+                    "id": 34133,
+                    "name": "VariableDeclaration",
+                    "src": "1130:16:43"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "bBnb_",
+                      "scope": 34187,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract BBNB",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "BBNB",
+                          "referencedDeclaration": 5008,
+                          "type": "contract BBNB"
+                        },
+                        "id": 34134,
+                        "name": "UserDefinedTypeName",
+                        "src": "1148:4:43"
+                      }
+                    ],
+                    "id": 34135,
+                    "name": "VariableDeclaration",
+                    "src": "1148:10:43"
+                  }
+                ],
+                "id": 34136,
+                "name": "ParameterList",
+                "src": "1129:30:43"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 34137,
+                "name": "ParameterList",
+                "src": "1175:0:43"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "assignments": [
+                        34139
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "name": "received",
+                          "scope": 34186,
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "type": "uint256",
+                          "value": null,
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "uint",
+                              "type": "uint256"
+                            },
+                            "id": 34138,
+                            "name": "ElementaryTypeName",
+                            "src": "1185:4:43"
+                          }
+                        ],
+                        "id": 34139,
+                        "name": "VariableDeclaration",
+                        "src": "1185:13:43"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "member_name": "value",
+                          "referencedDeclaration": null,
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 36238,
+                              "type": "msg",
+                              "value": "msg"
+                            },
+                            "id": 34140,
+                            "name": "Identifier",
+                            "src": "1201:3:43"
+                          }
+                        ],
+                        "id": 34141,
+                        "name": "MemberAccess",
+                        "src": "1201:9:43"
+                      }
+                    ],
+                    "id": 34142,
+                    "name": "VariableDeclarationStatement",
+                    "src": "1185:25:43"
+                  },
+                  {
+                    "attributes": {
+                      "assignments": [
+                        34144
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "name": "borrows",
+                          "scope": 34186,
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "type": "uint256",
+                          "value": null,
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "uint",
+                              "type": "uint256"
+                            },
+                            "id": 34143,
+                            "name": "ElementaryTypeName",
+                            "src": "1220:4:43"
+                          }
+                        ],
+                        "id": 34144,
+                        "name": "VariableDeclaration",
+                        "src": "1220:12:43"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "uint256",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "borrowBalanceCurrent",
+                              "referencedDeclaration": 8751,
+                              "type": "function (address) external returns (uint256)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 34135,
+                                  "type": "contract BBNB",
+                                  "value": "bBnb_"
+                                },
+                                "id": 34145,
+                                "name": "Identifier",
+                                "src": "1235:5:43"
+                              }
+                            ],
+                            "id": 34146,
+                            "name": "MemberAccess",
+                            "src": "1235:26:43"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 34133,
+                              "type": "address",
+                              "value": "borrower"
+                            },
+                            "id": 34147,
+                            "name": "Identifier",
+                            "src": "1262:8:43"
+                          }
+                        ],
+                        "id": 34148,
+                        "name": "FunctionCall",
+                        "src": "1235:36:43"
+                      }
+                    ],
+                    "id": 34149,
+                    "name": "VariableDeclarationStatement",
+                    "src": "1220:51:43"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": ">",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 34139,
+                              "type": "uint256",
+                              "value": "received"
+                            },
+                            "id": 34150,
+                            "name": "Identifier",
+                            "src": "1285:8:43"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 34144,
+                              "type": "uint256",
+                              "value": "borrows"
+                            },
+                            "id": 34151,
+                            "name": "Identifier",
+                            "src": "1296:7:43"
+                          }
+                        ],
+                        "id": 34152,
+                        "name": "BinaryOperation",
+                        "src": "1285:18:43"
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "type": "tuple()",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        {
+                                          "typeIdentifier": "t_address",
+                                          "typeString": "address"
+                                        }
+                                      ],
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "isStructConstructorCall": false,
+                                      "lValueRequested": false,
+                                      "names": [
+                                        null
+                                      ],
+                                      "type": "function (address) payable external",
+                                      "type_conversion": false
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": [
+                                            {
+                                              "typeIdentifier": "t_uint256",
+                                              "typeString": "uint256"
+                                            }
+                                          ],
+                                          "isConstant": false,
+                                          "isLValue": false,
+                                          "isPure": false,
+                                          "lValueRequested": false,
+                                          "member_name": "value",
+                                          "referencedDeclaration": null,
+                                          "type": "function (uint256) pure returns (function (address) payable external)"
+                                        },
+                                        "children": [
+                                          {
+                                            "attributes": {
+                                              "argumentTypes": null,
+                                              "isConstant": false,
+                                              "isLValue": false,
+                                              "isPure": false,
+                                              "lValueRequested": false,
+                                              "member_name": "repayBorrowBehalf",
+                                              "referencedDeclaration": 4759,
+                                              "type": "function (address) payable external"
+                                            },
+                                            "children": [
+                                              {
+                                                "attributes": {
+                                                  "argumentTypes": null,
+                                                  "overloadedDeclarations": [
+                                                    null
+                                                  ],
+                                                  "referencedDeclaration": 34135,
+                                                  "type": "contract BBNB",
+                                                  "value": "bBnb_"
+                                                },
+                                                "id": 34153,
+                                                "name": "Identifier",
+                                                "src": "1319:5:43"
+                                              }
+                                            ],
+                                            "id": 34156,
+                                            "name": "MemberAccess",
+                                            "src": "1319:23:43"
+                                          }
+                                        ],
+                                        "id": 34157,
+                                        "name": "MemberAccess",
+                                        "src": "1319:29:43"
+                                      },
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 34144,
+                                          "type": "uint256",
+                                          "value": "borrows"
+                                        },
+                                        "id": 34158,
+                                        "name": "Identifier",
+                                        "src": "1349:7:43"
+                                      }
+                                    ],
+                                    "id": 34159,
+                                    "name": "FunctionCall",
+                                    "src": "1319:38:43"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 34133,
+                                      "type": "address",
+                                      "value": "borrower"
+                                    },
+                                    "id": 34160,
+                                    "name": "Identifier",
+                                    "src": "1358:8:43"
+                                  }
+                                ],
+                                "id": 34161,
+                                "name": "FunctionCall",
+                                "src": "1319:48:43"
+                              }
+                            ],
+                            "id": 34162,
+                            "name": "ExpressionStatement",
+                            "src": "1319:48:43"
+                          },
+                          {
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "type": "tuple()",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        {
+                                          "typeIdentifier": "t_uint256",
+                                          "typeString": "uint256"
+                                        }
+                                      ],
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "transfer",
+                                      "referencedDeclaration": null,
+                                      "type": "function (uint256)"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "isConstant": false,
+                                          "isLValue": false,
+                                          "isPure": false,
+                                          "lValueRequested": false,
+                                          "member_name": "sender",
+                                          "referencedDeclaration": null,
+                                          "type": "address payable"
+                                        },
+                                        "children": [
+                                          {
+                                            "attributes": {
+                                              "argumentTypes": null,
+                                              "overloadedDeclarations": [
+                                                null
+                                              ],
+                                              "referencedDeclaration": 36238,
+                                              "type": "msg",
+                                              "value": "msg"
+                                            },
+                                            "id": 34163,
+                                            "name": "Identifier",
+                                            "src": "1381:3:43"
+                                          }
+                                        ],
+                                        "id": 34166,
+                                        "name": "MemberAccess",
+                                        "src": "1381:10:43"
+                                      }
+                                    ],
+                                    "id": 34167,
+                                    "name": "MemberAccess",
+                                    "src": "1381:19:43"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "commonType": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                      },
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "operator": "-",
+                                      "type": "uint256"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 34139,
+                                          "type": "uint256",
+                                          "value": "received"
+                                        },
+                                        "id": 34168,
+                                        "name": "Identifier",
+                                        "src": "1401:8:43"
+                                      },
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 34144,
+                                          "type": "uint256",
+                                          "value": "borrows"
+                                        },
+                                        "id": 34169,
+                                        "name": "Identifier",
+                                        "src": "1412:7:43"
+                                      }
+                                    ],
+                                    "id": 34170,
+                                    "name": "BinaryOperation",
+                                    "src": "1401:18:43"
+                                  }
+                                ],
+                                "id": 34171,
+                                "name": "FunctionCall",
+                                "src": "1381:39:43"
+                              }
+                            ],
+                            "id": 34172,
+                            "name": "ExpressionStatement",
+                            "src": "1381:39:43"
+                          }
+                        ],
+                        "id": 34173,
+                        "name": "Block",
+                        "src": "1305:126:43"
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "type": "tuple()",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        {
+                                          "typeIdentifier": "t_address",
+                                          "typeString": "address"
+                                        }
+                                      ],
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "isStructConstructorCall": false,
+                                      "lValueRequested": false,
+                                      "names": [
+                                        null
+                                      ],
+                                      "type": "function (address) payable external",
+                                      "type_conversion": false
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": [
+                                            {
+                                              "typeIdentifier": "t_uint256",
+                                              "typeString": "uint256"
+                                            }
+                                          ],
+                                          "isConstant": false,
+                                          "isLValue": false,
+                                          "isPure": false,
+                                          "lValueRequested": false,
+                                          "member_name": "value",
+                                          "referencedDeclaration": null,
+                                          "type": "function (uint256) pure returns (function (address) payable external)"
+                                        },
+                                        "children": [
+                                          {
+                                            "attributes": {
+                                              "argumentTypes": null,
+                                              "isConstant": false,
+                                              "isLValue": false,
+                                              "isPure": false,
+                                              "lValueRequested": false,
+                                              "member_name": "repayBorrowBehalf",
+                                              "referencedDeclaration": 4759,
+                                              "type": "function (address) payable external"
+                                            },
+                                            "children": [
+                                              {
+                                                "attributes": {
+                                                  "argumentTypes": null,
+                                                  "overloadedDeclarations": [
+                                                    null
+                                                  ],
+                                                  "referencedDeclaration": 34135,
+                                                  "type": "contract BBNB",
+                                                  "value": "bBnb_"
+                                                },
+                                                "id": 34174,
+                                                "name": "Identifier",
+                                                "src": "1451:5:43"
+                                              }
+                                            ],
+                                            "id": 34177,
+                                            "name": "MemberAccess",
+                                            "src": "1451:23:43"
+                                          }
+                                        ],
+                                        "id": 34178,
+                                        "name": "MemberAccess",
+                                        "src": "1451:29:43"
+                                      },
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 34139,
+                                          "type": "uint256",
+                                          "value": "received"
+                                        },
+                                        "id": 34179,
+                                        "name": "Identifier",
+                                        "src": "1481:8:43"
+                                      }
+                                    ],
+                                    "id": 34180,
+                                    "name": "FunctionCall",
+                                    "src": "1451:39:43"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 34133,
+                                      "type": "address",
+                                      "value": "borrower"
+                                    },
+                                    "id": 34181,
+                                    "name": "Identifier",
+                                    "src": "1491:8:43"
+                                  }
+                                ],
+                                "id": 34182,
+                                "name": "FunctionCall",
+                                "src": "1451:49:43"
+                              }
+                            ],
+                            "id": 34183,
+                            "name": "ExpressionStatement",
+                            "src": "1451:49:43"
+                          }
+                        ],
+                        "id": 34184,
+                        "name": "Block",
+                        "src": "1437:74:43"
+                      }
+                    ],
+                    "id": 34185,
+                    "name": "IfStatement",
+                    "src": "1281:230:43"
+                  }
+                ],
+                "id": 34186,
+                "name": "Block",
+                "src": "1175:342:43"
+              }
+            ],
+            "id": 34187,
+            "name": "FunctionDefinition",
+            "src": "1101:416:43"
+          }
+        ],
+        "id": 34188,
+        "name": "ContractDefinition",
+        "src": "114:1405:43"
+      }
+    ],
+    "id": 34189,
+    "name": "SourceUnit",
+    "src": "0:1520:43"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.17+commit.d19bba13.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.0",
+  "updatedAt": "2021-06-16T15:51:18.146Z",
+  "devdoc": {
+    "author": "Btntex",
+    "methods": {
+      "repayBehalf(address)": {
+        "details": "The provided BNB is applied towards the borrow balance, any excess is refunded",
+        "params": {
+          "borrower": "The address of the borrower account to repay on behalf of"
+        }
+      },
+      "repayBehalfExplicit(address,address)": {
+        "details": "The provided BNB is applied towards the borrow balance, any excess is refunded",
+        "params": {
+          "bBnb_": "The address of the bBnb contract to repay in",
+          "borrower": "The address of the borrower account to repay on behalf of"
+        }
+      }
+    },
+    "title": "Btntex's Maximillion Contract"
+  },
+  "userdoc": {
+    "methods": {
+      "constructor": "Construct a Maximillion to repay max in a BBNB market",
+      "repayBehalf(address)": {
+        "notice": "msg.sender sends BNB to repay an account's borrow in the bBnb market"
+      },
+      "repayBehalfExplicit(address,address)": {
+        "notice": "msg.sender sends BNB to repay an account's borrow in a bBnb market"
+      }
+    }
+  }
+}

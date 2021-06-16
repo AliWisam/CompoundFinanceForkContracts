@@ -1,0 +1,448 @@
+{
+  "contractName": "PriceOracle",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "isPriceOracle",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "contract BToken",
+          "name": "bToken",
+          "type": "address"
+        }
+      ],
+      "name": "getUnderlyingPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.17+commit.d19bba13\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"internalType\":\"contract BToken\",\"name\":\"bToken\",\"type\":\"address\"}],\"name\":\"getUnderlyingPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isPriceOracle\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"getUnderlyingPrice(address)\":{\"params\":{\"bToken\":\"The bToken to get the underlying price of\"},\"return\":\"The underlying asset price mantissa (scaled by 1e18). Zero means the price is unavailable.\"}}},\"userdoc\":{\"methods\":{\"getUnderlyingPrice(address)\":{\"notice\":\"Get the underlying price of a bToken asset\"}}}},\"settings\":{\"compilationTarget\":{\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/PriceOracle.sol\":\"PriceOracle\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BToken.sol\":{\"keccak256\":\"0xbb8bb683a051910269371a661504f8ba4d21e3a4d5069d15c3f0e39116fdf72b\",\"urls\":[\"bzz-raw://bbb20df8fb5f842d0e280525f998164da60d4a1ea82a463da19e4d4ce05f6e9c\",\"dweb:/ipfs/QmVbKLoe7uYHFeCZLobe2D4a2qv6jx9XLVogHoTQPqsNM8\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BTokenInterfaces.sol\":{\"keccak256\":\"0xd37b82a9f779237033cc69faf520e5803cf22a67b7829200bd7b17a36376ccb2\",\"urls\":[\"bzz-raw://2b5a2b7cd3ea1ae3f643c69692ce15db8e4207214ceb2b1c7c1deb9825d0e4a4\",\"dweb:/ipfs/QmcN7kbpBoin5JVi5kfVdNXExAuGMtBnmaVWQ3aDz64T5o\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/CarefulMath.sol\":{\"keccak256\":\"0x74b0db2b084c2993b6a23048e19b90efce5a0d8962974c1757d8daa19fb61995\",\"urls\":[\"bzz-raw://3aee6946317e316848ff3278f59edeb6d7fd903057485ef002e3d3b2673e27e7\",\"dweb:/ipfs/QmTABihsvAFEuiCke2rcERPCnbLq4BW12yygCy42At9K5e\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ComptrollerInterface.sol\":{\"keccak256\":\"0xeeab236ea1a3757fbd66ce0755b95171e7121f186cf23a0339e58821fadfbc7d\",\"urls\":[\"bzz-raw://fa3f6856fd52743b1874f3f6409e62a3730c3a2217822a8daf5e3f75b18f7ac7\",\"dweb:/ipfs/QmemY5h611yo2Kc1fbFxVW41uR5AAPY46TyeH1uwUN3ifr\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/EIP20Interface.sol\":{\"keccak256\":\"0x827242c7a667a0b4c9cd7a089fa84cc91c525d5a26addf891bac98a099255bc0\",\"urls\":[\"bzz-raw://aaee4eff9fb1078c28626377a94ed3b0abe1b91d75cd2527035f0f03399f7f69\",\"dweb:/ipfs/QmX7U5vKVsuadNZekWigzJUDprbjaMPpmiKpNXq5FUYmPm\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/EIP20NonStandardInterface.sol\":{\"keccak256\":\"0xa5d46f66b580f6399832820c18932470fe873f80706f95b1783cd9099ddbaf5e\",\"urls\":[\"bzz-raw://82ccbc050f8289068aca58cd04cc1255b304a374ba09c764dcfa5a6a70935019\",\"dweb:/ipfs/QmZx33aDg51QqFeHQnzMFvuPkvKrwimYU9VZFyHfQHsTms\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ErrorReporter.sol\":{\"keccak256\":\"0xf92b01359db7644043c8327f1baf9de393e6b82689ca6032ea2db711dba4f2f4\",\"urls\":[\"bzz-raw://343120afad633483c86820413623ff8eee05533de706c037baf5b83be371de88\",\"dweb:/ipfs/QmYrNt2FeLVLSJo6G8NtotWnR9mLenGauAvDQGkSvZtJe4\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/Exponential.sol\":{\"keccak256\":\"0x593e9333576977f23e5a20ca6bdcd6f14104533cfdb311ed866b4f3d00354c65\",\"urls\":[\"bzz-raw://ba7a9eaeab7c3e0654e239932dc47598480ef9b66f45c3801806d547cd043821\",\"dweb:/ipfs/QmWPQB1QK4r3pZtpRyfCVE5QJtRTry8Qmy3JAmac5WfnjV\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ExponentialNoError.sol\":{\"keccak256\":\"0x2a9c420261302a01ae49218f9f951ed29dd28840ca76d8500d16beac172c5522\",\"urls\":[\"bzz-raw://01aaa69315f27f0b93784565416411c0bfccad8a33600e5f9233323a4ae4f5d0\",\"dweb:/ipfs/QmQ7RKntAeWCTA21K3YbtVZ1sSRLYCXStuuoM6AEyWTGTt\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/InterestRateModel.sol\":{\"keccak256\":\"0x73140e38dba59bad70b17f9977a102d61ad5a89087adfd379c52d4e63b103692\",\"urls\":[\"bzz-raw://e2a504fcb04bcd84a904fc9631db7b79cbf28d0b65e85ff097ecb5e2ea4ff520\",\"dweb:/ipfs/QmQVo7iQRBeeHfxjYaFLTPY8iWL7coCnxgNsLPYGD3z56x\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/PriceOracle.sol\":{\"keccak256\":\"0x99d18c991914c8cfc50eea49214298a612b74f64efbc80dbf65699737d241b77\",\"urls\":[\"bzz-raw://59efe469b0ee01ef67b7efa46383f2864d074d350761bc81ea25f950c4197191\",\"dweb:/ipfs/QmUsNXvuAAakAKJEDZNJZ2WGniHMW7yZgMBVjxXKUK6Nx5\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.5.16;\n\nimport \"./BToken.sol\";\n\ncontract PriceOracle {\n    /// @notice Indicator that this is a PriceOracle contract (for inspection)\n    bool public constant isPriceOracle = true;\n\n    /**\n      * @notice Get the underlying price of a bToken asset\n      * @param bToken The bToken to get the underlying price of\n      * @return The underlying asset price mantissa (scaled by 1e18).\n      *  Zero means the price is unavailable.\n      */\n    function getUnderlyingPrice(BToken bToken) external view returns (uint);\n}\n",
+  "sourcePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/PriceOracle.sol",
+  "ast": {
+    "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/PriceOracle.sol",
+    "exportedSymbols": {
+      "PriceOracle": [
+        34311
+      ]
+    },
+    "id": 34312,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 34299,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".16"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:45"
+      },
+      {
+        "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BToken.sol",
+        "file": "./BToken.sol",
+        "id": 34300,
+        "nodeType": "ImportDirective",
+        "scope": 34312,
+        "sourceUnit": 11754,
+        "src": "26:22:45",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 34311,
+        "linearizedBaseContracts": [
+          34311
+        ],
+        "name": "PriceOracle",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": true,
+            "id": 34303,
+            "name": "isPriceOracle",
+            "nodeType": "VariableDeclaration",
+            "scope": 34311,
+            "src": "156:41:45",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 34301,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "156:4:45",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "74727565",
+              "id": 34302,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "bool",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "193:4:45",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              },
+              "value": "true"
+            },
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@notice Get the underlying price of a bToken asset\n@param bToken The bToken to get the underlying price of\n@return The underlying asset price mantissa (scaled by 1e18).\n Zero means the price is unavailable.",
+            "id": 34310,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getUnderlyingPrice",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 34306,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 34305,
+                  "name": "bToken",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34310,
+                  "src": "488:13:45",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_BToken_$11753",
+                    "typeString": "contract BToken"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 34304,
+                    "name": "BToken",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 11753,
+                    "src": "488:6:45",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BToken_$11753",
+                      "typeString": "contract BToken"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "487:15:45"
+            },
+            "returnParameters": {
+              "id": 34309,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 34308,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34310,
+                  "src": "526:4:45",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 34307,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "526:4:45",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "525:6:45"
+            },
+            "scope": 34311,
+            "src": "460:72:45",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 34312,
+        "src": "50:484:45"
+      }
+    ],
+    "src": "0:535:45"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/PriceOracle.sol",
+      "exportedSymbols": {
+        "PriceOracle": [
+          34311
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.5",
+            ".16"
+          ]
+        },
+        "id": 34299,
+        "name": "PragmaDirective",
+        "src": "0:24:45"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 11754,
+          "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BToken.sol",
+          "file": "./BToken.sol",
+          "scope": 34312,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 34300,
+        "name": "ImportDirective",
+        "src": "26:22:45"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            34311
+          ],
+          "name": "PriceOracle",
+          "scope": 34312
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": true,
+              "name": "isPriceOracle",
+              "scope": 34311,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "bool",
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "bool",
+                  "type": "bool"
+                },
+                "id": 34301,
+                "name": "ElementaryTypeName",
+                "src": "156:4:45"
+              },
+              {
+                "attributes": {
+                  "argumentTypes": null,
+                  "hexvalue": "74727565",
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "subdenomination": null,
+                  "token": "bool",
+                  "type": "bool",
+                  "value": "true"
+                },
+                "id": 34302,
+                "name": "Literal",
+                "src": "193:4:45"
+              }
+            ],
+            "id": 34303,
+            "name": "VariableDeclaration",
+            "src": "156:41:45"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "documentation": "@notice Get the underlying price of a bToken asset\n@param bToken The bToken to get the underlying price of\n@return The underlying asset price mantissa (scaled by 1e18).\n Zero means the price is unavailable.",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "getUnderlyingPrice",
+              "scope": 34311,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "bToken",
+                      "scope": 34310,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract BToken",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "BToken",
+                          "referencedDeclaration": 11753,
+                          "type": "contract BToken"
+                        },
+                        "id": 34304,
+                        "name": "UserDefinedTypeName",
+                        "src": "488:6:45"
+                      }
+                    ],
+                    "id": 34305,
+                    "name": "VariableDeclaration",
+                    "src": "488:13:45"
+                  }
+                ],
+                "id": 34306,
+                "name": "ParameterList",
+                "src": "487:15:45"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 34310,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 34307,
+                        "name": "ElementaryTypeName",
+                        "src": "526:4:45"
+                      }
+                    ],
+                    "id": 34308,
+                    "name": "VariableDeclaration",
+                    "src": "526:4:45"
+                  }
+                ],
+                "id": 34309,
+                "name": "ParameterList",
+                "src": "525:6:45"
+              }
+            ],
+            "id": 34310,
+            "name": "FunctionDefinition",
+            "src": "460:72:45"
+          }
+        ],
+        "id": 34311,
+        "name": "ContractDefinition",
+        "src": "50:484:45"
+      }
+    ],
+    "id": 34312,
+    "name": "SourceUnit",
+    "src": "0:535:45"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.17+commit.d19bba13.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.0",
+  "updatedAt": "2021-06-16T15:51:18.149Z",
+  "devdoc": {
+    "methods": {
+      "getUnderlyingPrice(address)": {
+        "params": {
+          "bToken": "The bToken to get the underlying price of"
+        },
+        "return": "The underlying asset price mantissa (scaled by 1e18). Zero means the price is unavailable."
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {
+      "getUnderlyingPrice(address)": {
+        "notice": "Get the underlying price of a bToken asset"
+      }
+    }
+  }
+}

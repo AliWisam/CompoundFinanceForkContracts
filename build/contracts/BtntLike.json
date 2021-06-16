@@ -1,0 +1,1160 @@
+{
+  "contractName": "BtntLike",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "delegatee",
+          "type": "address"
+        }
+      ],
+      "name": "delegate",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.17+commit.d19bba13\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"delegatee\",\"type\":\"address\"}],\"name\":\"delegate\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BBtntLikeDelegate.sol\":\"BtntLike\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BBep20.sol\":{\"keccak256\":\"0xae101928f02e7e260aae6fc298787d89104d3417f4bdfd4640a67021b8e031d9\",\"urls\":[\"bzz-raw://e63367ddb90dc3bcfbb03d600d715d76a1e95d57c3f0d680399a966a88241d0f\",\"dweb:/ipfs/Qmc7Py1Wq9L35FZBSNeAKz8d9n2WQESpaqogd1wqk81tFL\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BBep20Delegate.sol\":{\"keccak256\":\"0x87cff805e2851223a08dc6e5239e30d56ace9c09d54387e20736ac183f1ba227\",\"urls\":[\"bzz-raw://0e1a50704f904ffbdb594d5512b685b94c938671ca086355d8b3ccebf2f58a09\",\"dweb:/ipfs/QmTCt3pgF8sd7iXbPphXeSxoFmKrqUamoacNBWbonUwCGA\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BBtntLikeDelegate.sol\":{\"keccak256\":\"0xf28d24a53436c4a0eea605449033c8b2018bc2732a48ed46cbbabdb646377364\",\"urls\":[\"bzz-raw://5434d6f3339d14e0422855ab1e8b75b3d5928d3a4846c0fe4e75e88cd8e269f6\",\"dweb:/ipfs/QmS7TN9WxhmMY3UDreG8DGNJ4fezhMZ6igK15PBpfSusbS\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BToken.sol\":{\"keccak256\":\"0xbb8bb683a051910269371a661504f8ba4d21e3a4d5069d15c3f0e39116fdf72b\",\"urls\":[\"bzz-raw://bbb20df8fb5f842d0e280525f998164da60d4a1ea82a463da19e4d4ce05f6e9c\",\"dweb:/ipfs/QmVbKLoe7uYHFeCZLobe2D4a2qv6jx9XLVogHoTQPqsNM8\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BTokenInterfaces.sol\":{\"keccak256\":\"0xd37b82a9f779237033cc69faf520e5803cf22a67b7829200bd7b17a36376ccb2\",\"urls\":[\"bzz-raw://2b5a2b7cd3ea1ae3f643c69692ce15db8e4207214ceb2b1c7c1deb9825d0e4a4\",\"dweb:/ipfs/QmcN7kbpBoin5JVi5kfVdNXExAuGMtBnmaVWQ3aDz64T5o\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/CarefulMath.sol\":{\"keccak256\":\"0x74b0db2b084c2993b6a23048e19b90efce5a0d8962974c1757d8daa19fb61995\",\"urls\":[\"bzz-raw://3aee6946317e316848ff3278f59edeb6d7fd903057485ef002e3d3b2673e27e7\",\"dweb:/ipfs/QmTABihsvAFEuiCke2rcERPCnbLq4BW12yygCy42At9K5e\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ComptrollerInterface.sol\":{\"keccak256\":\"0xeeab236ea1a3757fbd66ce0755b95171e7121f186cf23a0339e58821fadfbc7d\",\"urls\":[\"bzz-raw://fa3f6856fd52743b1874f3f6409e62a3730c3a2217822a8daf5e3f75b18f7ac7\",\"dweb:/ipfs/QmemY5h611yo2Kc1fbFxVW41uR5AAPY46TyeH1uwUN3ifr\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/EIP20Interface.sol\":{\"keccak256\":\"0x827242c7a667a0b4c9cd7a089fa84cc91c525d5a26addf891bac98a099255bc0\",\"urls\":[\"bzz-raw://aaee4eff9fb1078c28626377a94ed3b0abe1b91d75cd2527035f0f03399f7f69\",\"dweb:/ipfs/QmX7U5vKVsuadNZekWigzJUDprbjaMPpmiKpNXq5FUYmPm\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/EIP20NonStandardInterface.sol\":{\"keccak256\":\"0xa5d46f66b580f6399832820c18932470fe873f80706f95b1783cd9099ddbaf5e\",\"urls\":[\"bzz-raw://82ccbc050f8289068aca58cd04cc1255b304a374ba09c764dcfa5a6a70935019\",\"dweb:/ipfs/QmZx33aDg51QqFeHQnzMFvuPkvKrwimYU9VZFyHfQHsTms\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ErrorReporter.sol\":{\"keccak256\":\"0xf92b01359db7644043c8327f1baf9de393e6b82689ca6032ea2db711dba4f2f4\",\"urls\":[\"bzz-raw://343120afad633483c86820413623ff8eee05533de706c037baf5b83be371de88\",\"dweb:/ipfs/QmYrNt2FeLVLSJo6G8NtotWnR9mLenGauAvDQGkSvZtJe4\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/Exponential.sol\":{\"keccak256\":\"0x593e9333576977f23e5a20ca6bdcd6f14104533cfdb311ed866b4f3d00354c65\",\"urls\":[\"bzz-raw://ba7a9eaeab7c3e0654e239932dc47598480ef9b66f45c3801806d547cd043821\",\"dweb:/ipfs/QmWPQB1QK4r3pZtpRyfCVE5QJtRTry8Qmy3JAmac5WfnjV\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ExponentialNoError.sol\":{\"keccak256\":\"0x2a9c420261302a01ae49218f9f951ed29dd28840ca76d8500d16beac172c5522\",\"urls\":[\"bzz-raw://01aaa69315f27f0b93784565416411c0bfccad8a33600e5f9233323a4ae4f5d0\",\"dweb:/ipfs/QmQ7RKntAeWCTA21K3YbtVZ1sSRLYCXStuuoM6AEyWTGTt\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/InterestRateModel.sol\":{\"keccak256\":\"0x73140e38dba59bad70b17f9977a102d61ad5a89087adfd379c52d4e63b103692\",\"urls\":[\"bzz-raw://e2a504fcb04bcd84a904fc9631db7b79cbf28d0b65e85ff097ecb5e2ea4ff520\",\"dweb:/ipfs/QmQVo7iQRBeeHfxjYaFLTPY8iWL7coCnxgNsLPYGD3z56x\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.5.16;\n\nimport \"./BBep20Delegate.sol\";\n\ninterface BtntLike {\n  function delegate(address delegatee) external;\n}\n\n/**\n * @title Btntex's BBtntLikeDelegate Contract\n * @notice BTokens which can 'delegate votes' of their underlying BEP-20\n * @author Btntex\n */\ncontract BBtntLikeDelegate is BBep20Delegate {\n  /**\n   * @notice Construct an empty delegate\n   */\n  constructor() public BBep20Delegate() {}\n\n  /**\n   * @notice Admin call to delegate the votes of the BTNT-like underlying\n   * @param btntLikeDelegatee The address to delegate votes to\n   */\n  function _delegateBtntLikeTo(address btntLikeDelegatee) external {\n    require(msg.sender == admin, \"only the admin may set the btnt-like delegate\");\n    BtntLike(underlying).delegate(btntLikeDelegatee);\n  }\n}",
+  "sourcePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BBtntLikeDelegate.sol",
+  "ast": {
+    "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BBtntLikeDelegate.sol",
+    "exportedSymbols": {
+      "BBtntLikeDelegate": [
+        6425
+      ],
+      "BtntLike": [
+        6395
+      ]
+    },
+    "id": 6426,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 6388,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".16"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:16"
+      },
+      {
+        "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BBep20Delegate.sol",
+        "file": "./BBep20Delegate.sol",
+        "id": 6389,
+        "nodeType": "ImportDirective",
+        "scope": 6426,
+        "sourceUnit": 5352,
+        "src": "26:30:16",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 6395,
+        "linearizedBaseContracts": [
+          6395
+        ],
+        "name": "BtntLike",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 6394,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "delegate",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 6392,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 6391,
+                  "name": "delegatee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 6394,
+                  "src": "99:17:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 6390,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "99:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "98:19:16"
+            },
+            "returnParameters": {
+              "id": 6393,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "126:0:16"
+            },
+            "scope": 6395,
+            "src": "81:46:16",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 6426,
+        "src": "58:71:16"
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 6396,
+              "name": "BBep20Delegate",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 5351,
+              "src": "306:14:16",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_BBep20Delegate_$5351",
+                "typeString": "contract BBep20Delegate"
+              }
+            },
+            "id": 6397,
+            "nodeType": "InheritanceSpecifier",
+            "src": "306:14:16"
+          }
+        ],
+        "contractDependencies": [
+          5293,
+          5351,
+          11753,
+          11813,
+          12122,
+          12125,
+          12190,
+          12193,
+          12222,
+          13986,
+          31208,
+          31822,
+          32517
+        ],
+        "contractKind": "contract",
+        "documentation": "@title Btntex's BBtntLikeDelegate Contract\n@notice BTokens which can 'delegate votes' of their underlying BEP-20\n@author Btntex",
+        "fullyImplemented": true,
+        "id": 6425,
+        "linearizedBaseContracts": [
+          6425,
+          5351,
+          12222,
+          12193,
+          5293,
+          12190,
+          12125,
+          11753,
+          31208,
+          31822,
+          32517,
+          13986,
+          12122,
+          11813
+        ],
+        "name": "BBtntLikeDelegate",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 6402,
+              "nodeType": "Block",
+              "src": "416:2:16",
+              "statements": []
+            },
+            "documentation": "@notice Construct an empty delegate",
+            "id": 6403,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [
+              {
+                "arguments": [],
+                "id": 6400,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 6399,
+                  "name": "BBep20Delegate",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 5351,
+                  "src": "399:14:16",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_type$_t_contract$_BBep20Delegate_$5351_$",
+                    "typeString": "type(contract BBep20Delegate)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "399:16:16"
+              }
+            ],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 6398,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "389:2:16"
+            },
+            "returnParameters": {
+              "id": 6401,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "416:0:16"
+            },
+            "scope": 6425,
+            "src": "378:40:16",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 6423,
+              "nodeType": "Block",
+              "src": "636:142:16",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
+                        },
+                        "id": 6412,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 6409,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36238,
+                            "src": "650:3:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 6410,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": null,
+                          "src": "650:10:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "id": 6411,
+                          "name": "admin",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 11773,
+                          "src": "664:5:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "src": "650:19:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "6f6e6c79207468652061646d696e206d617920736574207468652062746e742d6c696b652064656c6567617465",
+                        "id": 6413,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "671:47:16",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_b3f85b400e4852a9496b64256c7b2cafb7bda2d2f2ef9dfcc158c54a43216429",
+                          "typeString": "literal_string \"only the admin may set the btnt-like delegate\""
+                        },
+                        "value": "only the admin may set the btnt-like delegate"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_b3f85b400e4852a9496b64256c7b2cafb7bda2d2f2ef9dfcc158c54a43216429",
+                          "typeString": "literal_string \"only the admin may set the btnt-like delegate\""
+                        }
+                      ],
+                      "id": 6408,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        36241,
+                        36242
+                      ],
+                      "referencedDeclaration": 36242,
+                      "src": "642:7:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 6414,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "642:77:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 6415,
+                  "nodeType": "ExpressionStatement",
+                  "src": "642:77:16"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 6420,
+                        "name": "btntLikeDelegatee",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 6405,
+                        "src": "755:17:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 6417,
+                            "name": "underlying",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 12124,
+                            "src": "734:10:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          ],
+                          "id": 6416,
+                          "name": "BtntLike",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 6395,
+                          "src": "725:8:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_contract$_BtntLike_$6395_$",
+                            "typeString": "type(contract BtntLike)"
+                          }
+                        },
+                        "id": 6418,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "typeConversion",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "725:20:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_BtntLike_$6395",
+                          "typeString": "contract BtntLike"
+                        }
+                      },
+                      "id": 6419,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "delegate",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 6394,
+                      "src": "725:29:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_external_nonpayable$_t_address_$returns$__$",
+                        "typeString": "function (address) external"
+                      }
+                    },
+                    "id": 6421,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "725:48:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 6422,
+                  "nodeType": "ExpressionStatement",
+                  "src": "725:48:16"
+                }
+              ]
+            },
+            "documentation": "@notice Admin call to delegate the votes of the BTNT-like underlying\n@param btntLikeDelegatee The address to delegate votes to",
+            "id": 6424,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_delegateBtntLikeTo",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 6406,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 6405,
+                  "name": "btntLikeDelegatee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 6424,
+                  "src": "600:25:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 6404,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "600:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "599:27:16"
+            },
+            "returnParameters": {
+              "id": 6407,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "636:0:16"
+            },
+            "scope": 6425,
+            "src": "571:207:16",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 6426,
+        "src": "276:504:16"
+      }
+    ],
+    "src": "0:780:16"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BBtntLikeDelegate.sol",
+      "exportedSymbols": {
+        "BBtntLikeDelegate": [
+          6425
+        ],
+        "BtntLike": [
+          6395
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.5",
+            ".16"
+          ]
+        },
+        "id": 6388,
+        "name": "PragmaDirective",
+        "src": "0:24:16"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 5352,
+          "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BBep20Delegate.sol",
+          "file": "./BBep20Delegate.sol",
+          "scope": 6426,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 6389,
+        "name": "ImportDirective",
+        "src": "26:30:16"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "interface",
+          "documentation": null,
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            6395
+          ],
+          "name": "BtntLike",
+          "scope": 6426
+        },
+        "children": [
+          {
+            "attributes": {
+              "body": null,
+              "documentation": null,
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "delegate",
+              "scope": 6395,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "delegatee",
+                      "scope": 6394,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 6390,
+                        "name": "ElementaryTypeName",
+                        "src": "99:7:16"
+                      }
+                    ],
+                    "id": 6391,
+                    "name": "VariableDeclaration",
+                    "src": "99:17:16"
+                  }
+                ],
+                "id": 6392,
+                "name": "ParameterList",
+                "src": "98:19:16"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 6393,
+                "name": "ParameterList",
+                "src": "126:0:16"
+              }
+            ],
+            "id": 6394,
+            "name": "FunctionDefinition",
+            "src": "81:46:16"
+          }
+        ],
+        "id": 6395,
+        "name": "ContractDefinition",
+        "src": "58:71:16"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            5293,
+            5351,
+            11753,
+            11813,
+            12122,
+            12125,
+            12190,
+            12193,
+            12222,
+            13986,
+            31208,
+            31822,
+            32517
+          ],
+          "contractKind": "contract",
+          "documentation": "@title Btntex's BBtntLikeDelegate Contract\n@notice BTokens which can 'delegate votes' of their underlying BEP-20\n@author Btntex",
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            6425,
+            5351,
+            12222,
+            12193,
+            5293,
+            12190,
+            12125,
+            11753,
+            31208,
+            31822,
+            32517,
+            13986,
+            12122,
+            11813
+          ],
+          "name": "BBtntLikeDelegate",
+          "scope": 6426
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": null
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "BBep20Delegate",
+                  "referencedDeclaration": 5351,
+                  "type": "contract BBep20Delegate"
+                },
+                "id": 6396,
+                "name": "UserDefinedTypeName",
+                "src": "306:14:16"
+              }
+            ],
+            "id": 6397,
+            "name": "InheritanceSpecifier",
+            "src": "306:14:16"
+          },
+          {
+            "attributes": {
+              "documentation": "@notice Construct an empty delegate",
+              "implemented": true,
+              "isConstructor": true,
+              "kind": "constructor",
+              "name": "",
+              "scope": 6425,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 6398,
+                "name": "ParameterList",
+                "src": "389:2:16"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 6401,
+                "name": "ParameterList",
+                "src": "416:0:16"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 5351,
+                      "type": "type(contract BBep20Delegate)",
+                      "value": "BBep20Delegate"
+                    },
+                    "id": 6399,
+                    "name": "Identifier",
+                    "src": "399:14:16"
+                  }
+                ],
+                "id": 6400,
+                "name": "ModifierInvocation",
+                "src": "399:16:16"
+              },
+              {
+                "attributes": {
+                  "statements": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 6402,
+                "name": "Block",
+                "src": "416:2:16"
+              }
+            ],
+            "id": 6403,
+            "name": "FunctionDefinition",
+            "src": "378:40:16"
+          },
+          {
+            "attributes": {
+              "documentation": "@notice Admin call to delegate the votes of the BTNT-like underlying\n@param btntLikeDelegatee The address to delegate votes to",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "_delegateBtntLikeTo",
+              "scope": 6425,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "btntLikeDelegatee",
+                      "scope": 6424,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 6404,
+                        "name": "ElementaryTypeName",
+                        "src": "600:7:16"
+                      }
+                    ],
+                    "id": 6405,
+                    "name": "VariableDeclaration",
+                    "src": "600:25:16"
+                  }
+                ],
+                "id": 6406,
+                "name": "ParameterList",
+                "src": "599:27:16"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 6407,
+                "name": "ParameterList",
+                "src": "636:0:16"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                },
+                                {
+                                  "typeIdentifier": "t_stringliteral_b3f85b400e4852a9496b64256c7b2cafb7bda2d2f2ef9dfcc158c54a43216429",
+                                  "typeString": "literal_string \"only the admin may set the btnt-like delegate\""
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                36241,
+                                36242
+                              ],
+                              "referencedDeclaration": 36242,
+                              "type": "function (bool,string memory) pure",
+                              "value": "require"
+                            },
+                            "id": 6408,
+                            "name": "Identifier",
+                            "src": "642:7:16"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_address_payable",
+                                "typeString": "address payable"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "==",
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "sender",
+                                  "referencedDeclaration": null,
+                                  "type": "address payable"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 36238,
+                                      "type": "msg",
+                                      "value": "msg"
+                                    },
+                                    "id": 6409,
+                                    "name": "Identifier",
+                                    "src": "650:3:16"
+                                  }
+                                ],
+                                "id": 6410,
+                                "name": "MemberAccess",
+                                "src": "650:10:16"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 11773,
+                                  "type": "address payable",
+                                  "value": "admin"
+                                },
+                                "id": 6411,
+                                "name": "Identifier",
+                                "src": "664:5:16"
+                              }
+                            ],
+                            "id": 6412,
+                            "name": "BinaryOperation",
+                            "src": "650:19:16"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "6f6e6c79207468652061646d696e206d617920736574207468652062746e742d6c696b652064656c6567617465",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "string",
+                              "type": "literal_string \"only the admin may set the btnt-like delegate\"",
+                              "value": "only the admin may set the btnt-like delegate"
+                            },
+                            "id": 6413,
+                            "name": "Literal",
+                            "src": "671:47:16"
+                          }
+                        ],
+                        "id": 6414,
+                        "name": "FunctionCall",
+                        "src": "642:77:16"
+                      }
+                    ],
+                    "id": 6415,
+                    "name": "ExpressionStatement",
+                    "src": "642:77:16"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "delegate",
+                              "referencedDeclaration": 6394,
+                              "type": "function (address) external"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "type": "contract BtntLike",
+                                  "type_conversion": true
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        {
+                                          "typeIdentifier": "t_address",
+                                          "typeString": "address"
+                                        }
+                                      ],
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 6395,
+                                      "type": "type(contract BtntLike)",
+                                      "value": "BtntLike"
+                                    },
+                                    "id": 6416,
+                                    "name": "Identifier",
+                                    "src": "725:8:16"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 12124,
+                                      "type": "address",
+                                      "value": "underlying"
+                                    },
+                                    "id": 6417,
+                                    "name": "Identifier",
+                                    "src": "734:10:16"
+                                  }
+                                ],
+                                "id": 6418,
+                                "name": "FunctionCall",
+                                "src": "725:20:16"
+                              }
+                            ],
+                            "id": 6419,
+                            "name": "MemberAccess",
+                            "src": "725:29:16"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 6405,
+                              "type": "address",
+                              "value": "btntLikeDelegatee"
+                            },
+                            "id": 6420,
+                            "name": "Identifier",
+                            "src": "755:17:16"
+                          }
+                        ],
+                        "id": 6421,
+                        "name": "FunctionCall",
+                        "src": "725:48:16"
+                      }
+                    ],
+                    "id": 6422,
+                    "name": "ExpressionStatement",
+                    "src": "725:48:16"
+                  }
+                ],
+                "id": 6423,
+                "name": "Block",
+                "src": "636:142:16"
+              }
+            ],
+            "id": 6424,
+            "name": "FunctionDefinition",
+            "src": "571:207:16"
+          }
+        ],
+        "id": 6425,
+        "name": "ContractDefinition",
+        "src": "276:504:16"
+      }
+    ],
+    "id": 6426,
+    "name": "SourceUnit",
+    "src": "0:780:16"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.17+commit.d19bba13.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.0",
+  "updatedAt": "2021-06-16T15:51:17.683Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

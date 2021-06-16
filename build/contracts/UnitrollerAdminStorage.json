@@ -1,0 +1,3777 @@
+{
+  "contractName": "UnitrollerAdminStorage",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "admin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "comptrollerImplementation",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "pendingAdmin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "pendingComptrollerImplementation",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.17+commit.d19bba13\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"admin\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"comptrollerImplementation\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"pendingAdmin\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"pendingComptrollerImplementation\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ComptrollerStorage.sol\":\"UnitrollerAdminStorage\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIControllerInterface.sol\":{\"keccak256\":\"0x9d0bc80367a0d6dd860ebf9e5568f39f23600796d900257895280a15499440b8\",\"urls\":[\"bzz-raw://924ad9afd8a6e69570e49b008826efea621a460467005ad491f89f3804409bc4\",\"dweb:/ipfs/QmNgVLpABi4JDnLBcyogKPLCwiWv17V2P4jMvpUFJU7gn1\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BToken.sol\":{\"keccak256\":\"0xbb8bb683a051910269371a661504f8ba4d21e3a4d5069d15c3f0e39116fdf72b\",\"urls\":[\"bzz-raw://bbb20df8fb5f842d0e280525f998164da60d4a1ea82a463da19e4d4ce05f6e9c\",\"dweb:/ipfs/QmVbKLoe7uYHFeCZLobe2D4a2qv6jx9XLVogHoTQPqsNM8\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BTokenInterfaces.sol\":{\"keccak256\":\"0xd37b82a9f779237033cc69faf520e5803cf22a67b7829200bd7b17a36376ccb2\",\"urls\":[\"bzz-raw://2b5a2b7cd3ea1ae3f643c69692ce15db8e4207214ceb2b1c7c1deb9825d0e4a4\",\"dweb:/ipfs/QmcN7kbpBoin5JVi5kfVdNXExAuGMtBnmaVWQ3aDz64T5o\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/CarefulMath.sol\":{\"keccak256\":\"0x74b0db2b084c2993b6a23048e19b90efce5a0d8962974c1757d8daa19fb61995\",\"urls\":[\"bzz-raw://3aee6946317e316848ff3278f59edeb6d7fd903057485ef002e3d3b2673e27e7\",\"dweb:/ipfs/QmTABihsvAFEuiCke2rcERPCnbLq4BW12yygCy42At9K5e\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ComptrollerInterface.sol\":{\"keccak256\":\"0xeeab236ea1a3757fbd66ce0755b95171e7121f186cf23a0339e58821fadfbc7d\",\"urls\":[\"bzz-raw://fa3f6856fd52743b1874f3f6409e62a3730c3a2217822a8daf5e3f75b18f7ac7\",\"dweb:/ipfs/QmemY5h611yo2Kc1fbFxVW41uR5AAPY46TyeH1uwUN3ifr\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ComptrollerStorage.sol\":{\"keccak256\":\"0xa409f88c5f1beba1371c7568a22ab3a81ab0792b5ca9042870ebc1952c66a9bf\",\"urls\":[\"bzz-raw://725d50e7e2138deea7d71a14e6df90e74293b6787d912b1b610012182dcf2adf\",\"dweb:/ipfs/QmfE2USkCzBcJhnCZ6RZMCyp41rT1NFUCMdCps2v2jAZJ1\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/EIP20Interface.sol\":{\"keccak256\":\"0x827242c7a667a0b4c9cd7a089fa84cc91c525d5a26addf891bac98a099255bc0\",\"urls\":[\"bzz-raw://aaee4eff9fb1078c28626377a94ed3b0abe1b91d75cd2527035f0f03399f7f69\",\"dweb:/ipfs/QmX7U5vKVsuadNZekWigzJUDprbjaMPpmiKpNXq5FUYmPm\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/EIP20NonStandardInterface.sol\":{\"keccak256\":\"0xa5d46f66b580f6399832820c18932470fe873f80706f95b1783cd9099ddbaf5e\",\"urls\":[\"bzz-raw://82ccbc050f8289068aca58cd04cc1255b304a374ba09c764dcfa5a6a70935019\",\"dweb:/ipfs/QmZx33aDg51QqFeHQnzMFvuPkvKrwimYU9VZFyHfQHsTms\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ErrorReporter.sol\":{\"keccak256\":\"0xf92b01359db7644043c8327f1baf9de393e6b82689ca6032ea2db711dba4f2f4\",\"urls\":[\"bzz-raw://343120afad633483c86820413623ff8eee05533de706c037baf5b83be371de88\",\"dweb:/ipfs/QmYrNt2FeLVLSJo6G8NtotWnR9mLenGauAvDQGkSvZtJe4\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/Exponential.sol\":{\"keccak256\":\"0x593e9333576977f23e5a20ca6bdcd6f14104533cfdb311ed866b4f3d00354c65\",\"urls\":[\"bzz-raw://ba7a9eaeab7c3e0654e239932dc47598480ef9b66f45c3801806d547cd043821\",\"dweb:/ipfs/QmWPQB1QK4r3pZtpRyfCVE5QJtRTry8Qmy3JAmac5WfnjV\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ExponentialNoError.sol\":{\"keccak256\":\"0x2a9c420261302a01ae49218f9f951ed29dd28840ca76d8500d16beac172c5522\",\"urls\":[\"bzz-raw://01aaa69315f27f0b93784565416411c0bfccad8a33600e5f9233323a4ae4f5d0\",\"dweb:/ipfs/QmQ7RKntAeWCTA21K3YbtVZ1sSRLYCXStuuoM6AEyWTGTt\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/InterestRateModel.sol\":{\"keccak256\":\"0x73140e38dba59bad70b17f9977a102d61ad5a89087adfd379c52d4e63b103692\",\"urls\":[\"bzz-raw://e2a504fcb04bcd84a904fc9631db7b79cbf28d0b65e85ff097ecb5e2ea4ff520\",\"dweb:/ipfs/QmQVo7iQRBeeHfxjYaFLTPY8iWL7coCnxgNsLPYGD3z56x\"]},\"/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/PriceOracle.sol\":{\"keccak256\":\"0x99d18c991914c8cfc50eea49214298a612b74f64efbc80dbf65699737d241b77\",\"urls\":[\"bzz-raw://59efe469b0ee01ef67b7efa46383f2864d074d350761bc81ea25f950c4197191\",\"dweb:/ipfs/QmUsNXvuAAakAKJEDZNJZ2WGniHMW7yZgMBVjxXKUK6Nx5\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610245806100206000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c80632678224714610051578063bb82aa5e1461009b578063dcfbc0c7146100e5578063f851a4401461012f575b600080fd5b610059610179565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6100a361019f565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6100ed6101c5565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6101376101eb565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600360009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea265627a7a7231582005a80cc7e8934a9630f3074e17591830e75402160d54e6ae10fd3868e044a95c64736f6c63430005110032",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061004c5760003560e01c80632678224714610051578063bb82aa5e1461009b578063dcfbc0c7146100e5578063f851a4401461012f575b600080fd5b610059610179565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6100a361019f565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6100ed6101c5565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6101376101eb565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600360009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea265627a7a7231582005a80cc7e8934a9630f3074e17591830e75402160d54e6ae10fd3868e044a95c64736f6c63430005110032",
+  "sourceMap": "117:441:31:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;117:441:31;;;;;;;",
+  "deployedSourceMap": "117:441:31:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;117:441:31;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;312:27;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;403:40;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;508:47;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;216:20;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;312:27;;;;;;;;;;;;;:::o;403:40::-;;;;;;;;;;;;;:::o;508:47::-;;;;;;;;;;;;;:::o;216:20::-;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.5.16;\n\nimport \"./BToken.sol\";\nimport \"./PriceOracle.sol\";\nimport \"./BAIControllerInterface.sol\";\n\ncontract UnitrollerAdminStorage {\n    /**\n    * @notice Administrator for this contract\n    */\n    address public admin;\n\n    /**\n    * @notice Pending administrator for this contract\n    */\n    address public pendingAdmin;\n\n    /**\n    * @notice Active brains of Unitroller\n    */\n    address public comptrollerImplementation;\n\n    /**\n    * @notice Pending brains of Unitroller\n    */\n    address public pendingComptrollerImplementation;\n}\n\ncontract ComptrollerV1Storage is UnitrollerAdminStorage {\n\n    /**\n     * @notice Oracle which gives the price of any given asset\n     */\n    PriceOracle public oracle;\n\n    /**\n     * @notice Multiplier used to calculate the maximum repayAmount when liquidating a borrow\n     */\n    uint public closeFactorMantissa;\n\n    /**\n     * @notice Multiplier representing the discount on collateral that a liquidator receives\n     */\n    uint public liquidationIncentiveMantissa;\n\n    /**\n     * @notice Max number of assets a single account can participate in (borrow or use as collateral)\n     */\n    uint public maxAssets;\n\n    /**\n     * @notice Per-account mapping of \"assets you are in\", capped by maxAssets\n     */\n    mapping(address => BToken[]) public accountAssets;\n\n    struct Market {\n        /// @notice Whether or not this market is listed\n        bool isListed;\n\n        /**\n         * @notice Multiplier representing the most one can borrow against their collateral in this market.\n         *  For instance, 0.9 to allow borrowing 90% of collateral value.\n         *  Must be between 0 and 1, and stored as a mantissa.\n         */\n        uint collateralFactorMantissa;\n\n        /// @notice Per-market mapping of \"accounts in this asset\"\n        mapping(address => bool) accountMembership;\n\n        /// @notice Whether or not this market receives BTNT\n        bool isBtntex;\n    }\n\n    /**\n     * @notice Official mapping of bTokens -> Market metadata\n     * @dev Used e.g. to determine if a market is supported\n     */\n    mapping(address => Market) public markets;\n\n    /**\n     * @notice The Pause Guardian can pause certain actions as a safety mechanism.\n     *  Actions which allow users to remove their own assets cbtntot be paused.\n     *  Liquidation / seizing / transfer can only be paused globally, not by market.\n     */\n    address public pauseGuardian;\n    bool public _mintGuardianPaused;\n    bool public _borrowGuardianPaused;\n    bool public transferGuardianPaused;\n    bool public seizeGuardianPaused;\n    mapping(address => bool) public mintGuardianPaused;\n    mapping(address => bool) public borrowGuardianPaused;\n\n    struct BtntexMarketState {\n        /// @notice The market's last updated btntexBorrowIndex or btntexSupplyIndex\n        uint224 index;\n\n        /// @notice The block number the index was last updated at\n        uint32 block;\n    }\n\n    /// @notice A list of all markets\n    BToken[] public allMarkets;\n\n    /// @notice The rate at which the flywheel distributes BTNT, per block\n    uint public btntexRate;\n\n    /// @notice The portion of btntexRate that each market currently receives\n    mapping(address => uint) public btntexSpeeds;\n\n    /// @notice The Btntex market supply state for each market\n    mapping(address => BtntexMarketState) public btntexSupplyState;\n\n    /// @notice The Btntex market borrow state for each market\n    mapping(address => BtntexMarketState) public btntexBorrowState;\n\n    /// @notice The Btntex supply index for each market for each supplier as of the last time they accrued BTNT\n    mapping(address => mapping(address => uint)) public btntexSupplierIndex;\n\n    /// @notice The Btntex borrow index for each market for each borrower as of the last time they accrued BTNT\n    mapping(address => mapping(address => uint)) public btntexBorrowerIndex;\n\n    /// @notice The BTNT accrued but not yet transferred to each user\n    mapping(address => uint) public btntexAccrued;\n\n    /// @notice The Address of BAIController\n    BAIControllerInterface public baiController;\n\n    /// @notice The minted BAI amount to each user\n    mapping(address => uint) public mintedBAIs;\n\n    /// @notice BAI Mint Rate as a percentage\n    uint public baiMintRate;\n\n    /**\n     * @notice The Pause Guardian can pause certain actions as a safety mechanism.\n     */\n    bool public mintBAIGuardianPaused;\n    bool public repayBAIGuardianPaused;\n\n    /**\n     * @notice Pause/Unpause whole protocol actions\n     */\n    bool public protocolPaused;\n\n    /// @notice The rate at which the flywheel distributes BTNT to BAI Minters, per block\n    uint public btntexBAIRate;\n}\n\ncontract ComptrollerV2Storage is ComptrollerV1Storage {\n    /// @notice The rate at which the flywheel distributes BTNT to BAI Vault, per block\n    uint public btntexBAIVaultRate;\n\n    // address of BAI Vault\n    address public baiVaultAddress;\n\n    // start block of release to BAI Vault\n    uint256 public releaseStartBlock;\n\n    // minimum release amount to BAI Vault\n    uint256 public minReleaseAmount;\n}\n\ncontract ComptrollerV3Storage is ComptrollerV2Storage {\n    /// @notice The borrowCapGuardian can set borrowCaps to any number for any market. Lowering the borrow cap could disable borrowing on the given market.\n    address public borrowCapGuardian;\n\n    /// @notice Borrow caps enforced by borrowAllowed for each bToken address. Defaults to zero which corresponds to unlimited borrowing.\n    mapping(address => uint) public borrowCaps;\n}\n\ncontract ComptrollerV4Storage is ComptrollerV3Storage {\n    /// @notice Treasury Guardian address\n    address public treasuryGuardian;\n\n    /// @notice Treasury address\n    address public treasuryAddress;\n\n    /// @notice Fee percent of accrued interest with decimal 18\n    uint256 public treasuryPercent;\n}\n",
+  "sourcePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ComptrollerStorage.sol",
+  "ast": {
+    "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ComptrollerStorage.sol",
+    "exportedSymbols": {
+      "ComptrollerV1Storage": [
+        30467
+      ],
+      "ComptrollerV2Storage": [
+        30478
+      ],
+      "ComptrollerV3Storage": [
+        30487
+      ],
+      "ComptrollerV4Storage": [
+        30496
+      ],
+      "UnitrollerAdminStorage": [
+        30364
+      ]
+    },
+    "id": 30497,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 30352,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".16"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:31"
+      },
+      {
+        "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BToken.sol",
+        "file": "./BToken.sol",
+        "id": 30353,
+        "nodeType": "ImportDirective",
+        "scope": 30497,
+        "sourceUnit": 11754,
+        "src": "26:22:31",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/PriceOracle.sol",
+        "file": "./PriceOracle.sol",
+        "id": 30354,
+        "nodeType": "ImportDirective",
+        "scope": 30497,
+        "sourceUnit": 34312,
+        "src": "49:27:31",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIControllerInterface.sol",
+        "file": "./BAIControllerInterface.sol",
+        "id": 30355,
+        "nodeType": "ImportDirective",
+        "scope": 30497,
+        "sourceUnit": 3491,
+        "src": "77:38:31",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 30364,
+        "linearizedBaseContracts": [
+          30364
+        ],
+        "name": "UnitrollerAdminStorage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 30357,
+            "name": "admin",
+            "nodeType": "VariableDeclaration",
+            "scope": 30364,
+            "src": "216:20:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 30356,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "216:7:31",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30359,
+            "name": "pendingAdmin",
+            "nodeType": "VariableDeclaration",
+            "scope": 30364,
+            "src": "312:27:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 30358,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "312:7:31",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30361,
+            "name": "comptrollerImplementation",
+            "nodeType": "VariableDeclaration",
+            "scope": 30364,
+            "src": "403:40:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 30360,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "403:7:31",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30363,
+            "name": "pendingComptrollerImplementation",
+            "nodeType": "VariableDeclaration",
+            "scope": 30364,
+            "src": "508:47:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 30362,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "508:7:31",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 30497,
+        "src": "117:441:31"
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 30365,
+              "name": "UnitrollerAdminStorage",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 30364,
+              "src": "593:22:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_UnitrollerAdminStorage_$30364",
+                "typeString": "contract UnitrollerAdminStorage"
+              }
+            },
+            "id": 30366,
+            "nodeType": "InheritanceSpecifier",
+            "src": "593:22:31"
+          }
+        ],
+        "contractDependencies": [
+          30364
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 30467,
+        "linearizedBaseContracts": [
+          30467,
+          30364
+        ],
+        "name": "ComptrollerV1Storage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 30368,
+            "name": "oracle",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "702:25:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_PriceOracle_$34311",
+              "typeString": "contract PriceOracle"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 30367,
+              "name": "PriceOracle",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 34311,
+              "src": "702:11:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_PriceOracle_$34311",
+                "typeString": "contract PriceOracle"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30370,
+            "name": "closeFactorMantissa",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "844:31:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 30369,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "844:4:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30372,
+            "name": "liquidationIncentiveMantissa",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "991:40:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 30371,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "991:4:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30374,
+            "name": "maxAssets",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "1156:21:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 30373,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "1156:4:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30379,
+            "name": "accountAssets",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "1279:49:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_contract$_BToken_$11753_$dyn_storage_$",
+              "typeString": "mapping(address => contract BToken[])"
+            },
+            "typeName": {
+              "id": 30378,
+              "keyType": {
+                "id": 30375,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "1287:7:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "1279:28:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_contract$_BToken_$11753_$dyn_storage_$",
+                "typeString": "mapping(address => contract BToken[])"
+              },
+              "valueType": {
+                "baseType": {
+                  "contractScope": null,
+                  "id": 30376,
+                  "name": "BToken",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 11753,
+                  "src": "1298:6:31",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_BToken_$11753",
+                    "typeString": "contract BToken"
+                  }
+                },
+                "id": 30377,
+                "length": null,
+                "nodeType": "ArrayTypeName",
+                "src": "1298:8:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_contract$_BToken_$11753_$dyn_storage_ptr",
+                  "typeString": "contract BToken[]"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "ComptrollerV1Storage.Market",
+            "id": 30390,
+            "members": [
+              {
+                "constant": false,
+                "id": 30381,
+                "name": "isListed",
+                "nodeType": "VariableDeclaration",
+                "scope": 30390,
+                "src": "1416:13:31",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 30380,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1416:4:31",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 30383,
+                "name": "collateralFactorMantissa",
+                "nodeType": "VariableDeclaration",
+                "scope": 30390,
+                "src": "1709:29:31",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 30382,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1709:4:31",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 30387,
+                "name": "accountMembership",
+                "nodeType": "VariableDeclaration",
+                "scope": 30390,
+                "src": "1816:42:31",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
+                  "typeString": "mapping(address => bool)"
+                },
+                "typeName": {
+                  "id": 30386,
+                  "keyType": {
+                    "id": 30384,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1824:7:31",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "1816:24:31",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
+                    "typeString": "mapping(address => bool)"
+                  },
+                  "valueType": {
+                    "id": 30385,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1835:4:31",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 30389,
+                "name": "isBtntex",
+                "nodeType": "VariableDeclaration",
+                "scope": 30390,
+                "src": "1930:13:31",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 30388,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1930:4:31",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Market",
+            "nodeType": "StructDefinition",
+            "scope": 30467,
+            "src": "1335:615:31",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30394,
+            "name": "markets",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "2094:41:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Market_$30390_storage_$",
+              "typeString": "mapping(address => struct ComptrollerV1Storage.Market)"
+            },
+            "typeName": {
+              "id": 30393,
+              "keyType": {
+                "id": 30391,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "2102:7:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "2094:26:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Market_$30390_storage_$",
+                "typeString": "mapping(address => struct ComptrollerV1Storage.Market)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 30392,
+                "name": "Market",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 30390,
+                "src": "2113:6:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Market_$30390_storage_ptr",
+                  "typeString": "struct ComptrollerV1Storage.Market"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30396,
+            "name": "pauseGuardian",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "2406:28:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 30395,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "2406:7:31",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30398,
+            "name": "_mintGuardianPaused",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "2440:31:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 30397,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "2440:4:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30400,
+            "name": "_borrowGuardianPaused",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "2477:33:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 30399,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "2477:4:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30402,
+            "name": "transferGuardianPaused",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "2516:34:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 30401,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "2516:4:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30404,
+            "name": "seizeGuardianPaused",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "2556:31:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 30403,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "2556:4:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30408,
+            "name": "mintGuardianPaused",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "2593:50:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
+              "typeString": "mapping(address => bool)"
+            },
+            "typeName": {
+              "id": 30407,
+              "keyType": {
+                "id": 30405,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "2601:7:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "2593:24:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
+                "typeString": "mapping(address => bool)"
+              },
+              "valueType": {
+                "id": 30406,
+                "name": "bool",
+                "nodeType": "ElementaryTypeName",
+                "src": "2612:4:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30412,
+            "name": "borrowGuardianPaused",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "2649:52:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
+              "typeString": "mapping(address => bool)"
+            },
+            "typeName": {
+              "id": 30411,
+              "keyType": {
+                "id": 30409,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "2657:7:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "2649:24:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
+                "typeString": "mapping(address => bool)"
+              },
+              "valueType": {
+                "id": 30410,
+                "name": "bool",
+                "nodeType": "ElementaryTypeName",
+                "src": "2668:4:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "ComptrollerV1Storage.BtntexMarketState",
+            "id": 30417,
+            "members": [
+              {
+                "constant": false,
+                "id": 30414,
+                "name": "index",
+                "nodeType": "VariableDeclaration",
+                "scope": 30417,
+                "src": "2828:13:31",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint224",
+                  "typeString": "uint224"
+                },
+                "typeName": {
+                  "id": 30413,
+                  "name": "uint224",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2828:7:31",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint224",
+                    "typeString": "uint224"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 30416,
+                "name": "block",
+                "nodeType": "VariableDeclaration",
+                "scope": 30417,
+                "src": "2919:12:31",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint32",
+                  "typeString": "uint32"
+                },
+                "typeName": {
+                  "id": 30415,
+                  "name": "uint32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2919:6:31",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint32",
+                    "typeString": "uint32"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "BtntexMarketState",
+            "nodeType": "StructDefinition",
+            "scope": 30467,
+            "src": "2708:230:31",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30420,
+            "name": "allMarkets",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "2982:26:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_array$_t_contract$_BToken_$11753_$dyn_storage",
+              "typeString": "contract BToken[]"
+            },
+            "typeName": {
+              "baseType": {
+                "contractScope": null,
+                "id": 30418,
+                "name": "BToken",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 11753,
+                "src": "2982:6:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_contract$_BToken_$11753",
+                  "typeString": "contract BToken"
+                }
+              },
+              "id": 30419,
+              "length": null,
+              "nodeType": "ArrayTypeName",
+              "src": "2982:8:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_contract$_BToken_$11753_$dyn_storage_ptr",
+                "typeString": "contract BToken[]"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30422,
+            "name": "btntexRate",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "3090:22:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 30421,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "3090:4:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30426,
+            "name": "btntexSpeeds",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "3197:44:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+              "typeString": "mapping(address => uint256)"
+            },
+            "typeName": {
+              "id": 30425,
+              "keyType": {
+                "id": 30423,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "3205:7:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "3197:24:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                "typeString": "mapping(address => uint256)"
+              },
+              "valueType": {
+                "id": 30424,
+                "name": "uint",
+                "nodeType": "ElementaryTypeName",
+                "src": "3216:4:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30430,
+            "name": "btntexSupplyState",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "3311:62:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_BtntexMarketState_$30417_storage_$",
+              "typeString": "mapping(address => struct ComptrollerV1Storage.BtntexMarketState)"
+            },
+            "typeName": {
+              "id": 30429,
+              "keyType": {
+                "id": 30427,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "3319:7:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "3311:37:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_BtntexMarketState_$30417_storage_$",
+                "typeString": "mapping(address => struct ComptrollerV1Storage.BtntexMarketState)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 30428,
+                "name": "BtntexMarketState",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 30417,
+                "src": "3330:17:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_BtntexMarketState_$30417_storage_ptr",
+                  "typeString": "struct ComptrollerV1Storage.BtntexMarketState"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30434,
+            "name": "btntexBorrowState",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "3443:62:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_BtntexMarketState_$30417_storage_$",
+              "typeString": "mapping(address => struct ComptrollerV1Storage.BtntexMarketState)"
+            },
+            "typeName": {
+              "id": 30433,
+              "keyType": {
+                "id": 30431,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "3451:7:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "3443:37:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_BtntexMarketState_$30417_storage_$",
+                "typeString": "mapping(address => struct ComptrollerV1Storage.BtntexMarketState)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 30432,
+                "name": "BtntexMarketState",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 30417,
+                "src": "3462:17:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_BtntexMarketState_$30417_storage_ptr",
+                  "typeString": "struct ComptrollerV1Storage.BtntexMarketState"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30440,
+            "name": "btntexSupplierIndex",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "3624:71:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_uint256_$_$",
+              "typeString": "mapping(address => mapping(address => uint256))"
+            },
+            "typeName": {
+              "id": 30439,
+              "keyType": {
+                "id": 30435,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "3632:7:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "3624:44:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_uint256_$_$",
+                "typeString": "mapping(address => mapping(address => uint256))"
+              },
+              "valueType": {
+                "id": 30438,
+                "keyType": {
+                  "id": 30436,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "3651:7:31",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "nodeType": "Mapping",
+                "src": "3643:24:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                  "typeString": "mapping(address => uint256)"
+                },
+                "valueType": {
+                  "id": 30437,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "3662:4:31",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30446,
+            "name": "btntexBorrowerIndex",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "3814:71:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_uint256_$_$",
+              "typeString": "mapping(address => mapping(address => uint256))"
+            },
+            "typeName": {
+              "id": 30445,
+              "keyType": {
+                "id": 30441,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "3822:7:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "3814:44:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_uint256_$_$",
+                "typeString": "mapping(address => mapping(address => uint256))"
+              },
+              "valueType": {
+                "id": 30444,
+                "keyType": {
+                  "id": 30442,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "3841:7:31",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "nodeType": "Mapping",
+                "src": "3833:24:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                  "typeString": "mapping(address => uint256)"
+                },
+                "valueType": {
+                  "id": 30443,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "3852:4:31",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30450,
+            "name": "btntexAccrued",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "3962:45:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+              "typeString": "mapping(address => uint256)"
+            },
+            "typeName": {
+              "id": 30449,
+              "keyType": {
+                "id": 30447,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "3970:7:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "3962:24:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                "typeString": "mapping(address => uint256)"
+              },
+              "valueType": {
+                "id": 30448,
+                "name": "uint",
+                "nodeType": "ElementaryTypeName",
+                "src": "3981:4:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30452,
+            "name": "baiController",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "4059:43:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_BAIControllerInterface_$3490",
+              "typeString": "contract BAIControllerInterface"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 30451,
+              "name": "BAIControllerInterface",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3490,
+              "src": "4059:22:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_BAIControllerInterface_$3490",
+                "typeString": "contract BAIControllerInterface"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30456,
+            "name": "mintedBAIs",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "4160:42:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+              "typeString": "mapping(address => uint256)"
+            },
+            "typeName": {
+              "id": 30455,
+              "keyType": {
+                "id": 30453,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "4168:7:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "4160:24:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                "typeString": "mapping(address => uint256)"
+              },
+              "valueType": {
+                "id": 30454,
+                "name": "uint",
+                "nodeType": "ElementaryTypeName",
+                "src": "4179:4:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30458,
+            "name": "baiMintRate",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "4255:23:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 30457,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "4255:4:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30460,
+            "name": "mintBAIGuardianPaused",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "4384:33:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 30459,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "4384:4:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30462,
+            "name": "repayBAIGuardianPaused",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "4423:34:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 30461,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "4423:4:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30464,
+            "name": "protocolPaused",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "4532:26:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 30463,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "4532:4:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30466,
+            "name": "btntexBAIRate",
+            "nodeType": "VariableDeclaration",
+            "scope": 30467,
+            "src": "4655:25:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 30465,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "4655:4:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 30497,
+        "src": "560:4123:31"
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 30468,
+              "name": "ComptrollerV1Storage",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 30467,
+              "src": "4718:20:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_ComptrollerV1Storage_$30467",
+                "typeString": "contract ComptrollerV1Storage"
+              }
+            },
+            "id": 30469,
+            "nodeType": "InheritanceSpecifier",
+            "src": "4718:20:31"
+          }
+        ],
+        "contractDependencies": [
+          30364,
+          30467
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 30478,
+        "linearizedBaseContracts": [
+          30478,
+          30467,
+          30364
+        ],
+        "name": "ComptrollerV2Storage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 30471,
+            "name": "btntexBAIVaultRate",
+            "nodeType": "VariableDeclaration",
+            "scope": 30478,
+            "src": "4833:30:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 30470,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "4833:4:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30473,
+            "name": "baiVaultAddress",
+            "nodeType": "VariableDeclaration",
+            "scope": 30478,
+            "src": "4898:30:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 30472,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "4898:7:31",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30475,
+            "name": "releaseStartBlock",
+            "nodeType": "VariableDeclaration",
+            "scope": 30478,
+            "src": "4978:32:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 30474,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "4978:7:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30477,
+            "name": "minReleaseAmount",
+            "nodeType": "VariableDeclaration",
+            "scope": 30478,
+            "src": "5060:31:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 30476,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "5060:7:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 30497,
+        "src": "4685:409:31"
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 30479,
+              "name": "ComptrollerV2Storage",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 30478,
+              "src": "5129:20:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_ComptrollerV2Storage_$30478",
+                "typeString": "contract ComptrollerV2Storage"
+              }
+            },
+            "id": 30480,
+            "nodeType": "InheritanceSpecifier",
+            "src": "5129:20:31"
+          }
+        ],
+        "contractDependencies": [
+          30364,
+          30467,
+          30478
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 30487,
+        "linearizedBaseContracts": [
+          30487,
+          30478,
+          30467,
+          30364
+        ],
+        "name": "ComptrollerV3Storage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 30482,
+            "name": "borrowCapGuardian",
+            "nodeType": "VariableDeclaration",
+            "scope": 30487,
+            "src": "5312:32:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 30481,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "5312:7:31",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30486,
+            "name": "borrowCaps",
+            "nodeType": "VariableDeclaration",
+            "scope": 30487,
+            "src": "5489:42:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+              "typeString": "mapping(address => uint256)"
+            },
+            "typeName": {
+              "id": 30485,
+              "keyType": {
+                "id": 30483,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "5497:7:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "5489:24:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                "typeString": "mapping(address => uint256)"
+              },
+              "valueType": {
+                "id": 30484,
+                "name": "uint",
+                "nodeType": "ElementaryTypeName",
+                "src": "5508:4:31",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 30497,
+        "src": "5096:438:31"
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 30488,
+              "name": "ComptrollerV3Storage",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 30487,
+              "src": "5569:20:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_ComptrollerV3Storage_$30487",
+                "typeString": "contract ComptrollerV3Storage"
+              }
+            },
+            "id": 30489,
+            "nodeType": "InheritanceSpecifier",
+            "src": "5569:20:31"
+          }
+        ],
+        "contractDependencies": [
+          30364,
+          30467,
+          30478,
+          30487
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 30496,
+        "linearizedBaseContracts": [
+          30496,
+          30487,
+          30478,
+          30467,
+          30364
+        ],
+        "name": "ComptrollerV4Storage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 30491,
+            "name": "treasuryGuardian",
+            "nodeType": "VariableDeclaration",
+            "scope": 30496,
+            "src": "5638:31:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 30490,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "5638:7:31",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30493,
+            "name": "treasuryAddress",
+            "nodeType": "VariableDeclaration",
+            "scope": 30496,
+            "src": "5709:30:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 30492,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "5709:7:31",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 30495,
+            "name": "treasuryPercent",
+            "nodeType": "VariableDeclaration",
+            "scope": 30496,
+            "src": "5810:30:31",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 30494,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "5810:7:31",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 30497,
+        "src": "5536:307:31"
+      }
+    ],
+    "src": "0:5844:31"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/ComptrollerStorage.sol",
+      "exportedSymbols": {
+        "ComptrollerV1Storage": [
+          30467
+        ],
+        "ComptrollerV2Storage": [
+          30478
+        ],
+        "ComptrollerV3Storage": [
+          30487
+        ],
+        "ComptrollerV4Storage": [
+          30496
+        ],
+        "UnitrollerAdminStorage": [
+          30364
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.5",
+            ".16"
+          ]
+        },
+        "id": 30352,
+        "name": "PragmaDirective",
+        "src": "0:24:31"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 11754,
+          "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BToken.sol",
+          "file": "./BToken.sol",
+          "scope": 30497,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 30353,
+        "name": "ImportDirective",
+        "src": "26:22:31"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 34312,
+          "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/PriceOracle.sol",
+          "file": "./PriceOracle.sol",
+          "scope": 30497,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 30354,
+        "name": "ImportDirective",
+        "src": "49:27:31"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 3491,
+          "absolutePath": "/home/aliwisam/AliWisamData/Personal/Orders/Sir Junaid/Gist/TruffleFlat/contracts/BAIControllerInterface.sol",
+          "file": "./BAIControllerInterface.sol",
+          "scope": 30497,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 30355,
+        "name": "ImportDirective",
+        "src": "77:38:31"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            30364
+          ],
+          "name": "UnitrollerAdminStorage",
+          "scope": 30497
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "admin",
+              "scope": 30364,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 30356,
+                "name": "ElementaryTypeName",
+                "src": "216:7:31"
+              }
+            ],
+            "id": 30357,
+            "name": "VariableDeclaration",
+            "src": "216:20:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "pendingAdmin",
+              "scope": 30364,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 30358,
+                "name": "ElementaryTypeName",
+                "src": "312:7:31"
+              }
+            ],
+            "id": 30359,
+            "name": "VariableDeclaration",
+            "src": "312:27:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "comptrollerImplementation",
+              "scope": 30364,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 30360,
+                "name": "ElementaryTypeName",
+                "src": "403:7:31"
+              }
+            ],
+            "id": 30361,
+            "name": "VariableDeclaration",
+            "src": "403:40:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "pendingComptrollerImplementation",
+              "scope": 30364,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 30362,
+                "name": "ElementaryTypeName",
+                "src": "508:7:31"
+              }
+            ],
+            "id": 30363,
+            "name": "VariableDeclaration",
+            "src": "508:47:31"
+          }
+        ],
+        "id": 30364,
+        "name": "ContractDefinition",
+        "src": "117:441:31"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            30364
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            30467,
+            30364
+          ],
+          "name": "ComptrollerV1Storage",
+          "scope": 30497
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": null
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "UnitrollerAdminStorage",
+                  "referencedDeclaration": 30364,
+                  "type": "contract UnitrollerAdminStorage"
+                },
+                "id": 30365,
+                "name": "UserDefinedTypeName",
+                "src": "593:22:31"
+              }
+            ],
+            "id": 30366,
+            "name": "InheritanceSpecifier",
+            "src": "593:22:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "oracle",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract PriceOracle",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "PriceOracle",
+                  "referencedDeclaration": 34311,
+                  "type": "contract PriceOracle"
+                },
+                "id": 30367,
+                "name": "UserDefinedTypeName",
+                "src": "702:11:31"
+              }
+            ],
+            "id": 30368,
+            "name": "VariableDeclaration",
+            "src": "702:25:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "closeFactorMantissa",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 30369,
+                "name": "ElementaryTypeName",
+                "src": "844:4:31"
+              }
+            ],
+            "id": 30370,
+            "name": "VariableDeclaration",
+            "src": "844:31:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "liquidationIncentiveMantissa",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 30371,
+                "name": "ElementaryTypeName",
+                "src": "991:4:31"
+              }
+            ],
+            "id": 30372,
+            "name": "VariableDeclaration",
+            "src": "991:40:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "maxAssets",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 30373,
+                "name": "ElementaryTypeName",
+                "src": "1156:4:31"
+              }
+            ],
+            "id": 30374,
+            "name": "VariableDeclaration",
+            "src": "1156:21:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "accountAssets",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => contract BToken[])",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => contract BToken[])"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 30375,
+                    "name": "ElementaryTypeName",
+                    "src": "1287:7:31"
+                  },
+                  {
+                    "attributes": {
+                      "length": null,
+                      "type": "contract BToken[]"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "BToken",
+                          "referencedDeclaration": 11753,
+                          "type": "contract BToken"
+                        },
+                        "id": 30376,
+                        "name": "UserDefinedTypeName",
+                        "src": "1298:6:31"
+                      }
+                    ],
+                    "id": 30377,
+                    "name": "ArrayTypeName",
+                    "src": "1298:8:31"
+                  }
+                ],
+                "id": 30378,
+                "name": "Mapping",
+                "src": "1279:28:31"
+              }
+            ],
+            "id": 30379,
+            "name": "VariableDeclaration",
+            "src": "1279:49:31"
+          },
+          {
+            "attributes": {
+              "canonicalName": "ComptrollerV1Storage.Market",
+              "name": "Market",
+              "scope": 30467,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "isListed",
+                  "scope": 30390,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bool",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bool",
+                      "type": "bool"
+                    },
+                    "id": 30380,
+                    "name": "ElementaryTypeName",
+                    "src": "1416:4:31"
+                  }
+                ],
+                "id": 30381,
+                "name": "VariableDeclaration",
+                "src": "1416:13:31"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "collateralFactorMantissa",
+                  "scope": 30390,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 30382,
+                    "name": "ElementaryTypeName",
+                    "src": "1709:4:31"
+                  }
+                ],
+                "id": 30383,
+                "name": "VariableDeclaration",
+                "src": "1709:29:31"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "accountMembership",
+                  "scope": 30390,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "mapping(address => bool)",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "mapping(address => bool)"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 30384,
+                        "name": "ElementaryTypeName",
+                        "src": "1824:7:31"
+                      },
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 30385,
+                        "name": "ElementaryTypeName",
+                        "src": "1835:4:31"
+                      }
+                    ],
+                    "id": 30386,
+                    "name": "Mapping",
+                    "src": "1816:24:31"
+                  }
+                ],
+                "id": 30387,
+                "name": "VariableDeclaration",
+                "src": "1816:42:31"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "isBtntex",
+                  "scope": 30390,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bool",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bool",
+                      "type": "bool"
+                    },
+                    "id": 30388,
+                    "name": "ElementaryTypeName",
+                    "src": "1930:4:31"
+                  }
+                ],
+                "id": 30389,
+                "name": "VariableDeclaration",
+                "src": "1930:13:31"
+              }
+            ],
+            "id": 30390,
+            "name": "StructDefinition",
+            "src": "1335:615:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "markets",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => struct ComptrollerV1Storage.Market)",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => struct ComptrollerV1Storage.Market)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 30391,
+                    "name": "ElementaryTypeName",
+                    "src": "2102:7:31"
+                  },
+                  {
+                    "attributes": {
+                      "contractScope": null,
+                      "name": "Market",
+                      "referencedDeclaration": 30390,
+                      "type": "struct ComptrollerV1Storage.Market"
+                    },
+                    "id": 30392,
+                    "name": "UserDefinedTypeName",
+                    "src": "2113:6:31"
+                  }
+                ],
+                "id": 30393,
+                "name": "Mapping",
+                "src": "2094:26:31"
+              }
+            ],
+            "id": 30394,
+            "name": "VariableDeclaration",
+            "src": "2094:41:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "pauseGuardian",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 30395,
+                "name": "ElementaryTypeName",
+                "src": "2406:7:31"
+              }
+            ],
+            "id": 30396,
+            "name": "VariableDeclaration",
+            "src": "2406:28:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "_mintGuardianPaused",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "bool",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "bool",
+                  "type": "bool"
+                },
+                "id": 30397,
+                "name": "ElementaryTypeName",
+                "src": "2440:4:31"
+              }
+            ],
+            "id": 30398,
+            "name": "VariableDeclaration",
+            "src": "2440:31:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "_borrowGuardianPaused",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "bool",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "bool",
+                  "type": "bool"
+                },
+                "id": 30399,
+                "name": "ElementaryTypeName",
+                "src": "2477:4:31"
+              }
+            ],
+            "id": 30400,
+            "name": "VariableDeclaration",
+            "src": "2477:33:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "transferGuardianPaused",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "bool",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "bool",
+                  "type": "bool"
+                },
+                "id": 30401,
+                "name": "ElementaryTypeName",
+                "src": "2516:4:31"
+              }
+            ],
+            "id": 30402,
+            "name": "VariableDeclaration",
+            "src": "2516:34:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "seizeGuardianPaused",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "bool",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "bool",
+                  "type": "bool"
+                },
+                "id": 30403,
+                "name": "ElementaryTypeName",
+                "src": "2556:4:31"
+              }
+            ],
+            "id": 30404,
+            "name": "VariableDeclaration",
+            "src": "2556:31:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "mintGuardianPaused",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => bool)",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => bool)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 30405,
+                    "name": "ElementaryTypeName",
+                    "src": "2601:7:31"
+                  },
+                  {
+                    "attributes": {
+                      "name": "bool",
+                      "type": "bool"
+                    },
+                    "id": 30406,
+                    "name": "ElementaryTypeName",
+                    "src": "2612:4:31"
+                  }
+                ],
+                "id": 30407,
+                "name": "Mapping",
+                "src": "2593:24:31"
+              }
+            ],
+            "id": 30408,
+            "name": "VariableDeclaration",
+            "src": "2593:50:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "borrowGuardianPaused",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => bool)",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => bool)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 30409,
+                    "name": "ElementaryTypeName",
+                    "src": "2657:7:31"
+                  },
+                  {
+                    "attributes": {
+                      "name": "bool",
+                      "type": "bool"
+                    },
+                    "id": 30410,
+                    "name": "ElementaryTypeName",
+                    "src": "2668:4:31"
+                  }
+                ],
+                "id": 30411,
+                "name": "Mapping",
+                "src": "2649:24:31"
+              }
+            ],
+            "id": 30412,
+            "name": "VariableDeclaration",
+            "src": "2649:52:31"
+          },
+          {
+            "attributes": {
+              "canonicalName": "ComptrollerV1Storage.BtntexMarketState",
+              "name": "BtntexMarketState",
+              "scope": 30467,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "index",
+                  "scope": 30417,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint224",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint224",
+                      "type": "uint224"
+                    },
+                    "id": 30413,
+                    "name": "ElementaryTypeName",
+                    "src": "2828:7:31"
+                  }
+                ],
+                "id": 30414,
+                "name": "VariableDeclaration",
+                "src": "2828:13:31"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "block",
+                  "scope": 30417,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint32",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint32",
+                      "type": "uint32"
+                    },
+                    "id": 30415,
+                    "name": "ElementaryTypeName",
+                    "src": "2919:6:31"
+                  }
+                ],
+                "id": 30416,
+                "name": "VariableDeclaration",
+                "src": "2919:12:31"
+              }
+            ],
+            "id": 30417,
+            "name": "StructDefinition",
+            "src": "2708:230:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "allMarkets",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract BToken[]",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "length": null,
+                  "type": "contract BToken[]"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "contractScope": null,
+                      "name": "BToken",
+                      "referencedDeclaration": 11753,
+                      "type": "contract BToken"
+                    },
+                    "id": 30418,
+                    "name": "UserDefinedTypeName",
+                    "src": "2982:6:31"
+                  }
+                ],
+                "id": 30419,
+                "name": "ArrayTypeName",
+                "src": "2982:8:31"
+              }
+            ],
+            "id": 30420,
+            "name": "VariableDeclaration",
+            "src": "2982:26:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "btntexRate",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 30421,
+                "name": "ElementaryTypeName",
+                "src": "3090:4:31"
+              }
+            ],
+            "id": 30422,
+            "name": "VariableDeclaration",
+            "src": "3090:22:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "btntexSpeeds",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => uint256)",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => uint256)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 30423,
+                    "name": "ElementaryTypeName",
+                    "src": "3205:7:31"
+                  },
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 30424,
+                    "name": "ElementaryTypeName",
+                    "src": "3216:4:31"
+                  }
+                ],
+                "id": 30425,
+                "name": "Mapping",
+                "src": "3197:24:31"
+              }
+            ],
+            "id": 30426,
+            "name": "VariableDeclaration",
+            "src": "3197:44:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "btntexSupplyState",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => struct ComptrollerV1Storage.BtntexMarketState)",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => struct ComptrollerV1Storage.BtntexMarketState)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 30427,
+                    "name": "ElementaryTypeName",
+                    "src": "3319:7:31"
+                  },
+                  {
+                    "attributes": {
+                      "contractScope": null,
+                      "name": "BtntexMarketState",
+                      "referencedDeclaration": 30417,
+                      "type": "struct ComptrollerV1Storage.BtntexMarketState"
+                    },
+                    "id": 30428,
+                    "name": "UserDefinedTypeName",
+                    "src": "3330:17:31"
+                  }
+                ],
+                "id": 30429,
+                "name": "Mapping",
+                "src": "3311:37:31"
+              }
+            ],
+            "id": 30430,
+            "name": "VariableDeclaration",
+            "src": "3311:62:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "btntexBorrowState",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => struct ComptrollerV1Storage.BtntexMarketState)",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => struct ComptrollerV1Storage.BtntexMarketState)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 30431,
+                    "name": "ElementaryTypeName",
+                    "src": "3451:7:31"
+                  },
+                  {
+                    "attributes": {
+                      "contractScope": null,
+                      "name": "BtntexMarketState",
+                      "referencedDeclaration": 30417,
+                      "type": "struct ComptrollerV1Storage.BtntexMarketState"
+                    },
+                    "id": 30432,
+                    "name": "UserDefinedTypeName",
+                    "src": "3462:17:31"
+                  }
+                ],
+                "id": 30433,
+                "name": "Mapping",
+                "src": "3443:37:31"
+              }
+            ],
+            "id": 30434,
+            "name": "VariableDeclaration",
+            "src": "3443:62:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "btntexSupplierIndex",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => mapping(address => uint256))",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => mapping(address => uint256))"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 30435,
+                    "name": "ElementaryTypeName",
+                    "src": "3632:7:31"
+                  },
+                  {
+                    "attributes": {
+                      "type": "mapping(address => uint256)"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 30436,
+                        "name": "ElementaryTypeName",
+                        "src": "3651:7:31"
+                      },
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 30437,
+                        "name": "ElementaryTypeName",
+                        "src": "3662:4:31"
+                      }
+                    ],
+                    "id": 30438,
+                    "name": "Mapping",
+                    "src": "3643:24:31"
+                  }
+                ],
+                "id": 30439,
+                "name": "Mapping",
+                "src": "3624:44:31"
+              }
+            ],
+            "id": 30440,
+            "name": "VariableDeclaration",
+            "src": "3624:71:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "btntexBorrowerIndex",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => mapping(address => uint256))",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => mapping(address => uint256))"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 30441,
+                    "name": "ElementaryTypeName",
+                    "src": "3822:7:31"
+                  },
+                  {
+                    "attributes": {
+                      "type": "mapping(address => uint256)"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 30442,
+                        "name": "ElementaryTypeName",
+                        "src": "3841:7:31"
+                      },
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 30443,
+                        "name": "ElementaryTypeName",
+                        "src": "3852:4:31"
+                      }
+                    ],
+                    "id": 30444,
+                    "name": "Mapping",
+                    "src": "3833:24:31"
+                  }
+                ],
+                "id": 30445,
+                "name": "Mapping",
+                "src": "3814:44:31"
+              }
+            ],
+            "id": 30446,
+            "name": "VariableDeclaration",
+            "src": "3814:71:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "btntexAccrued",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => uint256)",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => uint256)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 30447,
+                    "name": "ElementaryTypeName",
+                    "src": "3970:7:31"
+                  },
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 30448,
+                    "name": "ElementaryTypeName",
+                    "src": "3981:4:31"
+                  }
+                ],
+                "id": 30449,
+                "name": "Mapping",
+                "src": "3962:24:31"
+              }
+            ],
+            "id": 30450,
+            "name": "VariableDeclaration",
+            "src": "3962:45:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "baiController",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract BAIControllerInterface",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "BAIControllerInterface",
+                  "referencedDeclaration": 3490,
+                  "type": "contract BAIControllerInterface"
+                },
+                "id": 30451,
+                "name": "UserDefinedTypeName",
+                "src": "4059:22:31"
+              }
+            ],
+            "id": 30452,
+            "name": "VariableDeclaration",
+            "src": "4059:43:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "mintedBAIs",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => uint256)",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => uint256)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 30453,
+                    "name": "ElementaryTypeName",
+                    "src": "4168:7:31"
+                  },
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 30454,
+                    "name": "ElementaryTypeName",
+                    "src": "4179:4:31"
+                  }
+                ],
+                "id": 30455,
+                "name": "Mapping",
+                "src": "4160:24:31"
+              }
+            ],
+            "id": 30456,
+            "name": "VariableDeclaration",
+            "src": "4160:42:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "baiMintRate",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 30457,
+                "name": "ElementaryTypeName",
+                "src": "4255:4:31"
+              }
+            ],
+            "id": 30458,
+            "name": "VariableDeclaration",
+            "src": "4255:23:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "mintBAIGuardianPaused",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "bool",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "bool",
+                  "type": "bool"
+                },
+                "id": 30459,
+                "name": "ElementaryTypeName",
+                "src": "4384:4:31"
+              }
+            ],
+            "id": 30460,
+            "name": "VariableDeclaration",
+            "src": "4384:33:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "repayBAIGuardianPaused",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "bool",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "bool",
+                  "type": "bool"
+                },
+                "id": 30461,
+                "name": "ElementaryTypeName",
+                "src": "4423:4:31"
+              }
+            ],
+            "id": 30462,
+            "name": "VariableDeclaration",
+            "src": "4423:34:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "protocolPaused",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "bool",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "bool",
+                  "type": "bool"
+                },
+                "id": 30463,
+                "name": "ElementaryTypeName",
+                "src": "4532:4:31"
+              }
+            ],
+            "id": 30464,
+            "name": "VariableDeclaration",
+            "src": "4532:26:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "btntexBAIRate",
+              "scope": 30467,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 30465,
+                "name": "ElementaryTypeName",
+                "src": "4655:4:31"
+              }
+            ],
+            "id": 30466,
+            "name": "VariableDeclaration",
+            "src": "4655:25:31"
+          }
+        ],
+        "id": 30467,
+        "name": "ContractDefinition",
+        "src": "560:4123:31"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            30364,
+            30467
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            30478,
+            30467,
+            30364
+          ],
+          "name": "ComptrollerV2Storage",
+          "scope": 30497
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": null
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "ComptrollerV1Storage",
+                  "referencedDeclaration": 30467,
+                  "type": "contract ComptrollerV1Storage"
+                },
+                "id": 30468,
+                "name": "UserDefinedTypeName",
+                "src": "4718:20:31"
+              }
+            ],
+            "id": 30469,
+            "name": "InheritanceSpecifier",
+            "src": "4718:20:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "btntexBAIVaultRate",
+              "scope": 30478,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 30470,
+                "name": "ElementaryTypeName",
+                "src": "4833:4:31"
+              }
+            ],
+            "id": 30471,
+            "name": "VariableDeclaration",
+            "src": "4833:30:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "baiVaultAddress",
+              "scope": 30478,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 30472,
+                "name": "ElementaryTypeName",
+                "src": "4898:7:31"
+              }
+            ],
+            "id": 30473,
+            "name": "VariableDeclaration",
+            "src": "4898:30:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "releaseStartBlock",
+              "scope": 30478,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 30474,
+                "name": "ElementaryTypeName",
+                "src": "4978:7:31"
+              }
+            ],
+            "id": 30475,
+            "name": "VariableDeclaration",
+            "src": "4978:32:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "minReleaseAmount",
+              "scope": 30478,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 30476,
+                "name": "ElementaryTypeName",
+                "src": "5060:7:31"
+              }
+            ],
+            "id": 30477,
+            "name": "VariableDeclaration",
+            "src": "5060:31:31"
+          }
+        ],
+        "id": 30478,
+        "name": "ContractDefinition",
+        "src": "4685:409:31"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            30364,
+            30467,
+            30478
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            30487,
+            30478,
+            30467,
+            30364
+          ],
+          "name": "ComptrollerV3Storage",
+          "scope": 30497
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": null
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "ComptrollerV2Storage",
+                  "referencedDeclaration": 30478,
+                  "type": "contract ComptrollerV2Storage"
+                },
+                "id": 30479,
+                "name": "UserDefinedTypeName",
+                "src": "5129:20:31"
+              }
+            ],
+            "id": 30480,
+            "name": "InheritanceSpecifier",
+            "src": "5129:20:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "borrowCapGuardian",
+              "scope": 30487,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 30481,
+                "name": "ElementaryTypeName",
+                "src": "5312:7:31"
+              }
+            ],
+            "id": 30482,
+            "name": "VariableDeclaration",
+            "src": "5312:32:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "borrowCaps",
+              "scope": 30487,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => uint256)",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => uint256)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 30483,
+                    "name": "ElementaryTypeName",
+                    "src": "5497:7:31"
+                  },
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 30484,
+                    "name": "ElementaryTypeName",
+                    "src": "5508:4:31"
+                  }
+                ],
+                "id": 30485,
+                "name": "Mapping",
+                "src": "5489:24:31"
+              }
+            ],
+            "id": 30486,
+            "name": "VariableDeclaration",
+            "src": "5489:42:31"
+          }
+        ],
+        "id": 30487,
+        "name": "ContractDefinition",
+        "src": "5096:438:31"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            30364,
+            30467,
+            30478,
+            30487
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            30496,
+            30487,
+            30478,
+            30467,
+            30364
+          ],
+          "name": "ComptrollerV4Storage",
+          "scope": 30497
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": null
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "ComptrollerV3Storage",
+                  "referencedDeclaration": 30487,
+                  "type": "contract ComptrollerV3Storage"
+                },
+                "id": 30488,
+                "name": "UserDefinedTypeName",
+                "src": "5569:20:31"
+              }
+            ],
+            "id": 30489,
+            "name": "InheritanceSpecifier",
+            "src": "5569:20:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "treasuryGuardian",
+              "scope": 30496,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 30490,
+                "name": "ElementaryTypeName",
+                "src": "5638:7:31"
+              }
+            ],
+            "id": 30491,
+            "name": "VariableDeclaration",
+            "src": "5638:31:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "treasuryAddress",
+              "scope": 30496,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 30492,
+                "name": "ElementaryTypeName",
+                "src": "5709:7:31"
+              }
+            ],
+            "id": 30493,
+            "name": "VariableDeclaration",
+            "src": "5709:30:31"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "treasuryPercent",
+              "scope": 30496,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 30494,
+                "name": "ElementaryTypeName",
+                "src": "5810:7:31"
+              }
+            ],
+            "id": 30495,
+            "name": "VariableDeclaration",
+            "src": "5810:30:31"
+          }
+        ],
+        "id": 30496,
+        "name": "ContractDefinition",
+        "src": "5536:307:31"
+      }
+    ],
+    "id": 30497,
+    "name": "SourceUnit",
+    "src": "0:5844:31"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.17+commit.d19bba13.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.0",
+  "updatedAt": "2021-06-16T15:51:18.052Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
