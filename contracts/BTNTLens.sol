@@ -398,14 +398,14 @@ contract BBep20Interface is BBep20Storage {
     function _addReserves(uint addAmount) external returns (uint);
 }
 
-contract ADelegationStorage {
+contract BDelegationStorage {
     /**
      * @notice Implementation address for this contract
      */
     address public implementation;
 }
 
-contract ADelegatorInterface is ADelegationStorage {
+contract BDelegatorInterface is BDelegationStorage {
     /**
      * @notice Emitted when implementation is changed
      */
@@ -420,7 +420,7 @@ contract ADelegatorInterface is ADelegationStorage {
     function _setImplementation(address implementation_, bool allowResign, bytes memory becomeImplementationData) public;
 }
 
-contract ADelegateInterface is ADelegationStorage {
+contract BDelegateInterface is BDelegationStorage {
     /**
      * @notice Called by the delegator on a delegate to initialize it for duty
      * @dev Should revert if any issues arise which make it unfit for delegation

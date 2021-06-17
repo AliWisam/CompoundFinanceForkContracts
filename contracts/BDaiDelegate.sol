@@ -7,7 +7,7 @@ import "./BBep20Delegate.sol";
  * @notice BToken which wraps Multi-Collateral DAI
  * @author Btntex
  */
-contract ADaiDelegate is BBep20Delegate {
+contract BDaiDelegate is BBep20Delegate {
     /**
      * @notice DAI adapter address
      */

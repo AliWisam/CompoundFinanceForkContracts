@@ -7,7 +7,7 @@ import "./BBep20.sol";
  * @notice BTokens which wrap an EIP-20 underlying and are delegated to
  * @author Btntex
  */
-contract BBep20Delegate is BBep20, ADelegateInterface {
+contract BBep20Delegate is BBep20, BDelegateInterface {
     /**
      * @notice Construct an empty delegate
      */
